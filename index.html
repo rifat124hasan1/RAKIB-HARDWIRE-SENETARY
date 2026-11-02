@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b5ed7">
+<title>রাকিব হার্ডওয়্যার</title>
+<style>
+:root{--p:#0b5ed7;--p2:#0a3f94;--g:#16a34a;--r:#dc2626;--o:#ea580c;--bg:#eef2f7;--card:#fff;--t:#1e293b;--m:#64748b;--l:#e2e8f0;--hint:#eff6ff;--box:#f1f5f9;--badge:#fee2e2}
+html[data-dark="1"]{--card:#1e293b;--t:#e2e8f0;--m:#94a3b8;--l:#334155;--hint:#1e3a5f;--box:#0f172a;--badge:#4c1d1d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--t);padding-bottom:84px;transition:background .25s}
+header{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:18px 16px 56px;border-radius:0 0 24px 24px}
+header h1{margin:0;font-size:20px}header p{margin:2px 0 0;font-size:13px;opacity:.85}
+.hrow{display:flex;align-items:center;gap:12px}
+.themebtn{margin-left:auto;width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:20px;cursor:pointer;flex-shrink:0}
+.logo{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.25);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;flex-shrink:0;cursor:pointer}
+.logo img{width:100%;height:100%;object-fit:cover}
+.page{display:none;padding:0 12px;max-width:800px;margin:auto}.page.active{display:block}
+.pull{margin-top:-40px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat{background:var(--card);border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.stat span{font-size:12px;color:var(--m)}.stat b{display:block;font-size:20px;margin-top:4px}
+.stat.g b{color:var(--g)}.stat.o b{color:var(--o)}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+h3{margin:14px 4px 8px;font-size:16px}
+input,select{width:100%;padding:12px;margin:4px 0 10px;font-size:16px;border:1px solid var(--l);border-radius:12px;background:var(--card);color:var(--t)}
+input[type=color]{height:48px;padding:4px}
+label{font-size:13px;color:var(--m)}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:bold;color:#fff;background:var(--p);cursor:pointer}
+.btn.g{background:var(--g)}.btn.gray{background:#64748b;margin-top:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.toolbar{display:flex;gap:8px}.toolbar select{flex:1;font-size:14px;padding:10px}
+.qty{display:flex;gap:8px}.qty input{flex:2}.qty select{flex:1}
+.pitem{display:flex;gap:12px}
+.pitem img,.noimg{width:64px;height:64px;border-radius:12px;object-fit:cover;background:var(--l);flex-shrink:0}
+.noimg{display:flex;align-items:center;justify-content:center;font-size:26px}
+.small{font-size:13px;color:var(--m);line-height:1.6}
+.low{color:var(--r);font-weight:bold}
+.badge{background:var(--badge);color:var(--r);border-radius:20px;padding:2px 10px;font-size:12px}
+.sb{border:none;border-radius:8px;padding:7px 12px;color:#fff;background:#64748b;font-size:13px;margin-right:6px;cursor:pointer}.sb.red{background:var(--r)}
+.hint{background:var(--hint);border-radius:12px;padding:10px;font-size:14px;margin-bottom:10px}
+.box{background:var(--box);border-radius:12px;padding:10px;margin-bottom:10px}
+.preview{width:90px;height:90px;object-fit:cover;border-radius:12px;display:none;margin-bottom:8px}
+.fab{position:fixed;right:18px;bottom:96px;width:56px;height:56px;border-radius:50%;border:none;background:var(--g);color:#fff;font-size:30px;box-shadow:0 4px 12px rgba(0,0,0,.3);z-index:20;display:none}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);box-shadow:0 -2px 10px rgba(0,0,0,.1);padding-bottom:env(safe-area-inset-bottom);z-index:30}
+nav button{flex:1;border:none;background:none;padding:9px 0 8px;font-size:11px;color:var(--m);cursor:pointer}
+nav button i{display:block;font-style:normal;font-size:22px}
+nav button.active{color:var(--p);font-weight:bold}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40;align-items:flex-end}
+.overlay>div{background:var(--card);width:100%;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:16px;max-width:800px;margin:auto}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 12px}
+.sw{height:52px;border-radius:14px;border:3px solid transparent;color:#fff;font-size:12px;font-weight:bold;cursor:pointer}
+.sw.on{border-color:var(--t)}
+#login{padding:80px 24px;max-width:380px;margin:auto;text-align:center}
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;z-index:60;display:none;max-width:90%;text-align:center}
+</style>
+<script>
+// থিম: পেজ দেখানোর আগেই চালু হয়, তাই রং ঝলকায় না
+const PRESETS = [['নীল','#0b5ed7'],['সবুজ','#16a34a'],['বেগুনি','#7c3aed'],['কমলা','#ea580c'],['লাল','#dc2626'],['টিল','#0d9488'],['গোলাপি','#db2777'],['ধূসর','#475569']];
+function hx(h){h=h.replace('#','');return [0,2,4].map(i=>parseInt(h.substr(i,2),16));}
+function toHex(a){return '#'+a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');}
+function mix(a,b,t){const x=hx(a),y=hx(b);return toHex(x.map((v,i)=>v*(1-t)+y[i]*t));}
+function getTheme(){try{return JSON.parse(localStorage.getItem('shopTheme'))||{};}catch(e){return {};}}
+function saveTheme(t){try{localStorage.setItem('shopTheme',JSON.stringify(t));}catch(e){}}
+function applyTheme(t){
+  const c=t.color||'#0b5ed7',dark=!!t.dark,r=document.documentElement;
+  r.style.setProperty('--p',c);
+  r.style.setProperty('--p2',mix(c,'#000000',0.38));
+  r.style.setProperty('--bg',dark?mix('#0b1220',c,0.14):mix('#ffffff',c,0.09));
+  r.setAttribute('data-dark',dark?'1':'0');
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',c);
+}
+applyTheme(getTheme());
+function paintThemeSheet(){
+  const t=getTheme(),c=(t.color||'#0b5ed7').toLowerCase();
+  document.getElementById('swatches').innerHTML=PRESETS.map(p=>`<button class="sw ${p[1]===c?'on':''}" style="background:${p[1]}" onclick="setThemeColor('${p[1]}')">${p[0]}</button>`).join('');
+  document.getElementById('customColor').value=c;
+  document.getElementById('darkBtn').textContent=t.dark?'☀️ লাইট মোডে যান':'🌙 ডার্ক মোডে যান';
+}
+function setThemeColor(c){const t=getTheme();t.color=c;saveTheme(t);applyTheme(t);paintThemeSheet();}
+function toggleDark(){const t=getTheme();t.dark=!t.dark;saveTheme(t);applyTheme(t);paintThemeSheet();}
+function resetTheme(){saveTheme({});applyTheme({});paintThemeSheet();}
+function openTheme(){paintThemeSheet();document.getElementById('themeSheet').style.display='flex';}
+function closeTheme(){document.getElementById('themeSheet').style.display='none';}
+</script>
+</head>
+<body>
+
+<div id="login">
+<div style="font-size:56px">🏪</div>
+<h2>রাকিব হার্ডওয়্যার</h2>
+<input type="password" id="pass" placeholder="পাসওয়ার্ড দিন" onkeydown="if(event.key==='Enter')login()">
+<button class="btn" onclick="login()">ঢুকুন</button>
+</div>
+
+<div id="app" style="display:none">
+<header><div class="hrow">
+<label class="logo" for="logoIn"><img id="logoImg" style="display:none"><span id="logoEmoji">🏪</span></label>
+<input type="file" id="logoIn" accept="image/*" hidden onchange="pickLogo(this)">
+<div><h1>রাকিব হার্ডওয়্যার</h1><p id="today"></p></div>
+<button class="themebtn" onclick="openTheme()" aria-label="থিম">🎨</button>
+</div></header>
+
+<!-- হোম -->
+<div id="home" class="page active pull">
+<div class="grid">
+<div class="stat"><span>আজকের বিক্রি</span><b id="todaySale">0</b></div>
+<div class="stat g"><span>আজকের লাভ</span><b id="todayProfit">0</b></div>
+<div class="stat"><span>স্টকে আটকা টাকা</span><b id="stockValue">0</b></div>
+<div class="stat o"><span>মোট পণ্য</span><b id="prodCount">0</b></div>
+</div>
+<h3>⚠️ কম স্টকের পণ্য</h3>
+<div id="lowList"></div>
+<h3>সাম্প্রতিক লেনদেন</h3>
+<div id="recent"></div>
+</div>
+
+<!-- স্টক -->
+<div id="stock" class="page pull">
+<input id="search" placeholder="🔍 পণ্য খুঁজুন" oninput="debSearch()">
+<div class="toolbar">
+<select id="prodFilter" onchange="renderProducts()">
+<option value="all">সব পণ্য</option>
+<option value="low">কম স্টক</option>
+<option value="out">স্টক শেষ</option>
+</select>
+<select id="prodSort" onchange="renderProducts()">
+<option value="name">নাম অনুসারে</option>
+<option value="newest">নতুন আগে</option>
+<option value="oldest">পুরনো আগে</option>
+<option value="stockAsc">স্টক কম আগে</option>
+<option value="stockDesc">স্টক বেশি আগে</option>
+<option value="priceAsc">দাম কম → বেশি</option>
+<option value="priceDesc">দাম বেশি → কম</option>
+<option value="profitDesc">লাভ বেশি আগে</option>
+</select>
+</div>
+<div id="productList"></div>
+</div>
+
+<!-- বিক্রি -->
+<div id="sell" class="page pull">
+<div class="card">
+<b>পণ্য বিক্রি</b>
+<select id="sellProduct" onchange="onSellProductChange()"></select>
+<div id="sellInfo" class="hint" style="display:none"></div>
+<label>কতটুকু বিক্রি করলেন</label>
+<div class="qty">
+<input id="sellQty" type="number" inputmode="decimal" placeholder="পরিমাণ" oninput="updateSellPreview()">
+<select id="sellUnit" onchange="onSellUnitChange()"></select>
+</div>
+<label id="lblSellPrice">দাম</label>
+<input id="sellPrice" type="number" inputmode="decimal" placeholder="দাম" oninput="updateSellPreview()">
+<div id="sellTotal" class="hint" style="display:none"></div>
+<button class="btn" onclick="sellItem()">বিক্রি নিশ্চিত করুন</button>
+</div>
+</div>
+
+<!-- মাল কেনা -->
+<div id="buy" class="page pull">
+<div class="card">
+<b>নতুন মাল এলে স্টক বাড়ান</b>
+<select id="buyProduct" onchange="onBuyProductChange()"></select>
+<div class="qty">
+<input id="buyQty" type="number" inputmode="decimal" placeholder="কতটুকু এল">
+<select id="buyUnit"></select>
+</div>
+<button class="btn g" onclick="buyItem()">স্টকে যোগ করুন</button>
+</div>
+</div>
+
+<!-- হিসাব -->
+<div id="report" class="page pull">
+<div class="card">
+<select id="period" onchange="renderReport()">
+<option value="0">আজ</option><option value="7">গত ৭ দিন</option><option value="30">গত ৩০ দিন</option>
+</select>
+<div class="grid" style="margin:0">
+<div class="stat"><span>বিক্রি</span><b id="rSale">0</b></div>
+<div class="stat g"><span>লাভ</span><b id="rProfit">0</b></div>
+<div class="stat"><span>মাল কেনা</span><b id="rBuy">0</b></div>
+<div class="stat o"><span>বিক্রির সংখ্যা</span><b id="rCount">0</b></div>
+</div>
+</div>
+<h3>লেনদেনের তালিকা</h3>
+<div class="toolbar">
+<select id="rType" onchange="renderReport()">
+<option value="all">সব লেনদেন</option>
+<option value="sell">শুধু বিক্রি</option>
+<option value="buy">শুধু কেনা</option>
+</select>
+<select id="rSort" onchange="renderReport()">
+<option value="newest">নতুন আগে</option>
+<option value="oldest">পুরনো আগে</option>
+<option value="amount">বেশি টাকা আগে</option>
+<option value="profit">বেশি লাভ আগে</option>
+</select>
+</div>
+<div id="logList"></div>
+</div>
+
+<button class="fab" id="fab" onclick="openSheet()">＋</button>
+
+<nav>
+<button class="active" data-p="home" onclick="showPage('home',this)"><i>🏠</i>হোম</button>
+<button data-p="stock" onclick="showPage('stock',this)"><i>📦</i>স্টক</button>
+<button data-p="sell" onclick="showPage('sell',this)"><i>💰</i>বিক্রি</button>
+<button data-p="buy" onclick="showPage('buy',this)"><i>🚚</i>মাল কেনা</button>
+<button data-p="report" onclick="showPage('report',this)"><i>📊</i>হিসাব</button>
+</nav>
+
+<!-- পণ্য যোগ/সম্পাদনার ফর্ম -->
+<div id="sheet" class="overlay"><div>
+<b id="formTitle" style="font-size:18px">নতুন পণ্য যোগ করুন</b>
+<img id="preview" class="preview" style="margin-top:8px">
+<label style="display:block;margin-top:8px">পণ্যের ছবি</label>
+<input id="pImage" type="file" accept="image/*" onchange="pickImage(this)">
+<input id="pName" placeholder="পণ্যের নাম">
+<label>পণ্যের ধরন</label>
+<select id="pType" onchange="onTypeChange()">
+<option value="piece">পিস (সংখ্যায় বিক্রি)</option>
+<option value="weight">ওজন (কেজি / গ্রাম / পাউন্ড)</option>
+<option value="volume">তরল (লিটার / মিলিলিটার)</option>
+<option value="length">দৈর্ঘ্য (মিটার / ফুট / গজ / ইঞ্চি)</option>
+</select>
+<label id="lblBuy">ক্রয়মূল্য</label>
+<input id="pBuy" type="number" inputmode="decimal">
+<label id="lblSell">বিক্রয়মূল্য</label>
+<input id="pSell" type="number" inputmode="decimal">
+<label id="lblMin">সর্বনিম্ন বিক্রয়মূল্য</label>
+<input id="pMin" type="number" inputmode="decimal">
+<div id="packBox" class="box">
+<label>এক প্যাকেটে কয়টা পিস? (প্যাকেটে বিক্রি না করলে ফাঁকা)</label>
+<input id="pPackSize" type="number" inputmode="numeric">
+<label>প্যাকেটের বিক্রয়মূল্য (পুরো প্যাকেটের)</label>
+<input id="pPackSell" type="number" inputmode="decimal">
+<label>প্যাকেটের সর্বনিম্ন মূল্য</label>
+<input id="pPackMin" type="number" inputmode="decimal">
+</div>
+<div id="qtyBox">
+<label>বর্তমান স্টক</label>
+<div class="qty"><input id="pQty" type="number" inputmode="decimal" placeholder="কতটুকু আছে"><select id="pQtyUnit"></select></div>
+</div>
+<button class="btn g" onclick="saveProduct()">সংরক্ষণ করুন</button>
+<button class="btn gray" onclick="closeSheet()">বাতিল</button>
+</div></div>
+
+<!-- থিম -->
+<div id="themeSheet" class="overlay"><div>
+<b style="font-size:18px">🎨 থিম ও রঙ</b>
+<label style="display:block;margin-top:10px">রং বাছাই করুন (হেডার ও ব্যাকগ্রাউন্ড বদলাবে)</label>
+<div id="swatches" class="swatches"></div>
+<label>নিজের পছন্দের রং</label>
+<input type="color" id="customColor" oninput="setThemeColor(this.value)">
+<button class="btn gray" id="darkBtn" onclick="toggleDark()">🌙 ডার্ক মোডে যান</button>
+<button class="btn gray" onclick="resetTheme()">আগের মতো করুন</button>
+<button class="btn" style="margin-top:8px" onclick="closeTheme()">ঠিক আছে</button>
+</div></div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, addDoc, doc, updateDoc, deleteDoc, setDoc, onSnapshot, query, orderBy, limit, increment, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDD-hS4KYiJTG0YwRBJADpmmEmi6E5HZI",
+  authDomain: "rakib-hardwire.firebaseapp.com",
+  projectId: "rakib-hardwire",
+  storageBucket: "rakib-hardwire.firebasestorage.app",
+  messagingSenderId: "422034716206",
+  appId: "1:422034716206:web:53dcd2e0adf82e093491bf"
+};
+const APP_PASSWORD = "1234";
+
+// অফলাইন ক্যাশ: দ্বিতীয়বার থেকে অ্যাপ প্রায় সাথে সাথে খোলে, নেট না থাকলেও চলে
+const fbApp = initializeApp(firebaseConfig);
+let db;
+try {
+  db = initializeFirestore(fbApp, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) });
+} catch (e) { db = getFirestore(fbApp); }
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let toastTimer;
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.style.display = 'block';
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = 'none', 1900);
+}
+// লেখার কাজ ব্যাকগ্রাউন্ডে চলে, স্ক্রিন আটকে থাকে না
+const fire = p => p.catch(e => alert('সেভ হয়নি: ' + e.message));
+
+const TYPES = {
+  piece:  { base: 'পিস',   units: { 'পিস': 1 } },
+  weight: { base: 'কেজি',  units: { 'কেজি': 1, 'গ্রাম': 0.001, 'পাউন্ড': 0.45359237 } },
+  volume: { base: 'লিটার', units: { 'লিটার': 1, 'মিলিলিটার': 0.001 } },
+  length: { base: 'মিটার', units: { 'মিটার': 1, 'সেন্টিমিটার': 0.01, 'ইঞ্চি': 0.0254, 'ফুট': 0.3048, 'গজ': 0.9144 } }
+};
+const typeOf = p => TYPES[p.type] ? p.type : 'piece';
+const baseOf = p => TYPES[typeOf(p)].base;
+const hasPack = p => typeOf(p) === 'piece' && p.packSize > 0;
+function unitKeys(p) { const k = Object.keys(TYPES[typeOf(p)].units); if (hasPack(p)) k.unshift('প্যাকেট'); return k; }
+function toBase(p, v, u) { return u === 'প্যাকেট' ? v * p.packSize : v * TYPES[typeOf(p)].units[u]; }
+function minPricePerBase(p, u) { return u === 'প্যাকেট' ? (p.packMin || 0) / p.packSize : (p.min || 0); }
+const round = n => Math.round(n * 1000000) / 1000000;
+const fmt = n => String(round(n));
+const money = n => Math.round(n * 100) / 100;
+function unitOptions(p, sel) {
+  const keys = unitKeys(p);
+  const def = sel && keys.includes(sel) ? sel : (hasPack(p) ? 'প্যাকেট' : TYPES[typeOf(p)].base);
+  return keys.map(u => `<option value="${u}" ${u === def ? 'selected' : ''}>${u}</option>`).join('');
+}
+function showQty(p) {
+  const q = round(p.qty), t = typeOf(p);
+  if (t === 'weight' && q > 0 && q < 1) return q + ' কেজি (' + round(q * 1000) + ' গ্রাম)';
+  if (t === 'volume' && q > 0 && q < 1) return q + ' লিটার (' + round(q * 1000) + ' মিলিলিটার)';
+  if (hasPack(p) && q >= p.packSize) {
+    const k = Math.floor(q / p.packSize), rest = round(q - k * p.packSize);
+    return k + ' প্যাকেট' + (rest ? ' + ' + rest + ' পিস' : '') + ' (মোট ' + q + ' পিস)';
+  }
+  return q + ' ' + baseOf(p);
+}
+const isLow = p => typeOf(p) === 'piece' ? p.qty <= 5 : p.qty <= 1;
+
+let products = [], logs = [], newImage = null, editingId = null;
+
+window.login = () => {
+  if ($('pass').value === APP_PASSWORD) { localStorage.setItem('shopLogin', 'yes'); startApp(); }
+  else alert('ভুল পাসওয়ার্ড');
+};
+function startApp() {
+  $('login').style.display = 'none'; $('app').style.display = 'block';
+  $('today').textContent = new Date().toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const cachedLogo = localStorage.getItem('shopLogo'); if (cachedLogo) setLogo(cachedLogo);
+  onTypeChange(); listen();
+}
+if (localStorage.getItem('shopLogin') === 'yes') startApp();
+
+window.showPage = (id, btn) => {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  $(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  $('fab').style.display = id === 'stock' ? 'block' : 'none';
+  window.scrollTo(0, 0);
+};
+
+function setLogo(src) {
+  $('logoImg').src = src; $('logoImg').style.display = 'block'; $('logoEmoji').style.display = 'none';
+}
+
+window.pickLogo = input => {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = async () => {
+      const s = Math.min(1, 200 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      const data = c.toDataURL('image/jpeg', 0.8);
+      setLogo(data); localStorage.setItem('shopLogo', data);
+      fire(setDoc(doc(db, 'settings', 'shop'), { logo: data }, { merge: true }));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+const EST = { serverTimestamps: 'estimate' };
+function listen() {
+  onSnapshot(doc(db, 'settings', 'shop'), s => {
+    const d = s.data();
+    if (d && d.logo) { setLogo(d.logo); localStorage.setItem('shopLogo', d.logo); }
+  }, () => {});
+  onSnapshot(query(collection(db, 'products'), orderBy('name')), snap => {
+    products = snap.docs.map(d => {
+      const x = d.data(EST);
+      return { id: d.id, ...x, createdMs: x.createdAt && x.createdAt.toMillis ? x.createdAt.toMillis() : 0 };
+    });
+    renderProducts(); fillSelects(); renderReport();
+  }, e => toast('পণ্য লোড হয়নি: ' + e.message));
+  // সর্বশেষ ৫০০ লেনদেন (৩০ দিনের হিসাবের জন্য যথেষ্ট)
+  onSnapshot(query(collection(db, 'logs'), orderBy('time', 'desc'), limit(500)), snap => {
+    logs = snap.docs.map(d => ({ id: d.id, ...d.data(EST) }));
+    renderReport();
+  }, e => toast('লেনদেন লোড হয়নি: ' + e.message));
+}
+
+window.openSheet = () => { $('sheet').style.display = 'flex'; };
+window.closeSheet = () => { $('sheet').style.display = 'none'; resetForm(); };
+
+window.onTypeChange = () => {
+  const type = $('pType').value, base = TYPES[type].base;
+  $('lblBuy').textContent = 'ক্রয়মূল্য (টাকা, প্রতি ' + base + ')';
+  $('lblSell').textContent = 'বিক্রয়মূল্য (টাকা, প্রতি ' + base + ')';
+  $('lblMin').textContent = 'সর্বনিম্ন বিক্রয়মূল্য (প্রতি ' + base + ', এর নিচে বিক্রি হবে না)';
+  $('packBox').style.display = type === 'piece' ? 'block' : 'none';
+  $('pQtyUnit').innerHTML = unitOptions({ type, packSize: Number($('pPackSize').value) || 0 });
+};
+document.addEventListener('input', e => { if (e.target && e.target.id === 'pPackSize') onTypeChange(); });
+
+// ছবি ছোট ও হালকা করে রাখা হয়, তাই লোড দ্রুত হয়
+window.pickImage = input => {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 250 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      newImage = c.toDataURL('image/jpeg', 0.55);
+      $('preview').src = newImage; $('preview').style.display = 'block';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.saveProduct = () => {
+  const name = $('pName').value.trim(), type = $('pType').value;
+  const buy = Number($('pBuy').value), sell = Number($('pSell').value), min = Number($('pMin').value);
+  const qtyInput = Number($('pQty').value) || 0, qtyUnit = $('pQtyUnit').value;
+  const packSize = type === 'piece' ? (Number($('pPackSize').value) || 0) : 0;
+  const packSell = Number($('pPackSell').value) || 0, packMin = Number($('pPackMin').value) || 0;
+  if (!name || !buy || !sell || !min) { alert('নাম, ক্রয়মূল্য, বিক্রয়মূল্য ও সর্বনিম্ন মূল্য দিন'); return; }
+  if (min > sell) { alert('সর্বনিম্ন মূল্য বিক্রয়মূল্যের চেয়ে বেশি হতে পারে না'); return; }
+  if (packSize > 0) {
+    if (!packSell || !packMin) { alert('প্যাকেটের বিক্রয়মূল্য ও সর্বনিম্ন মূল্য দিন'); return; }
+    if (packMin > packSell) { alert('প্যাকেটের সর্বনিম্ন মূল্য বিক্রয়মূল্যের চেয়ে বেশি হতে পারে না'); return; }
+    if (packMin < buy * packSize && !confirm('প্যাকেটের সর্বনিম্ন মূল্য ক্রয়মূল্যের চেয়ে কম, লোকসান হবে। তবু সংরক্ষণ করবেন?')) return;
+  }
+  if (min < buy && !confirm('সর্বনিম্ন মূল্য ক্রয়মূল্যের চেয়ে কম, লোকসান হবে। তবু সংরক্ষণ করবেন?')) return;
+  const data = { name, type, buy, sell, min, packSize, packSell: packSize ? packSell : 0, packMin: packSize ? packMin : 0 };
+  if (newImage) data.image = newImage;
+  if (editingId) fire(updateDoc(doc(db, 'products', editingId), data));
+  else {
+    data.qty = round(toBase({ type, packSize }, qtyInput, qtyUnit));
+    data.createdAt = serverTimestamp();
+    fire(addDoc(collection(db, 'products'), data));
+  }
+  closeSheet(); toast('✅ পণ্য সংরক্ষিত');
+};
+
+window.resetForm = () => {
+  ['pName','pBuy','pSell','pMin','pQty','pImage','pPackSize','pPackSell','pPackMin'].forEach(i => $(i).value = '');
+  $('pType').value = 'piece'; $('pType').disabled = false; onTypeChange();
+  $('preview').style.display = 'none';
+  $('formTitle').textContent = 'নতুন পণ্য যোগ করুন';
+  $('qtyBox').style.display = 'block';
+  newImage = null; editingId = null;
+};
+
+window.editProduct = id => {
+  const p = products.find(x => x.id === id);
+  editingId = id; newImage = null;
+  $('pName').value = p.name; $('pType').value = typeOf(p); $('pType').disabled = true; onTypeChange();
+  $('pBuy').value = p.buy; $('pSell').value = p.sell; $('pMin').value = p.min || '';
+  $('pPackSize').value = p.packSize || ''; $('pPackSell').value = p.packSell || ''; $('pPackMin').value = p.packMin || '';
+  $('qtyBox').style.display = 'none';
+  if (p.image) { $('preview').src = p.image; $('preview').style.display = 'block'; } else $('preview').style.display = 'none';
+  $('formTitle').textContent = 'সম্পাদনা: ' + p.name;
+  openSheet();
+};
+
+// সার্চে প্রতি অক্ষরে নয়, থামলে একবার আঁকা হয়
+let searchTimer;
+window.debSearch = () => { clearTimeout(searchTimer); searchTimer = setTimeout(renderProducts, 200); };
+
+const PROD_SORT = {
+  name:       (a, b) => a.name.localeCompare(b.name, 'bn'),
+  newest:     (a, b) => (b.createdMs || 0) - (a.createdMs || 0),
+  oldest:     (a, b) => (a.createdMs || 0) - (b.createdMs || 0),
+  stockAsc:   (a, b) => a.qty - b.qty,
+  stockDesc:  (a, b) => b.qty - a.qty,
+  priceAsc:   (a, b) => a.sell - b.sell,
+  priceDesc:  (a, b) => b.sell - a.sell,
+  profitDesc: (a, b) => (b.sell - b.buy) - (a.sell - a.buy)
+};
+
+window.renderProducts = () => {
+  const q = $('search').value.trim().toLowerCase(), f = $('prodFilter').value;
+  let list = products.filter(p => p.name.toLowerCase().includes(q));
+  if (f === 'low') list = list.filter(isLow);
+  else if (f === 'out') list = list.filter(p => p.qty <= 0);
+  list.sort(PROD_SORT[$('prodSort').value] || PROD_SORT.name);
+  $('productList').innerHTML = list.map(p => {
+    const base = baseOf(p);
+    const pack = hasPack(p) ? `<br>প্যাকেট (${p.packSize} পিস): ${p.packSell} ৳ | সর্বনিম্ন: ${p.packMin || '-'} ৳` : '';
+    return `<div class="card"><div class="pitem">
+${p.image ? `<img src="${p.image}" loading="lazy" decoding="async">` : '<div class="noimg">📦</div>'}
+<div style="flex:1"><div class="row"><b>${esc(p.name)}</b>${isLow(p) ? '<span class="badge">কম</span>' : ''}</div>
+<div class="${isLow(p) ? 'low' : ''}" style="font-size:14px">স্টক: ${showQty(p)}</div>
+<div class="small">ক্রয় ${p.buy} ৳ | বিক্রয় ${p.sell} ৳ (প্রতি ${base})<br>সর্বনিম্ন ${p.min || '-'} ৳ | লাভ ${money(p.sell - p.buy)} ৳${pack}</div></div></div>
+<div style="margin-top:10px"><button class="sb" onclick="editProduct('${p.id}')">সম্পাদনা</button><button class="sb red" onclick="delProduct('${p.id}')">মুছুন</button></div></div>`;
+  }).join('') || '<p class="small">কোনো পণ্য নেই। নিচের ＋ চাপুন।</p>';
+};
+
+function fillSelects() {
+  const ks = $('sellProduct').value, kb = $('buyProduct').value;
+  const opts = products.map(p => `<option value="${p.id}">${esc(p.name)} (${showQty(p)})</option>`).join('');
+  $('sellProduct').innerHTML = opts; $('buyProduct').innerHTML = opts;
+  if (ks && products.find(p => p.id === ks)) $('sellProduct').value = ks;
+  if (kb && products.find(p => p.id === kb)) $('buyProduct').value = kb;
+  onSellProductChange(true); onBuyProductChange();
+}
+
+function setDefaultSellPrice(p, unit) {
+  if (unit === 'প্যাকেট') { $('lblSellPrice').textContent = 'দাম (টাকা, প্রতি প্যাকেট - বদলাতে পারবেন)'; $('sellPrice').value = p.packSell; }
+  else { $('lblSellPrice').textContent = 'দাম (টাকা, প্রতি ' + baseOf(p) + ' - বদলাতে পারবেন)'; $('sellPrice').value = p.sell; }
+}
+
+window.onSellProductChange = keepPrice => {
+  const p = products.find(x => x.id === $('sellProduct').value);
+  const info = $('sellInfo');
+  if (!p) { info.style.display = 'none'; return; }
+  info.style.display = 'block';
+  info.innerHTML = `নির্ধারিত দাম: <b>${p.sell} ৳</b> প্রতি ${baseOf(p)} | সর্বনিম্ন: <b>${p.min || '-'} ৳</b>` +
+    (hasPack(p) ? `<br>প্যাকেট (${p.packSize} পিস): <b>${p.packSell} ৳</b> | সর্বনিম্ন: <b>${p.packMin || '-'} ৳</b>` : '');
+  const us = $('sellUnit'); us.innerHTML = unitOptions(p, us.value);
+  if (keepPrice !== true || !$('sellPrice').value) setDefaultSellPrice(p, us.value);
+  updateSellPreview();
+};
+
+window.onSellUnitChange = () => {
+  const p = products.find(x => x.id === $('sellProduct').value); if (!p) return;
+  if (hasPack(p)) setDefaultSellPrice(p, $('sellUnit').value);
+  updateSellPreview();
+};
+
+window.onBuyProductChange = () => {
+  const p = products.find(x => x.id === $('buyProduct').value); if (!p) return;
+  $('buyUnit').innerHTML = unitOptions(p, $('buyUnit').value);
+};
+
+window.updateSellPreview = () => {
+  const p = products.find(x => x.id === $('sellProduct').value), box = $('sellTotal');
+  const qty = Number($('sellQty').value), price = Number($('sellPrice').value);
+  if (!p || !qty || !price) { box.style.display = 'none'; return; }
+  const unit = $('sellUnit').value, bq = toBase(p, qty, unit);
+  const total = unit === 'প্যাকেট' ? qty * price : bq * price;
+  box.style.display = 'block';
+  box.innerHTML = `${qty} ${unit} = ${fmt(bq)} ${baseOf(p)} | মোট: <b>${money(total)} ৳</b>`;
+};
+
+window.delProduct = id => { if (confirm('পণ্যটি মুছে ফেলবেন?')) fire(deleteDoc(doc(db, 'products', id))); };
+
+// বিক্রি: স্টক কমানো আর লেনদেন লেখা একসাথে এক ধাক্কায় হয়
+window.sellItem = () => {
+  const id = $('sellProduct').value, qtyInput = Number($('sellQty').value), unit = $('sellUnit').value, price = Number($('sellPrice').value);
+  const p = products.find(x => x.id === id);
+  if (!p || !qtyInput || qtyInput <= 0 || !price) { alert('পণ্য, পরিমাণ ও দাম দিন'); return; }
+  const qty = round(toBase(p, qtyInput, unit));
+  if (qty > round(p.qty)) { alert('স্টকে এত নেই! আছে: ' + showQty(p)); return; }
+  const perBase = unit === 'প্যাকেট' ? price / p.packSize : price;
+  const minB = minPricePerBase(p, unit);
+  if (minB && perBase < minB - 0.000001) {
+    alert('এই দামে বিক্রি করা যাবে না! সর্বনিম্ন: ' + (unit === 'প্যাকেট' ? p.packMin + ' ৳ প্রতি প্যাকেট' : p.min + ' ৳ প্রতি ' + baseOf(p)));
+    return;
+  }
+  const amount = unit === 'প্যাকেট' ? qtyInput * price : qty * price;
+  const profit = amount - qty * p.buy;
+  const batch = writeBatch(db);
+  batch.update(doc(db, 'products', id), { qty: increment(-qty) });
+  batch.set(doc(collection(db, 'logs')), { type: 'sell', pid: id, name: p.name, ptype: typeOf(p), qty, inputQty: qtyInput, inputUnit: unit, price, amount: money(amount), profit: money(profit), time: serverTimestamp() });
+  fire(batch.commit());
+  $('sellQty').value = ''; updateSellPreview();
+  toast('✅ বিক্রি সংরক্ষিত');
+};
+
+window.buyItem = () => {
+  const id = $('buyProduct').value, qtyInput = Number($('buyQty').value), unit = $('buyUnit').value;
+  const p = products.find(x => x.id === id);
+  if (!p || !qtyInput || qtyInput <= 0) { alert('পণ্য ও পরিমাণ দিন'); return; }
+  const qty = round(toBase(p, qtyInput, unit));
+  const batch = writeBatch(db);
+  batch.update(doc(db, 'products', id), { qty: increment(qty) });
+  batch.set(doc(collection(db, 'logs')), { type: 'buy', name: p.name, ptype: typeOf(p), qty, inputQty: qtyInput, inputUnit: unit, amount: money(qty * p.buy), profit: 0, time: serverTimestamp() });
+  fire(batch.commit());
+  $('buyQty').value = '';
+  toast('✅ স্টক বেড়েছে');
+};
+
+window.returnSale = id => {
+  const l = logs.find(x => x.id === id); if (!l) return;
+  const left = l.qty - (l.returned || 0);
+  const u = l.inputUnit || '';
+  const leftDisp = l.inputQty ? round(left / l.qty * l.inputQty) : round(left);
+  const ans = prompt('কতটুকু ফেরত এসেছে? (' + u + ')\nসর্বোচ্চ: ' + leftDisp + ' ' + u + '\nপুরো বিক্রি ভুল হলে ' + leftDisp + ' লিখুন', leftDisp);
+  if (ans === null) return;
+  const r = Number(ans);
+  if (!r || r <= 0 || r > leftDisp + 0.000001) { alert('সঠিক পরিমাণ দিন (সর্বোচ্চ ' + leftDisp + ')'); return; }
+  const retBase = l.inputQty ? round(r / l.inputQty * l.qty) : r;
+  const p = products.find(x => x.id === l.pid) || products.find(x => x.name === l.name);
+  if (!confirm(l.name + ': ' + r + ' ' + u + ' ফেরত নেবেন? স্টকে ফিরে যাবে আর বিক্রি ও লাভ থেকে কমবে।')) return;
+  const newRet = round((l.returned || 0) + retBase);
+  const oa = l.origAmount !== undefined ? l.origAmount : l.amount;
+  const op = l.origProfit !== undefined ? l.origProfit : l.profit;
+  const frac = newRet >= l.qty - 0.000001 ? 1 : newRet / l.qty;
+  const batch = writeBatch(db);
+  batch.update(doc(db, 'logs', id), { returned: newRet, origAmount: oa, origProfit: op, amount: money(oa * (1 - frac)), profit: money(op * (1 - frac)) });
+  if (p) batch.update(doc(db, 'products', p.id), { qty: increment(retBase) });
+  else alert('পণ্যটি তালিকায় নেই, তাই স্টক বাড়েনি');
+  fire(batch.commit());
+  toast('✅ ফেরত সংরক্ষিত');
+};
+
+function logCard(l) {
+  const base = TYPES[l.ptype] ? TYPES[l.ptype].base : 'পিস';
+  const shown = l.inputUnit ? l.inputQty + ' ' + l.inputUnit : l.qty + ' ' + base;
+  const pk = l.inputUnit === 'প্যাকেট';
+  const rq = l.returned || 0, full = l.type === 'sell' && rq >= l.qty - 0.000001;
+  const ret = rq ? '<br>↩️ ফেরত: ' + (l.inputUnit ? round(rq / l.qty * l.inputQty) + ' ' + l.inputUnit : rq + ' ' + base) + (full ? ' (সম্পূর্ণ)' : '') : '';
+  const btn = l.type === 'sell' && !full ? `<div style="margin-top:8px"><button class="sb" onclick="returnSale('${l.id}')">↩️ ফেরত / ভুল বিক্রি</button></div>` : '';
+  return `<div class="card"><div class="row"><b>${l.type === 'sell' ? '🔴 বিক্রি' : '🟢 কেনা'}: ${esc(l.name)}</b><span>${shown}</span></div>
+<div class="small">${l.type === 'sell' ? 'প্রতি ' + (pk ? 'প্যাকেট' : base) + ' ' + l.price + ' ৳ | ' : ''}মোট ${l.amount} ৳${l.type === 'sell' ? ' | লাভ ' + l.profit + ' ৳' : ''}<br>${l.time ? l.time.toDate().toLocaleString('bn-BD') : ''}${ret}</div>${btn}</div>`;
+}
+
+const LOG_SORT = {
+  newest: (a, b) => b.time.toMillis() - a.time.toMillis(),
+  oldest: (a, b) => a.time.toMillis() - b.time.toMillis(),
+  amount: (a, b) => b.amount - a.amount,
+  profit: (a, b) => b.profit - a.profit
+};
+
+function renderReport() {
+  const start = new Date(); start.setHours(0, 0, 0, 0);
+  let sale = 0, profit = 0;
+  logs.forEach(l => { if (l.type === 'sell' && l.time && l.time.toDate() >= start) { sale += l.amount; profit += l.profit; } });
+  $('todaySale').textContent = money(sale) + ' ৳';
+  $('todayProfit').textContent = money(profit) + ' ৳';
+  $('stockValue').textContent = money(products.reduce((s, p) => s + p.qty * p.buy, 0)) + ' ৳';
+  $('prodCount').textContent = products.length;
+  const low = products.filter(isLow);
+  $('lowList').innerHTML = low.length ? low.map(p => `<div class="card row"><b>${esc(p.name)}</b><span class="low">${showQty(p)}</span></div>`).join('') : '<p class="small">সব পণ্যের স্টক ঠিক আছে ✅</p>';
+  $('recent').innerHTML = logs.slice(0, 5).map(logCard).join('') || '<p class="small">এখনো কোনো লেনদেন নেই</p>';
+
+  const days = Number($('period').value), from = new Date(); from.setHours(0, 0, 0, 0); from.setDate(from.getDate() - days);
+  let rs = 0, rp = 0, rb = 0, rc = 0;
+  const list = logs.filter(l => l.time && l.time.toDate() >= from);
+  list.forEach(l => { if (l.type === 'sell') { rs += l.amount; rp += l.profit; if ((l.returned || 0) < l.qty - 0.000001) rc++; } else rb += l.amount; });
+  $('rSale').textContent = money(rs) + ' ৳'; $('rProfit').textContent = money(rp) + ' ৳';
+  $('rBuy').textContent = money(rb) + ' ৳'; $('rCount').textContent = rc;
+
+  const tf = $('rType').value;
+  let shown = tf === 'all' ? list.slice() : list.filter(l => l.type === tf);
+  shown.sort(LOG_SORT[$('rSort').value] || LOG_SORT.newest);
+  $('logList').innerHTML = shown.slice(0, 40).map(logCard).join('') || '<p class="small">এই সময়ে কোনো লেনদেন নেই</p>';
+}
+window.renderReport = renderReport;
+</script>
+</body>
+</html>
