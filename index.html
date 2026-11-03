@@ -36,7 +36,9 @@ dialog{border:0;border-radius:10px;width:min(94vw,460px);max-height:90vh;backgro
 dialog::backdrop{background:rgba(0,0,0,.5)}
 .rc table{width:100%;border-collapse:collapse;margin-top:8px}.rc td{padding:5px 0;border-bottom:1px dashed var(--l)}.rc .tt td{font-weight:700}.rc small{color:var(--m)}.lg{width:60px;height:60px;border-radius:50%;object-fit:cover}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none}
-@media print{header,nav,main,.nop,#toast{display:none!important}dialog{box-shadow:none;border:0}}
+#lo{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:20px}
+#lo .box{background:var(--c);border:1px solid var(--l);border-radius:10px;padding:20px;width:min(94vw,380px);text-align:center}
+@media print{header,nav,main,.nop,#toast,#lo{display:none!important}dialog{box-shadow:none;border:0}}
 </style></head><body>
 <header></header><main id="main"></main>
 <nav>
@@ -49,11 +51,21 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
 </nav>
 <dialog id="dlg"></dialog><div id="toast"></div>
 <input type="file" id="lf" accept="image/*" hidden><input type="file" id="imf" accept="application/json" hidden>
+
+<!-- লগইন পর্দা -->
+<div id="lo"><form class="box" onsubmit="return login(event)">
+<h3>রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি</h3>
+<input id="le" type="email" placeholder="ইমেইল" autocomplete="username" required>
+<input id="lp" type="password" placeholder="পাসওয়ার্ড" autocomplete="current-password" required>
+<button class="b">লগইন</button>
+<p id="lm" class="neg"></p>
+</form></div>
+
 <script>
 const K='rakib_hs_v1';
 let D;try{D=JSON.parse(localStorage.getItem(K))}catch(e){}
 D=D||{shop:{name:'রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি',logo:'',color:'#2f5d8a',dark:0},p:[],tx:[],cu:[],su:[],ex:[],bl:[],n:1};
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('সেভ করা যায়নি, জায়গা শেষ হয়ে গেছে। ব্যাকআপ নিন।')}};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('সেভ করা যায়নি, জায়গা শেষ হয়ে গেছে। ব্যাকআপ নিন।')};window.cloudSave&&window.cloudSave()};
 const $=s=>document.querySelector(s),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nf=x=>+(+x).toFixed(3),tk=n=>'৳'+(Math.round(n*100)/100).toLocaleString('en-IN'),sum=(a,k)=>a.reduce((s,x)=>s+(x[k]||0),0);
@@ -93,7 +105,7 @@ dlg(`<h3>${id?'পণ্য এডিট':'নতুন পণ্য'}</h3><form
 <button class="b">সংরক্ষণ করুন</button>${id?`<button type="button" class="d" onclick="delP('${id}')">পণ্য মুছুন</button>`:''}<button type="button" class="s" onclick="cl()">বাতিল</button></form>`);setT()}
 function setT(){const t=$('#ty').value;document.querySelectorAll('.mu').forEach(e=>e.textContent=U[t].main);$('#sku').innerHTML=Object.keys(U[t].u).map(k=>`<option${k==U[t].main?' selected':''}>${k}`).join('');$('#pkb').style.display=t=='piece'?'':'none'}
 function sp(e,id){e.preventDefault();const g=i=>$('#'+i).value,ty=g('ty');const o={name:g('pn').trim(),type:ty,buy:+g('pb'),sell:+g('ps'),min:+g('pm')||0,pack:ty=='piece'?+g('pk')||0:0,packPrice:+g('pkp')||0,packMin:+g('pkm')||0,low:+g('pl')||0,stock:+g('pst')*U[ty].u[g('sku')]};
-const done=img=>{if(id)Object.assign(D.p.find(x=>x.id==id),o,img?{img}:{});else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f=$('#pimg').files[0];f?rd(f,160,done):done();return false}
+const done=img=>{if(id)Object.assign(D.p.find(x=>x.id==id),o,img?{img}:{});else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f=$('#pimg').files[0];f?rd(f,120,done):done();return false}
 function delP(id){if(confirm('এই পণ্য মুছে ফেলবেন?')){D.p=D.p.filter(x=>x.id!=id);save();cl();go('stock')}}
 // ---- বিক্রি ও কেনা
 const popt=()=>D.p.map(p=>`<option value="${p.id}">${esc(p.name)} — ${fq(p,p.stock)}`).join('');
@@ -127,8 +139,75 @@ return `<h2>হিসাব</h2><select onchange="per=+this.value;go('acc')">${[
 function addEx(){const n=$('#en').value.trim(),a=+$('#ea').value;if(!n||!(a>0))return alert('বিবরণ ও টাকা দিন');D.ex.push({id:uid(),t:Date.now(),n,amt:a});save();go('acc')}
 function delEx(id){D.ex=D.ex.filter(x=>x.id!=id);save();go('acc')}
 // ---- সেটিংস
-function st(){dlg(`<h3>সেটিংস</h3><button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()"><label>থিমের রং</label><input type="color" value="${D.shop.color}" oninput="D.shop.color=this.value;save();th()"><label><input type="checkbox" style="width:auto" ${D.shop.dark?'checked':''} onchange="D.shop.dark=+this.checked;save();th()"> ডার্ক মোড</label><button class="s" onclick="bk()">ব্যাকআপ নামান</button> <button class="s" onclick="$('#imf').click()">ব্যাকআপ ফেরত আনুন</button> <button class="s" onclick="cl()">বন্ধ</button>`)}
+function st(){dlg(`<h3>সেটিংস</h3><button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()"><label>থিমের রং</label><input type="color" value="${D.shop.color}" oninput="D.shop.color=this.value;save();th()"><label><input type="checkbox" style="width:auto" ${D.shop.dark?'checked':''} onchange="D.shop.dark=+this.checked;save();th()"> ডার্ক মোড</label><button class="s" onclick="bk()">ব্যাকআপ নামান</button> <button class="s" onclick="$('#imf').click()">ব্যাকআপ ফেরত আনুন</button> <button class="s" onclick="logout()">লগআউট</button> <button class="s" onclick="cl()">বন্ধ</button>`)}
 function bk(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='rakib-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
 $('#imf').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{try{const d=JSON.parse(t);if(!d.p||!d.shop)throw 0;D=d;save();th();hd();cl();go(cur);toast('ব্যাকআপ ফেরত এসেছে')}catch(x){alert('ফাইলটা ঠিক নয়')}})};
 th();hd();go('home');
-</script></body></html>
+</script>
+
+<!-- Firebase: লগইন + দুই ফোনে সিঙ্ক -->
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {getFirestore,doc,setDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Firebase কনসোল > Project settings > Your apps > RHS থেকে apiKey আর appId কপি করে বসান
+const firebaseConfig={
+  apiKey:"আপনার_API_KEY",
+  authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
+  projectId:"rakib-hardwire--senetary-13b1f",
+  appId:"আপনার_APP_ID"
+};
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const KEYS=['meta','p','tx','cu','su','ex','bl'];
+const last={},seen=new Set();
+let unsubs=[],timer=null,live=false,dirty=false;
+
+const ser=k=>JSON.stringify(k=='meta'?{shop:D.shop,n:D.n}:D[k]);
+function apply(k,s){const v=JSON.parse(s);if(k=='meta'){D.shop=v.shop;D.n=v.n}else D[k]=v}
+function refresh(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){};th();hd();if(!$('#dlg').open)go(cur)}
+
+async function push(){
+  if(!live||!auth.currentUser)return;
+  for(const k of KEYS){
+    const s=ser(k);if(s===last[k])continue;
+    last[k]=s;
+    try{await setDoc(doc(db,'store',k),{j:s})}
+    catch(e){last[k]=null;toast('ক্লাউডে সেভ হয়নি, ইন্টারনেট দেখুন')}
+  }
+}
+window.cloudSave=()=>{clearTimeout(timer);timer=setTimeout(push,700)};
+
+function listen(){
+  unsubs=KEYS.map(k=>onSnapshot(doc(db,'store',k),snap=>{
+    if(snap.metadata.hasPendingWrites)return;
+    if(!snap.exists()&&snap.metadata.fromCache)return;
+    if(snap.exists()){
+      const s=snap.data().j;
+      if(s!==last[k]){last[k]=s;apply(k,s);dirty=true}
+    }
+    seen.add(k);
+    if(seen.size==KEYS.length){
+      if(!live){live=true;push()}
+      if(dirty){dirty=false;refresh()}
+    }
+  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
+}
+
+window.login=async e=>{
+  e.preventDefault();
+  $('#lm').textContent='';
+  try{await signInWithEmailAndPassword(auth,$('#le').value.trim(),$('#lp').value)}
+  catch(x){$('#lm').textContent='লগইন হয়নি: ইমেইল বা পাসওয়ার্ড ভুল'}
+  return false;
+};
+window.logout=()=>{cl();signOut(auth)};
+
+onAuthStateChanged(auth,u=>{
+  unsubs.forEach(f=>f());unsubs=[];seen.clear();live=false;dirty=false;
+  $('#lo').style.display=u?'none':'grid';
+  if(u)listen();
+});
+</script>
+</body></html>
