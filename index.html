@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--a:#2f5d8a;--y:#f2b705;--bg:#f1f3f5;--c:#fff;--t:#1c2530;--m:#6b7785;--l:#dde1e6;--g:#1e8e5a;--r:#c8372d}
+body.dk{--bg:#12171d;--c:#1c242d;--t:#e8ecf0;--m:#8e9aa7;--l:#2c3743}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--t);padding:0 0 84px;font-size:16px}
+header{background:var(--a);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:4px solid var(--y)}
+header h1{font-size:18px;margin:0;flex:1;line-height:1.2}
+header img,.lgo{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#fff;display:grid;place-items:center;font-size:24px}
+header button{background:none;border:0;color:#fff;font-size:22px}
+main{padding:12px;max-width:640px;margin:auto}
+h2,h3{margin:14px 0 8px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.st{background:var(--c);border-left:4px solid var(--a);padding:10px;border-radius:6px}
+.st small{display:block;color:var(--m)}.st b{font-size:22px}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:10px;margin:8px 0}
+.tr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--l)}
+.tr small{display:block;color:var(--m)}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.pos{color:var(--g);font-weight:600}.neg{color:var(--r);font-weight:600}.m{color:var(--m)}
+input,select{width:100%;padding:10px;border:1px solid var(--l);border-radius:6px;background:var(--bg);color:var(--t);font:inherit;margin:3px 0}
+label{font-size:14px;color:var(--m);display:block;margin-top:6px}
+button.b,button.s{width:100%;padding:11px;border-radius:6px;border:0;font:inherit;font-weight:600;margin:6px 0}
+button.b{background:var(--a);color:#fff}button.s{background:var(--l);color:var(--t);width:auto;padding:8px 12px}
+button.d{background:var(--r);color:#fff;width:100%;padding:11px;border:0;border-radius:6px;font:inherit;margin:6px 0}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--c);border-top:1px solid var(--l);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;border:0;background:none;color:var(--m);padding:8px 0;font:inherit;font-size:12px;border-top:3px solid transparent}
+nav button span{display:block;font-size:20px}nav button.on{color:var(--a);border-top-color:var(--y);font-weight:700}
+.tabs{display:flex;gap:6px}.tabs button{flex:1;padding:9px;border:1px solid var(--l);background:var(--c);color:var(--t);border-radius:6px;font:inherit}.tabs button.on{background:var(--a);color:#fff}
+.th{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--l);display:grid;place-items:center;flex:none}
+dialog{border:0;border-radius:10px;width:min(94vw,460px);max-height:90vh;background:var(--c);color:var(--t);padding:14px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.rc table{width:100%;border-collapse:collapse;margin-top:8px}.rc td{padding:5px 0;border-bottom:1px dashed var(--l)}.rc .tt td{font-weight:700}.rc small{color:var(--m)}.lg{width:60px;height:60px;border-radius:50%;object-fit:cover}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none}
+@media print{header,nav,main,.nop,#toast{display:none!important}dialog{box-shadow:none;border:0}}
+</style></head><body>
+<header></header><main id="main"></main>
+<nav>
+<button data-v="home" onclick="go('home')"><span>🏠</span>হোম</button>
+<button data-v="stock" onclick="go('stock')"><span>📦</span>স্টক</button>
+<button data-v="sell" onclick="go('sell')"><span>💰</span>বিক্রি</button>
+<button data-v="buy" onclick="go('buy')"><span>🚚</span>মাল কেনা</button>
+<button data-v="khata" onclick="go('khata')"><span>📒</span>খাতা</button>
+<button data-v="acc" onclick="go('acc')"><span>📊</span>হিসাব</button>
+</nav>
+<dialog id="dlg"></dialog><div id="toast"></div>
+<input type="file" id="lf" accept="image/*" hidden><input type="file" id="imf" accept="application/json" hidden>
+<script>
+const K='rakib_hs_v1';
+let D;try{D=JSON.parse(localStorage.getItem(K))}catch(e){}
+D=D||{shop:{name:'রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি',logo:'',color:'#2f5d8a',dark:0},p:[],tx:[],cu:[],su:[],ex:[],bl:[],n:1};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(D))}catch(e){alert('সেভ করা যায়নি, জায়গা শেষ হয়ে গেছে। ব্যাকআপ নিন।')}};
+const $=s=>document.querySelector(s),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf=x=>+(+x).toFixed(3),tk=n=>'৳'+(Math.round(n*100)/100).toLocaleString('en-IN'),sum=(a,k)=>a.reduce((s,x)=>s+(x[k]||0),0);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1800)};
+const dlg=h=>{$('#dlg').innerHTML=h;$('#dlg').showModal()},cl=()=>$('#dlg').close();
+// units: factor = কত মূল একক এক ইউনিটে
+const U={piece:{main:'পিস',u:{'পিস':1}},weight:{main:'কেজি',u:{'কেজি':1,'গ্রাম':.001,'পাউন্ড':.45359237}},liquid:{main:'লিটার',u:{'লিটার':1,'মিলিলিটার':.001}},length:{main:'মিটার',u:{'মিটার':1,'ফুট':.3048,'গজ':.9144,'ইঞ্চি':.0254}}};
+const TN={piece:'পিস (সংখ্যায়)',weight:'ওজন (কেজি/গ্রাম/পাউন্ড)',liquid:'তরল (লিটার/মিলি)',length:'দৈর্ঘ্য (মিটার/ফুট/গজ/ইঞ্চি)'};
+const units=p=>{const u={...U[p.type].u};if(p.type=='piece'&&p.pack>1)u['প্যাকেট']=p.pack;return u};
+const priceU=(p,u)=>u=='প্যাকেট'&&p.packPrice?p.packPrice:p.sell*units(p)[u];
+const minU=(p,u)=>u=='প্যাকেট'&&p.packMin?p.packMin:(p.min||0)*units(p)[u];
+const fq=(p,q)=>{const t=p.type;if(t=='weight'&&q&&Math.abs(q)<1)return nf(q*1000)+' গ্রাম';if(t=='liquid'&&q&&Math.abs(q)<1)return nf(q*1000)+' মিলি';return nf(q)+' '+U[t].main};
+const lab={s:'বিক্রি',b:'কেনা',rc:'বাকি আদায়',pd:'মহাজনকে পরিশোধ'};
+const dt=t=>new Date(t).toLocaleString('bn-BD',{dateStyle:'short',timeStyle:'short'});
+const row=x=>`<div class="tr"><div><b>${esc(x.n)}</b><small>${lab[x.k]} • ${dt(x.t)}</small></div><span class="${x.k=='s'||x.k=='rc'?'pos':'neg'}">${tk(x.amt)}</span></div>`;
+function rd(f,sz,cb){if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,sz/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.8))};i.src=r.result};r.readAsDataURL(f)}
+function th(){document.documentElement.style.setProperty('--a',D.shop.color);document.body.classList.toggle('dk',!!D.shop.dark)}
+function hd(){$('header').innerHTML=`${D.shop.logo?`<img src="${D.shop.logo}" alt="" onclick="$('#lf').click()">`:`<div class="lgo" onclick="$('#lf').click()">🏪</div>`}<h1>${esc(D.shop.name)}</h1><button onclick="st()" aria-label="সেটিংস">⚙</button>`}
+$('#lf').onchange=e=>rd(e.target.files[0],200,d=>{D.shop.logo=d;save();hd();toast('লোগো বদলেছে')});
+let cur='home',cart=[],kt='cu',per=7,q='',so='n';
+const V={};
+function go(v){cur=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#main').innerHTML=V[v]();({stock:drawStock,sell:()=>{selP('s');drawCart()},buy:()=>selP('b')}[v]||(()=>{}))();scrollTo(0,0)}
+V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&x.k=='s'),low=D.p.filter(p=>p.stock<=p.low);const c=(l,v)=>`<div class="st"><small>${l}</small><b>${v}</b></div>`;
+return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div><h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${esc(p.name)}</b><span class="neg">${p.stock>0?fq(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
+// ---- স্টক
+V.stock=()=>`<div class="row"><h2>স্টক</h2><button class="s" onclick="pf()">＋ নতুন পণ্য</button></div><input placeholder="পণ্য খুঁজুন" value="${esc(q)}" oninput="q=this.value;drawStock()"><select onchange="so=this.value;drawStock()">${[['n','নাম অনুসারে'],['low','কম স্টক আগে'],['sh','স্টক বেশি আগে'],['pl','দাম কম → বেশি'],['ph','দাম বেশি → কম']].map(o=>`<option value="${o[0]}"${so==o[0]?' selected':''}>${o[1]}`).join('')}</select><div id="sl"></div>`;
+function drawStock(){let L=D.p.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()));const f={n:(a,b)=>a.name.localeCompare(b.name),low:(a,b)=>a.stock-b.stock,sh:(a,b)=>b.stock-a.stock,pl:(a,b)=>a.sell-b.sell,ph:(a,b)=>b.sell-a.sell}[so];L.sort(f);
+$('#sl').innerHTML=L.map(p=>`<div class="card row" onclick="pf('${p.id}')">${p.img?`<img class="th" src="${p.img}" alt="">`:`<div class="th">📦</div>`}<div style="flex:1"><b>${esc(p.name)}</b><small class="m" style="display:block">বিক্রয় ${tk(p.sell)}/${U[p.type].main} • ক্রয় ${tk(p.buy)}</small></div><b class="${p.stock<=p.low?'neg':''}">${fq(p,p.stock)}</b></div>`).join('')||'<p class="m">কোনো পণ্য নেই। ওপরের বোতাম দিয়ে যোগ করুন।</p>'}
+function pf(id){const p=D.p.find(x=>x.id==id)||{type:'piece',stock:0,low:5};
+dlg(`<h3>${id?'পণ্য এডিট':'নতুন পণ্য'}</h3><form onsubmit="return sp(event,'${id||''}')"><label>পণ্যের ছবি</label><input type="file" id="pimg" accept="image/*"><label>পণ্যের নাম</label><input id="pn" required value="${esc(p.name||'')}"><label>পণ্যের ধরন</label><select id="ty" onchange="setT()">${Object.keys(TN).map(k=>`<option value="${k}"${p.type==k?' selected':''}>${TN[k]}`).join('')}</select>
+<label>ক্রয়মূল্য (প্রতি <span class="mu"></span>)</label><input id="pb" type="number" step="any" required value="${p.buy??''}">
+<label>বিক্রয়মূল্য (প্রতি <span class="mu"></span>)</label><input id="ps" type="number" step="any" required value="${p.sell??''}">
+<label>সর্বনিম্ন বিক্রয়মূল্য (প্রতি <span class="mu"></span>)</label><input id="pm" type="number" step="any" value="${p.min||''}">
+<div id="pkb"><label>এক প্যাকেটে কয়টা পিস? (প্যাকেটে না বেচলে ফাঁকা)</label><input id="pk" type="number" value="${p.pack||''}"><label>প্যাকেটের বিক্রয়মূল্য</label><input id="pkp" type="number" step="any" value="${p.packPrice||''}"><label>প্যাকেটের সর্বনিম্ন মূল্য</label><input id="pkm" type="number" step="any" value="${p.packMin||''}"></div>
+<label>বর্তমান স্টক</label><div class="row"><input id="pst" type="number" step="any" required value="${nf(p.stock)}"><select id="sku"></select></div>
+<label>কম স্টকের সীমা (<span class="mu"></span>)</label><input id="pl" type="number" step="any" value="${p.low??5}">
+<button class="b">সংরক্ষণ করুন</button>${id?`<button type="button" class="d" onclick="delP('${id}')">পণ্য মুছুন</button>`:''}<button type="button" class="s" onclick="cl()">বাতিল</button></form>`);setT()}
+function setT(){const t=$('#ty').value;document.querySelectorAll('.mu').forEach(e=>e.textContent=U[t].main);$('#sku').innerHTML=Object.keys(U[t].u).map(k=>`<option${k==U[t].main?' selected':''}>${k}`).join('');$('#pkb').style.display=t=='piece'?'':'none'}
+function sp(e,id){e.preventDefault();const g=i=>$('#'+i).value,ty=g('ty');const o={name:g('pn').trim(),type:ty,buy:+g('pb'),sell:+g('ps'),min:+g('pm')||0,pack:ty=='piece'?+g('pk')||0:0,packPrice:+g('pkp')||0,packMin:+g('pkm')||0,low:+g('pl')||0,stock:+g('pst')*U[ty].u[g('sku')]};
+const done=img=>{if(id)Object.assign(D.p.find(x=>x.id==id),o,img?{img}:{});else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f=$('#pimg').files[0];f?rd(f,160,done):done();return false}
+function delP(id){if(confirm('এই পণ্য মুছে ফেলবেন?')){D.p=D.p.filter(x=>x.id!=id);save();cl();go('stock')}}
+// ---- বিক্রি ও কেনা
+const popt=()=>D.p.map(p=>`<option value="${p.id}">${esc(p.name)} — ${fq(p,p.stock)}`).join('');
+const popts=a=>`<option value="">সাধারণ ক্রেতা / নগদ`.replace('সাধারণ ক্রেতা / নগদ',a)+D[a=='সাধারণ ক্রেতা'?'cu':'su'].map(c=>`<option value="${c.id}">${esc(c.name)} (বাকি ${tk(c.bal)})`).join('');
+function selP(w){const p=D.p.find(x=>x.id==$('#'+w+'p').value);if(!p)return;$('#'+w+'u').innerHTML=Object.keys(units(p)).map(k=>`<option>${k}`).join('');if(w=='s')fillPr()}
+function fillPr(){const p=D.p.find(x=>x.id==$('#sp').value);if(p)$('#spr').value=nf(priceU(p,$('#su').value))}
+V.sell=()=>D.p.length?`<h2>বিক্রি (বিল)</h2><div class="card"><select id="sp" onchange="selP('s')">${popt()}</select><div class="row"><input id="sq" type="number" step="any" placeholder="কতটুকু"><select id="su" onchange="fillPr()"></select></div><label>দাম (প্রতি ইউনিট)</label><input id="spr" type="number" step="any"><button class="b" onclick="addLine()">＋ বিলে যোগ করুন</button></div><div id="cart"></div>`:'<p class="m">আগে স্টক ট্যাবে পণ্য যোগ করুন।</p>';
+function addLine(){const p=D.p.find(x=>x.id==$('#sp').value),u=$('#su').value,qn=+$('#sq').value,pr=+$('#spr').value;if(!p||!(qn>0)||!(pr>=0))return alert('পরিমাণ ও দাম দিন');const m=qn*units(p)[u],inC=cart.filter(c=>c.id==p.id).reduce((s,c)=>s+c.m,0);
+if(m+inC>p.stock+1e-9)return alert('স্টকে আছে মাত্র '+fq(p,p.stock-inC));if(pr<minU(p,u)&&!confirm('দাম সর্বনিম্ন দামের ('+tk(minU(p,u))+') কম। তবুও বিক্রি করবেন?'))return;
+cart.push({id:p.id,n:p.name,q:qn,u,pr,m,amt:qn*pr});$('#sq').value='';drawCart()}
+function drawCart(){const t=sum(cart,'amt');$('#cart').innerHTML=cart.length?`<div class="card">${cart.map((l,i)=>`<div class="tr"><div><b>${esc(l.n)}</b><small>${nf(l.q)} ${l.u} × ${tk(l.pr)}</small></div><span>${tk(l.amt)} <button class="s" onclick="cart.splice(${i},1);drawCart()">✕</button></span></div>`).join('')}<div class="row"><b>মোট</b><b>${tk(t)}</b></div><label>ক্রেতা</label><select id="sc">${popts('সাধারণ ক্রেতা')}</select><label>নগদ জমা (ফাঁকা = পুরো টাকা)</label><input id="spd" type="number" step="any"><button class="b" onclick="sell()">বিক্রি নিশ্চিত করুন</button></div>`:''}
+function sell(){if(!cart.length)return;const tot=sum(cart,'amt'),c=D.cu.find(x=>x.id==$('#sc').value);let paid=$('#spd').value===''?tot:Math.min(+$('#spd').value,tot);if(!c)paid=tot;
+const b={id:uid(),no:D.n++,t:Date.now(),items:cart.map(x=>({...x})),tot,paid,due:tot-paid,cust:c?c.name:'সাধারণ ক্রেতা'};
+cart.forEach(l=>{const p=D.p.find(x=>x.id==l.id);p.stock-=l.m;D.tx.push({id:uid(),k:'s',t:b.t,n:l.n+' ('+nf(l.q)+' '+l.u+')',amt:l.amt,pf:l.amt-l.m*p.buy})});
+if(c)c.bal+=b.due;D.bl.push(b);cart=[];save();go('sell');receipt(b.id)}
+function receipt(id){const b=D.bl.find(x=>x.id==id);if(!b)return;dlg(`<div class="rc"><div style="text-align:center">${D.shop.logo?`<img class="lg" src="${D.shop.logo}" alt="">`:''}<h3 style="margin:4px">${esc(D.shop.name)}</h3><small>বিল #${b.no} • ${dt(b.t)}<br>ক্রেতা: ${esc(b.cust)}</small></div><table>${b.items.map(i=>`<tr><td>${esc(i.n)}<br><small>${nf(i.q)} ${i.u} × ${tk(i.pr)}</small><td align="right">${tk(i.amt)}`).join('')}<tr class="tt"><td>মোট<td align="right">${tk(b.tot)}<tr><td>জমা<td align="right">${tk(b.paid)}<tr><td>বাকি<td align="right">${tk(b.due)}</table><p style="text-align:center">ধন্যবাদ, আবার আসবেন!</p></div><div class="row nop"><button class="b" onclick="print()">প্রিন্ট</button><button class="s" onclick="cl()">বন্ধ</button></div>`)}
+V.buy=()=>D.p.length?`<h2>নতুন মাল এলে স্টক বাড়ান</h2><div class="card"><select id="bp" onchange="selP('b')">${popt()}</select><div class="row"><input id="bq" type="number" step="any" placeholder="কতটুকু এলো"><select id="bu"></select></div><label>মোট কত টাকায় কিনলেন</label><input id="bt" type="number" step="any"><label>মহাজন</label><select id="bs">${popts('নগদ')}</select><label>নগদ দিলেন (ফাঁকা = পুরো টাকা)</label><input id="bpd" type="number" step="any"><button class="b" onclick="buy()">স্টকে যোগ করুন</button></div>`:'<p class="m">আগে স্টক ট্যাবে পণ্য যোগ করুন।</p>';
+function buy(){const p=D.p.find(x=>x.id==$('#bp').value);if(!p)return;const qn=+$('#bq').value,c=+$('#bt').value,u=$('#bu').value,m=qn*units(p)[u];if(!(qn>0&&c>=0))return alert('পরিমাণ ও মোট টাকা দিন');
+const s=D.su.find(x=>x.id==$('#bs').value);let pd=$('#bpd').value===''?c:Math.min(+$('#bpd').value,c);if(!s)pd=c;if(s)s.bal+=c-pd;p.stock+=m;if(c>0)p.buy=c/m;
+D.tx.push({id:uid(),k:'b',t:Date.now(),n:p.name+' ('+nf(qn)+' '+u+')',amt:c,pf:0});save();go('buy');toast('স্টকে যোগ হয়েছে')}
+// ---- খাতা
+V.khata=()=>`<h2>খাতা</h2><div class="tabs"><button class="${kt=='cu'?'on':''}" onclick="kt='cu';go('khata')">ক্রেতার বাকি</button><button class="${kt=='su'?'on':''}" onclick="kt='su';go('khata')">মহাজনের পাওনা</button></div><button class="b" onclick="addParty()">＋ নতুন ${kt=='cu'?'ক্রেতা':'মহাজন'}</button>`+(D[kt].map(x=>`<div class="card"><b>${esc(x.name)}</b> <small class="m">${esc(x.phone||'')}</small><div class="row"><span class="${x.bal>0?'neg':''}">${kt=='cu'?'বাকি':'দেনা'}: ${tk(x.bal)}</span><button class="s" onclick="pay('${x.id}')">${kt=='cu'?'টাকা নিলাম':'টাকা দিলাম'}</button></div></div>`).join('')||'<p class="m">কেউ নেই</p>');
+function addParty(){const n=(prompt('নাম')||'').trim();if(!n)return;D[kt].push({id:uid(),name:n,phone:prompt('ফোন (না থাকলে ফাঁকা)')||'',bal:+prompt('আগের '+(kt=='cu'?'বাকি':'দেনা')+' (না থাকলে 0)','0')||0});save();go('khata')}
+function pay(id){const x=D[kt].find(y=>y.id==id),a=Math.min(+prompt('কত টাকা?')||0,x.bal);if(!(a>0))return;x.bal-=a;D.tx.push({id:uid(),k:kt=='cu'?'rc':'pd',t:Date.now(),n:x.name,amt:a,pf:0});save();go('khata')}
+// ---- হিসাব
+V.acc=()=>{const d0=new Date().setHours(0,0,0,0),from=per==1?d0:per?Date.now()-per*864e5:0,T=D.tx.filter(x=>x.t>=from),E=D.ex.filter(x=>x.t>=from),s=T.filter(x=>x.k=='s'),c=(l,v)=>`<div class="st"><small>${l}</small><b>${v}</b></div>`;
+return `<h2>হিসাব</h2><select onchange="per=+this.value;go('acc')">${[[1,'আজ'],[7,'গত ৭ দিন'],[30,'গত ৩০ দিন'],[0,'সব']].map(o=>`<option value="${o[0]}"${per==o[0]?' selected':''}>${o[1]}`).join('')}</select><div class="g" style="margin-top:8px">${c('বিক্রি',tk(sum(s,'amt')))}${c('লাভ',tk(sum(s,'pf')))}${c('মাল কেনা',tk(sum(T.filter(x=>x.k=='b'),'amt')))}${c('খরচ',tk(sum(E,'amt')))}${c('নিট লাভ',tk(sum(s,'pf')-sum(E,'amt')))}${c('বিক্রির সংখ্যা',s.length)}</div>
+<h3>দোকানের খরচ</h3><div class="card"><input id="en" placeholder="খরচের বিবরণ (ভাড়া, বিদ্যুৎ...)"><input id="ea" type="number" step="any" placeholder="টাকা"><button class="b" onclick="addEx()">খরচ যোগ করুন</button>${E.slice().reverse().slice(0,10).map(x=>`<div class="tr"><div><b>${esc(x.n)}</b><small>${dt(x.t)}</small></div><span class="neg">${tk(x.amt)} <button class="s" onclick="delEx('${x.id}')">✕</button></span></div>`).join('')}</div>
+<h3>বিলের তালিকা</h3>${D.bl.filter(b=>b.t>=from).slice().reverse().slice(0,20).map(b=>`<div class="tr" onclick="receipt('${b.id}')"><div><b>বিল #${b.no} • ${esc(b.cust)}</b><small>${dt(b.t)}</small></div><span>${tk(b.tot)}</span></div>`).join('')||'<p class="m">কোনো বিল নেই</p>'}
+<h3>লেনদেনের তালিকা</h3>${T.slice().reverse().slice(0,50).map(row).join('')||'<p class="m">কোনো লেনদেন নেই</p>'}`};
+function addEx(){const n=$('#en').value.trim(),a=+$('#ea').value;if(!n||!(a>0))return alert('বিবরণ ও টাকা দিন');D.ex.push({id:uid(),t:Date.now(),n,amt:a});save();go('acc')}
+function delEx(id){D.ex=D.ex.filter(x=>x.id!=id);save();go('acc')}
+// ---- সেটিংস
+function st(){dlg(`<h3>সেটিংস</h3><button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()"><label>থিমের রং</label><input type="color" value="${D.shop.color}" oninput="D.shop.color=this.value;save();th()"><label><input type="checkbox" style="width:auto" ${D.shop.dark?'checked':''} onchange="D.shop.dark=+this.checked;save();th()"> ডার্ক মোড</label><button class="s" onclick="bk()">ব্যাকআপ নামান</button> <button class="s" onclick="$('#imf').click()">ব্যাকআপ ফেরত আনুন</button> <button class="s" onclick="cl()">বন্ধ</button>`)}
+function bk(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='rakib-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
+$('#imf').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{try{const d=JSON.parse(t);if(!d.p||!d.shop)throw 0;D=d;save();th();hd();cl();go(cur);toast('ব্যাকআপ ফেরত এসেছে')}catch(x){alert('ফাইলটা ঠিক নয়')}})};
+th();hd();go('home');
+</script></body></html>
