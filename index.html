@@ -153,10 +153,12 @@ import {getFirestore,doc,setDoc,onSnapshot} from "https://www.gstatic.com/fireba
 
 // Firebase কনসোল > Project settings > Your apps > RHS থেকে apiKey আর appId কপি করে বসান
 const firebaseConfig={
-  apiKey:"আপনার_API_KEY",
+  apiKey:"AIzaSyCYOlNIYnPhFKin-Z0kD8r4Gan9ryUVBJo",
   authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
   projectId:"rakib-hardwire--senetary-13b1f",
-  appId:"আপনার_APP_ID"
+  storageBucket:"rakib-hardwire--senetary-13b1f.firebasestorage.app",
+  messagingSenderId:"80631125508",
+  appId:"1:80631125508:web:142b0c6d50dbf094680751"
 };
 
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
