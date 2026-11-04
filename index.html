@@ -163,18 +163,19 @@ th();hd();go('home');
 <!-- Firebase: লগইন + দুই ফোনে সিঙ্ক -->
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {initializeAuth,inMemoryPersistence,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {getFirestore,doc,collection,setDoc,deleteDoc,getDoc,getDocs,onSnapshot,increment} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyCYOlNIYnPhFKin-Z0kD8r4Gan9ryUVBJo",
-  authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
-  projectId:"rakib-hardwire--senetary-13b1f",
-  storageBucket:"rakib-hardwire--senetary-13b1f.firebasestorage.app",
-  messagingSenderId:"80631125508",
-  appId:"1:80631125508:web:142b0c6d50dbf094680751"
+  apiKey:"AIzaSyCYOlNIYnPhFKin-Z0kD8r4Gan9ryUVBJo",
+  authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
+  projectId:"rakib-hardwire--senetary-13b1f",
+  storageBucket:"rakib-hardwire--senetary-13b1f.firebasestorage.app",
+  messagingSenderId:"80631125508",
+  appId:"1:80631125508:web:142b0c6d50dbf094680751"
 };
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+// inMemoryPersistence: লগইন সেভ থাকে না, অ্যাপ খুললেই পাসওয়ার্ড চাইবে
+const app=initializeApp(firebaseConfig),auth=initializeAuth(app,{persistence:inMemoryPersistence}),db=getFirestore(app);
 // প্রতিটা পণ্য/বিল/লেনদেন আলাদা ডকুমেন্ট; স্টক ও বাকি যোগ-বিয়োগ করে সিঙ্ক হয়
 const COL=['p','cu','su','ex','tx','bl'],CNT={p:'stock',cu:'bal',su:'bal'};
 const base={},first={};let mb=null,unsubs=[],timer=null,live=false,ready=0,ui=0;
@@ -185,103 +186,109 @@ const split=(k,o)=>{o=cp(o);const f=CNT[k],c=f?+o[f]||0:0;if(f)delete o[f];retur
 function refresh(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){};th();hd();if(!$('#dlg').open)go(cur)}
 
 function merge(k,id,sv){
-  const f=CNT[k],i=D[k].findIndex(x=>x.id==id),b=base[k][id],ss=split(k,sv);
-  let o=ss.o,c=ss.c;
-  if(i>=0&&b){const l=split(k,D[k][i]);if(l.s!=b.s)o={...ss.o,...l.o};c=ss.c+(l.c-b.c)}
-  const n=f?{...o,[f]:c}:{...o};
-  base[k][id]={s:ss.s,c:ss.c};
-  const ch=i<0||cs(D[k][i])!=cs(n);
-  if(i<0)D[k].push(n);else D[k][i]=n;
-  return ch;
+  const f=CNT[k],i=D[k].findIndex(x=>x.id==id),b=base[k][id],ss=split(k,sv);
+  let o=ss.o,c=ss.c;
+  if(i>=0&&b){const l=split(k,D[k][i]);if(l.s!=b.s)o={...ss.o,...l.o};c=ss.c+(l.c-b.c)}
+  const n=f?{...o,[f]:c}:{...o};
+  base[k][id]={s:ss.s,c:ss.c};
+  const ch=i<0||cs(D[k][i])!=cs(n);
+  if(i<0)D[k].push(n);else D[k][i]=n;
+  return ch;
 }
 
 async function push(){
-  if(!live||!auth.currentUser)return;
-  for(const k of COL){
-    const f=CNT[k],have=new Set();
-    for(const it of D[k]){
-      have.add(it.id);
-      const b=base[k][it.id],l=split(k,it);
-      if(b&&b.s===l.s&&(!f||b.c===l.c))continue;
-      const prev=b;base[k][it.id]={s:l.s,c:l.c};
-      try{await setDoc(doc(db,k,it.id),f?{...l.o,[f]:increment(l.c-(prev?prev.c:0))}:l.o,{merge:!!f})}
-      catch(e){base[k][it.id]=prev;toast('ক্লাউডে সেভ হয়নি, ইন্টারনেট দেখুন')}
-    }
-    for(const id of Object.keys(base[k])){
-      if(have.has(id))continue;
-      const prev=base[k][id];delete base[k][id];
-      try{await deleteDoc(doc(db,k,id))}catch(e){base[k][id]=prev}
-    }
-  }
-  const ms=cs(D.shop),n=D.n;
-  if(!mb||mb.s!=ms||mb.n!=n){
-    const p=mb;mb={s:ms,n};
-    try{await setDoc(doc(db,'store','meta2'),{j:JSON.stringify(D.shop),n:increment(n-(p?p.n:0))},{merge:true})}
-    catch(e){mb=p}
-  }
+  if(!live||!auth.currentUser)return;
+  for(const k of COL){
+    const f=CNT[k],have=new Set();
+    for(const it of D[k]){
+      have.add(it.id);
+      const b=base[k][it.id],l=split(k,it);
+      if(b&&b.s===l.s&&(!f||b.c===l.c))continue;
+      const prev=b;base[k][it.id]={s:l.s,c:l.c};
+      try{await setDoc(doc(db,k,it.id),f?{...l.o,[f]:increment(l.c-(prev?prev.c:0))}:l.o,{merge:!!f})}
+      catch(e){base[k][it.id]=prev;toast('ক্লাউডে সেভ হয়নি, ইন্টারনেট দেখুন')}
+    }
+    for(const id of Object.keys(base[k])){
+      if(have.has(id))continue;
+      const prev=base[k][id];delete base[k][id];
+      try{await deleteDoc(doc(db,k,id))}catch(e){base[k][id]=prev}
+    }
+  }
+  const ms=cs(D.shop),n=D.n;
+  if(!mb||mb.s!=ms||mb.n!=n){
+    const p=mb;mb={s:ms,n};
+    try{await setDoc(doc(db,'store','meta2'),{j:JSON.stringify(D.shop),n:increment(n-(p?p.n:0))},{merge:true})}
+    catch(e){mb=p}
+  }
 }
 window.cloudSave=()=>{clearTimeout(timer);timer=setTimeout(push,700)};
 
 function fin(){
-  if(!live&&ready>=COL.length+1){live=true;ui=1;push()}
-  if(ui){ui=0;refresh()}
+  if(!live&&ready>=COL.length+1){live=true;ui=1;push()}
+  if(ui){ui=0;refresh()}
 }
 function listen(){
-  unsubs=COL.map(k=>onSnapshot(collection(db,k),snap=>{
-    if(!first[k]){
-      if(snap.empty&&snap.metadata.fromCache)return;
-      first[k]=1;
-      if(!snap.empty){D[k]=[];base[k]={};snap.docs.forEach(d=>merge(k,d.id,d.data()));srt(D[k]);ui=1}
-      ready++;
-    }else{
-      let c=0;
-      snap.docChanges().forEach(x=>{
-        const id=x.doc.id;
-        if(x.type=='removed'){if(base[k][id]){D[k]=D[k].filter(y=>y.id!=id);delete base[k][id];c=1}}
-        else if(merge(k,id,x.doc.data()))c=1;
-      });
-      if(c){srt(D[k]);ui=1}
-    }
-    fin();
-  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
-  unsubs.push(onSnapshot(doc(db,'store','meta2'),s=>{
-    if(!first.m){if(!s.exists()&&s.metadata.fromCache)return;first.m=1;ready++}
-    if(s.exists()){
-      const d=s.data(),sh=JSON.parse(d.j),keep=mb&&cs(D.shop)!=mb.s;let n=d.n||0;
-      if(mb)n+=D.n-mb.n;
-      const ch=(!keep&&cs(D.shop)!=cs(sh))||D.n!=n;
-      if(!keep)D.shop=sh;D.n=n;mb={s:cs(sh),n:d.n||0};
-      if(ch)ui=1;
-    }
-    fin();
-  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
+  unsubs=COL.map(k=>onSnapshot(collection(db,k),snap=>{
+    if(!first[k]){
+      if(snap.empty&&snap.metadata.fromCache)return;
+      first[k]=1;
+      if(!snap.empty){D[k]=[];base[k]={};snap.docs.forEach(d=>merge(k,d.id,d.data()));srt(D[k]);ui=1}
+      ready++;
+    }else{
+      let c=0;
+      snap.docChanges().forEach(x=>{
+        const id=x.doc.id;
+        if(x.type=='removed'){if(base[k][id]){D[k]=D[k].filter(y=>y.id!=id);delete base[k][id];c=1}}
+        else if(merge(k,id,x.doc.data()))c=1;
+      });
+      if(c){srt(D[k]);ui=1}
+    }
+    fin();
+  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
+  unsubs.push(onSnapshot(doc(db,'store','meta2'),s=>{
+    if(!first.m){if(!s.exists()&&s.metadata.fromCache)return;first.m=1;ready++}
+    if(s.exists()){
+      const d=s.data(),sh=JSON.parse(d.j),keep=mb&&cs(D.shop)!=mb.s;let n=d.n||0;
+      if(mb)n+=D.n-mb.n;
+      const ch=(!keep&&cs(D.shop)!=cs(sh))||D.n!=n;
+      if(!keep)D.shop=sh;D.n=n;mb={s:cs(sh),n:d.n||0};
+      if(ch)ui=1;
+    }
+    fin();
+  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
 }
 
 // পুরোনো এক-ডকুমেন্টের ডেটা থাকলে নতুন কাঠামোয় আনা
 async function migrate(){
-  try{
-    for(const k of COL){
-      if((await getDocs(collection(db,k))).empty){const o=await getDoc(doc(db,'store',k));if(o.exists())D[k]=JSON.parse(o.data().j)}
-    }
-    if(!(await getDoc(doc(db,'store','meta2'))).exists()){const o=await getDoc(doc(db,'store','meta'));if(o.exists()){const v=JSON.parse(o.data().j);D.shop=v.shop;D.n=v.n}}
-  }catch(e){}
+  try{
+    for(const k of COL){
+      if((await getDocs(collection(db,k))).empty){const o=await getDoc(doc(db,'store',k));if(o.exists())D[k]=JSON.parse(o.data().j)}
+    }
+    if(!(await getDoc(doc(db,'store','meta2'))).exists()){const o=await getDoc(doc(db,'store','meta'));if(o.exists()){const v=JSON.parse(o.data().j);D.shop=v.shop;D.n=v.n}}
+  }catch(e){}
 }
 
 window.login=async e=>{
-  e.preventDefault();
-  $('#lm').textContent='';
-  try{await signInWithEmailAndPassword(auth,$('#le').value.trim(),$('#lp').value)}
-  catch(x){$('#lm').textContent='লগইন হয়নি: ইমেইল বা পাসওয়ার্ড ভুল'}
-  return false;
+  e.preventDefault();
+  $('#lm').textContent='';
+  try{await signInWithEmailAndPassword(auth,$('#le').value.trim(),$('#lp').value)}
+  catch(x){$('#lm').textContent='লগইন হয়নি: ইমেইল বা পাসওয়ার্ড ভুল'}
+  return false;
 };
 window.logout=()=>{cl();signOut(auth)};
 
+// ৫ মিনিট কিছু না ছুঁলে অটো লগআউট (সময় বদলাতে 5 বদলান)
+let idle;
+const resetIdle=()=>{clearTimeout(idle);if(auth.currentUser)idle=setTimeout(()=>signOut(auth),5*60*1000)};
+["click","keydown","touchstart"].forEach(e=>document.addEventListener(e,resetIdle));
+
 onAuthStateChanged(auth,async u=>{
-  unsubs.forEach(f=>f());unsubs=[];live=false;ready=0;ui=0;mb=null;first.m=0;
-  COL.forEach(k=>{base[k]={};first[k]=0});
-  $('#lo').style.display=u?'none':'grid';
+  unsubs.forEach(f=>f());unsubs=[];live=false;ready=0;ui=0;mb=null;first.m=0;
+  COL.forEach(k=>{base[k]={};first[k]=0});
+  $('#lo').style.display=u?'none':'grid';
+  resetIdle();
 window.OWN=!!u&&(u.email||'').toLowerCase()=='teammrhlive@gmail.com';document.querySelector('nav button[data-v=buy]').style.display=window.OWN?'':'none';go(cur);
-  if(u){await migrate();listen()}
+  if(u){await migrate();listen()}
 });
 </script>
 <script>
@@ -289,16 +296,16 @@ window.OWN=!!u&&(u.email||'').toLowerCase()=='teammrhlive@gmail.com';document.qu
 const H=['লাভ','আজকের লাভ','নিট লাভ','স্টকে আটকা টাকা','মহাজনের পাওনা','মাল কেনা','খরচ'];
 const ob=new MutationObserver(fix);
 function fix(){
- if(window.OWN)return;
- ob.disconnect();
- document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
- document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
- const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
- document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
- document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
- document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
- document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
- ob.observe(document.body,{childList:true,subtree:true});
+ if(window.OWN)return;
+ ob.disconnect();
+ document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
+ document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
+ const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
+ document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
+ document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
+ document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
+ document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
+ ob.observe(document.body,{childList:true,subtree:true});
 }
 ob.observe(document.body,{childList:true,subtree:true});
 })();
