@@ -280,7 +280,27 @@ onAuthStateChanged(auth,async u=>{
   unsubs.forEach(f=>f());unsubs=[];live=false;ready=0;ui=0;mb=null;first.m=0;
   COL.forEach(k=>{base[k]={};first[k]=0});
   $('#lo').style.display=u?'none':'grid';
+window.OWN=!!u&&(u.email||'').toLowerCase()=='teammrhlive@gmail.com';document.querySelector('nav button[data-v=buy]').style.display=window.OWN?'':'none';go(cur);
   if(u){await migrate();listen()}
 });
+</script>
+<script>
+(function(){
+const H=['লাভ','আজকের লাভ','নিট লাভ','স্টকে আটকা টাকা','মহাজনের পাওনা','মাল কেনা','খরচ'];
+const ob=new MutationObserver(fix);
+function fix(){
+ if(window.OWN)return;
+ ob.disconnect();
+ document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
+ document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
+ const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
+ document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
+ document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
+ document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
+ document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
+ ob.observe(document.body,{childList:true,subtree:true});
+}
+ob.observe(document.body,{childList:true,subtree:true});
+})();
 </script>
 </body></html>
