@@ -103,17 +103,17 @@ for(let i=0;i<30;i++){const x=(i*47)%360;TH.push(['রং '+(TH.length+1),`hsl($
 // ---- নামের ফরম্যাট (নোট অ্যাপের মতো)
 const clean=h=>{const t=document.createElement('div');t.innerHTML=h;
 const w=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType==3)return;if(c.nodeType!=1){c.remove();return}
- const g=c.tagName.toLowerCase();w(c);
- if(g=='br'){c.replaceWith(' ');return}
- if(!['span','b','strong','font'].includes(g)){c.replaceWith(...c.childNodes);return}
- const s=c.style;let st='';
- const col=s.color||(g=='font'?c.getAttribute('color'):''),fs=s.fontSize,fw=s.fontWeight;
- if(col&&/^[#a-z0-9(),.% ]+$/i.test(col))st+='color:'+col+';';
- if(fs&&/^([a-z-]+|[\d.]+(px|em|rem|%))$/i.test(fs))st+='font-size:'+fs+';';
- if(g=='b'||g=='strong'||/^(bold|[6-9]00)$/.test(fw))st+='font-weight:700;';
- const sz=g=='font'?c.getAttribute('size'):'';if(sz&&/^[1-7]$/.test(sz))st+='font-size:'+['x-small','small','medium','large','x-large','xx-large','xxx-large'][sz-1]+';';
- [...c.attributes].forEach(a=>c.removeAttribute(a.name));
- const sp=document.createElement('span');if(st)sp.setAttribute('style',st);sp.append(...c.childNodes);c.replaceWith(sp)})};
+ const g=c.tagName.toLowerCase();w(c);
+ if(g=='br'){c.replaceWith(' ');return}
+ if(!['span','b','strong','font'].includes(g)){c.replaceWith(...c.childNodes);return}
+ const s=c.style;let st='';
+ const col=s.color||(g=='font'?c.getAttribute('color'):''),fs=s.fontSize,fw=s.fontWeight;
+ if(col&&/^[#a-z0-9(),.% ]+$/i.test(col))st+='color:'+col+';';
+ if(fs&&/^([a-z-]+|[\d.]+(px|em|rem|%))$/i.test(fs))st+='font-size:'+fs+';';
+ if(g=='b'||g=='strong'||/^(bold|[6-9]00)$/.test(fw))st+='font-weight:700;';
+ const sz=g=='font'?c.getAttribute('size'):'';if(sz&&/^[1-7]$/.test(sz))st+='font-size:'+['x-small','small','medium','large','x-large','xx-large','xxx-large'][sz-1]+';';
+ [...c.attributes].forEach(a=>c.removeAttribute(a.name));
+ const sp=document.createElement('span');if(st)sp.setAttribute('style',st);sp.append(...c.childNodes);c.replaceWith(sp)})};
 w(t);return t.innerHTML};
 const pnm=p=>p.nh?clean(p.nh):esc(p.name);
 let SR=null;document.addEventListener('selectionchange',()=>{const s=getSelection();if(s.rangeCount){const r=s.getRangeAt(0),e=$('#pn');if(e&&e.contains(r.commonAncestorContainer))SR=r.cloneRange()}});
@@ -127,28 +127,28 @@ const minU=(p,u)=>u=='প্যাকেট'&&p.packMin?p.packMin:(p.min||0)*uni
 const dn=p=>p.du&&U[p.type].u[p.du]?p.du:U[p.type].main,df=p=>U[p.type].u[dn(p)];
 const fq=(p,q)=>{const t=p.type,d=dn(p);if(d!=U[t].main)return nf(q/df(p))+' '+d;if(t=='weight'&&q&&Math.abs(q)<1)return nf(q*1000)+' গ্রাম';if(t=='liquid'&&q&&Math.abs(q)<1)return nf(q*1000)+' মিলি';return nf(q)+' '+U[t].main};
 const fh=x=>{x=+x;const a=Math.abs(x),w=Math.trunc(a),r=a-w,s=x<0?'-':'';
- for(const [n,d] of [[1,2],[1,4],[3,4],[1,3],[2,3],[1,8],[3,8],[5,8],[7,8]])
-  if(Math.abs(r-n/d)<.001)return s+(w?w+' ':'')+`<i class="fr">${n}/${d}</i>`;
- return nf(x)};
+ for(const [n,d] of [[1,2],[1,4],[3,4],[1,3],[2,3],[1,8],[3,8],[5,8],[7,8]])
+  if(Math.abs(r-n/d)<.001)return s+(w?w+' ':'')+`<i class="fr">${n}/${d}</i>`;
+ return nf(x)};
 const fqh=(p,q)=>{const t=p.type,d=dn(p);
- if(d!=U[t].main)return fh(q/df(p))+' '+d;
- if(t=='weight'&&q&&Math.abs(q)<1)return fh(q*1000)+' গ্রাম';
- if(t=='liquid'&&q&&Math.abs(q)<1)return fh(q*1000)+' মিলি';
- return fh(q)+' '+U[t].main};
+ if(d!=U[t].main)return fh(q/df(p))+' '+d;
+ if(t=='weight'&&q&&Math.abs(q)<1)return fh(q*1000)+' গ্রাম';
+ if(t=='liquid'&&q&&Math.abs(q)<1)return fh(q*1000)+' মিলি';
+ return fh(q)+' '+U[t].main};
 const lab={r:'ফেরত',s:'বিক্রি',b:'কেনা',rc:'বাকি আদায়',pd:'মহাজনকে পরিশোধ',bk:'বাকি দেওয়া'};
 const dt=t=>new Date(t).toLocaleString('bn-BD',{dateStyle:'short',timeStyle:'short'});
 const row=x=>`<div class="tr"><div><b>${esc(x.n)}</b><small>${lab[x.k]} • ${dt(x.t)}</small></div><span class="${x.k=='s'||x.k=='rc'?'pos':'neg'}">${tk(x.amt)}</span></div>`;
 // ছবি: sz = সর্বোচ্চ পিক্সেল (পণ্যের ছবি এখন ৫০০)
 function rd(f,sz,cb){if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,sz/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.8))};i.src=r.result};r.readAsDataURL(f)}
 function th(){
-  document.documentElement.style.setProperty('--a',D.shop.color);
-  document.documentElement.style.setProperty('--y',D.shop.c2||'#f2b705');
-  document.body.classList.toggle('dk',!!D.shop.dark);
-  if(D.shop.tc)document.body.style.setProperty('--t',D.shop.tc);
-  else document.body.style.removeProperty('--t');
-  const z=(D.shop.fs||16)/16;
-  $('#main').style.zoom=z;$('#dlg').style.zoom=z;
-  document.body.style.fontFamily=`'${D.shop.fe||'Poppins'}','${D.shop.fb||'Noto Sans Bengali'}',system-ui,sans-serif`;
+  document.documentElement.style.setProperty('--a',D.shop.color);
+  document.documentElement.style.setProperty('--y',D.shop.c2||'#f2b705');
+  document.body.classList.toggle('dk',!!D.shop.dark);
+  if(D.shop.tc)document.body.style.setProperty('--t',D.shop.tc);
+  else document.body.style.removeProperty('--t');
+  const z=(D.shop.fs||16)/16;
+  $('#main').style.zoom=z;$('#dlg').style.zoom=z;
+  document.body.style.fontFamily=`'${D.shop.fe||'Poppins'}','${D.shop.fb||'Noto Sans Bengali'}',system-ui,sans-serif`;
 }
 function hd(){$('header').innerHTML=`${D.shop.logo?`<img src="${D.shop.logo}" alt="" onclick="$('#lf').click()">`:`<div class="lgo" onclick="$('#lf').click()">🏪</div>`}<h1>${esc(D.shop.name)}</h1><button onclick="ocr()" aria-label="ছবি থেকে লেখা কপি">📷</button><button onclick="st()" aria-label="সেটিংস">⚙</button>`}
 $('#lf').onchange=e=>rd(e.target.files[0],200,d=>{D.shop.logo=d;save();hd();toast('লোগো বদলেছে')});
@@ -156,7 +156,7 @@ let cur='home',cart=[],kt='cu',per=7,q='',so='n',sd='';
 const V={};
 function go(v){cur=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#main').innerHTML=V[v]();({stock:drawStock,sell:()=>{selP('s');drawCart()},buy:()=>selP('b')}[v]||(()=>{}))();scrollTo(0,0)}
 V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k=='s'||x.k=='r')),low=D.p.filter(p=>p.stock<=p.low);const c=(l,v)=>`<div class="st"><small>${l}</small><b>${v}</b></div>`;
-return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${PFX?'':`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">পণ্যের বিক্রয়মূল্য জানতে লিখুন বা 🎙️ চাপ দিয়ে বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?”</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s" onclick="mrhListen()" title="ভয়েস">🎙️</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
+return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div><section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">পণ্যের বিক্রয়মূল্য জানতে লিখুন বা 🎙️ চাপ দিয়ে বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?”</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s" onclick="mrhListen()" title="ভয়েস">🎙️</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section><h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
 // ---- MRH AI: লোকাল পণ্য খোঁজা, বিক্রয়মূল্য বলা ও নিশ্চিত বিক্রির খসড়া
 let mrhState=null;
 const mrhNorm=s=>String(s||'').toLowerCase().replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[৳,!?।ঃ]/g,' ').replace(/\s+/g,' ').trim();
@@ -202,16 +202,16 @@ d.dataset.t=t;d.dataset.f=f2;
 document.querySelectorAll('.mu').forEach(e=>e.textContent=n);$('#sku').innerHTML=Object.keys(U[t].u).map(k=>`<option${k==n?' selected':''}>${k}`).join('');$('#pkb').style.display=t=='piece'?'':'none'}
 // ক্রয়মূল্য ভুল সংশোধন: ওই পণ্যের পুরনো বিক্রি/ফেরতের লাভ নতুন ক্রয়মূল্যে আবার হিসাব হয়
 function reBuy(p,nb,on){let c=0;D.tx.forEach(x=>{if(x.k!='s'&&x.k!='r')return;const r=x.k=='r';let m;
- if(x.pid){if(x.pid!=p.id)return;m=x.m}
- else{const mm=/ \(([\d.]+) ([^)]+)\)$/.exec(x.n);if(!mm)return;let b=x.n.slice(0,mm.index);if(r){const w=' ফেরত';if(!b.endsWith(w))return;b=b.slice(0,-w.length)}if(b!=on)return;const f=units(p)[mm[2]];if(!f)return;m=+mm[1]*f}
- x.pf=r?x.amt+m*nb:x.amt-m*nb;c++});return c}
+ if(x.pid){if(x.pid!=p.id)return;m=x.m}
+ else{const mm=/ \(([\d.]+) ([^)]+)\)$/.exec(x.n);if(!mm)return;let b=x.n.slice(0,mm.index);if(r){const w=' ফেরত';if(!b.endsWith(w))return;b=b.slice(0,-w.length)}if(b!=on)return;const f=units(p)[mm[2]];if(!f)return;m=+mm[1]*f}
+ x.pf=r?x.amt+m*nb:x.amt-m*nb;c++});return c}
 function sp(e,id){e.preventDefault();const g=i=>$('#'+i).value,nm=$('#pn').textContent.trim();if(!nm){alert('পণ্যের নাম লিখুন');return false}
 const nh=clean($('#pn').innerHTML),ty=g('ty'),du=g('du'),f=U[ty].u[du];const o={name:nm,nh:nh==esc(nm)?'':nh,type:ty,du:du,buy:+g('pb')/f,sell:+g('ps')/f,min:(+g('pm')||0)/f,pack:ty=='piece'?+g('pk')||0:0,packPrice:+g('pkp')||0,packMin:+g('pkm')||0,low:(+g('pl')||0)*f,stock:+g('pst')*U[ty].u[g('sku')]};
 const old=id?D.p.find(x=>x.id==id):null,chg=!!old&&!!window.OWN&&Math.abs(+g('pb')-+(old.buy*f).toFixed(4))>1e-4;
 const done=img=>{if(id){const p=old;
-  if(!window.OWN)o.buy=p.buy;
-  else if(chg&&confirm('ক্রয়মূল্য বদলেছে।\n\nOK = আগের ভুল সংশোধন (পুরনো বিক্রির লাভও ঠিক হবে)\nCancel = নতুন দাম (পুরনো লাভ যেমন আছে তেমনই থাকবে)')){reBuy(p,o.buy,p.name);toast('পুরনো বিক্রির লাভ ঠিক হয়েছে')}
-  Object.assign(p,o,img?{img}:{})}else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f0=$('#pimg').files[0];f0?rd(f0,500,done):done();return false}
+  if(!window.OWN)o.buy=p.buy;
+  else if(chg&&confirm('ক্রয়মূল্য বদলেছে।\n\nOK = আগের ভুল সংশোধন (পুরনো বিক্রির লাভও ঠিক হবে)\nCancel = নতুন দাম (পুরনো লাভ যেমন আছে তেমনই থাকবে)')){reBuy(p,o.buy,p.name);toast('পুরনো বিক্রির লাভ ঠিক হয়েছে')}
+  Object.assign(p,o,img?{img}:{})}else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f0=$('#pimg').files[0];f0?rd(f0,500,done):done();return false}
 function delP(id){if(confirm('এই পণ্য মুছে ফেলবেন?')){D.p=D.p.filter(x=>x.id!=id);save();cl();go('stock')}}
 // ---- বিক্রি ও কেনা
 const popt=(f='')=>D.p.filter(p=>p.name.toLowerCase().includes(f.trim().toLowerCase())).map(p=>`<option value="${p.id}">${esc(p.name)} — ${fq(p,p.stock)}`).join('');
@@ -247,9 +247,9 @@ V.khata=()=>`<h2>খাতা</h2><div class="tabs"><button class="${kt=='cu'?'o
 function addParty(){const n=(prompt('নাম')||'').trim();if(!n)return;D[kt].push({id:uid(),name:n,phone:prompt('ফোন (না থাকলে ফাঁকা)')||'',bal:+prompt('আগের '+(kt=='cu'?'বাকি':'দেনা')+' (না থাকলে 0)','0')||0});save();go('khata')}
 function addBal(id){const x=D[kt].find(y=>y.id==id),a=+prompt(x.name+' — কত টাকা বাকি যোগ করবেন?')||0;if(!(a>0))return;x.bal+=a;save();go('khata');toast('বাকি যোগ হয়েছে: '+tk(a))}
 function cEnt(c){const L=[];
- D.bl.filter(b=>b.cid==c.id).forEach(b=>L.push({t:b.t,k:'bill',items:b.items.map(i=>i.n+' '+nf(i.q)+' '+i.u).join(', '),amt:b.due,sub:'বিল #'+b.no+' • মোট '+tk(b.tot-(b.rv||0))+', জমা '+tk(b.paid)}));
- D.tx.filter(x=>x.cid==c.id&&(x.k=='bk'||x.k=='rc')).forEach(x=>L.push({t:x.t,k:x.k,items:x.items||'',amt:x.amt,img:x.img}));
- return L.sort((a,b)=>b.t-a.t)}
+ D.bl.filter(b=>b.cid==c.id).forEach(b=>L.push({t:b.t,k:'bill',items:b.items.map(i=>i.n+' '+nf(i.q)+' '+i.u).join(', '),amt:b.due,sub:'বিল #'+b.no+' • মোট '+tk(b.tot-(b.rv||0))+', জমা '+tk(b.paid)}));
+ D.tx.filter(x=>x.cid==c.id&&(x.k=='bk'||x.k=='rc')).forEach(x=>L.push({t:x.t,k:x.k,items:x.items||'',amt:x.amt,img:x.img}));
+ return L.sort((a,b)=>b.t-a.t)}
 function lastBk(c){const e=cEnt(c).find(e=>e.k!='rc'&&e.items);return e?`<small class="m" style="display:block">📦 ${esc(e.items)}</small>`:''}
 function viewImg(s){dlg(`<img src="${s}" style="width:100%;border-radius:8px"><button class="s" onclick="cl()">বন্ধ</button>`)}
 function cdet(id){const c=D.cu.find(x=>x.id==id);if(!c)return;
@@ -273,13 +273,13 @@ function delEx(id){D.ex=D.ex.filter(x=>x.id!=id);save();go('acc')}
 function ocr(){dlg(`<h3>ছবি থেকে লেখা কপি</h3><p class="m" style="margin:0 0 6px">ক্যামেরায় ছবি তুলুন বা গ্যালারি থেকে বেছে নিন। লেখা পড়ে নিচে আসবে।</p><input type="file" id="oim" accept="image/*" onchange="runOcr(this.files[0])"><p id="ost" class="m"></p><textarea id="oto" rows="8" placeholder="এখানে লেখা আসবে (ঠিক করেও নিতে পারবেন)" style="width:100%;padding:10px;border:1px solid var(--l);border-radius:10px;background:var(--bg);color:var(--t);font:inherit"></textarea><button class="b" onclick="copyO()">📋 কপি করুন</button><button class="s" onclick="cl()">বন্ধ</button>`)}
 function loadT(){return window.Tesseract?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
 async function runOcr(f){if(!f)return;const st=$('#ost');st.textContent='প্রস্তুত হচ্ছে... (প্রথমবার একটু সময় লাগে)';
- try{await loadT();const r=await Tesseract.recognize(f,'ben+eng',{logger:m=>{if(m.status=='recognizing text')st.textContent='পড়া হচ্ছে '+Math.round(m.progress*100)+'%'}});
-  $('#oto').value=r.data.text.trim();st.textContent=r.data.text.trim()?'হয়ে গেছে। দরকার হলে ঠিক করে কপি করুন।':'কোনো লেখা পাওয়া যায়নি, আরেকটু পরিষ্কার ছবি দিন।'}
- catch(e){st.textContent='পড়া যায়নি, ইন্টারনেট দেখুন'}}
+ try{await loadT();const r=await Tesseract.recognize(f,'ben+eng',{logger:m=>{if(m.status=='recognizing text')st.textContent='পড়া হচ্ছে '+Math.round(m.progress*100)+'%'}});
+  $('#oto').value=r.data.text.trim();st.textContent=r.data.text.trim()?'হয়ে গেছে। দরকার হলে ঠিক করে কপি করুন।':'কোনো লেখা পাওয়া যায়নি, আরেকটু পরিষ্কার ছবি দিন।'}
+ catch(e){st.textContent='পড়া যায়নি, ইন্টারনেট দেখুন'}}
 function copyO(){const t=$('#oto');if(!t.value)return toast('কপি করার মতো লেখা নেই');t.select();
- const ok=()=>toast('কপি হয়েছে');
- if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t.value).then(ok).catch(()=>{document.execCommand('copy');ok()});
- else{document.execCommand('copy');ok()}}
+ const ok=()=>toast('কপি হয়েছে');
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t.value).then(ok).catch(()=>{document.execCommand('copy');ok()});
+ else{document.execCommand('copy');ok()}}
 // ---- সেটিংস
 function st(){const c1=/^#/.test(D.shop.color)?D.shop.color:'#2f5d8a',c2=D.shop.c2||'#f2b705',c2v=/^#/.test(c2)?c2:'#f2b705';
 dlg(`<h3>সেটিংস</h3><button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()">
@@ -303,18 +303,19 @@ import {initializeAuth,browserLocalPersistence,signInWithEmailAndPassword,onAuth
 import {getFirestore,doc,collection,setDoc,deleteDoc,getDoc,getDocs,onSnapshot,increment} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyCYOlNIYnPhFKin-Z0kD8r4Gan9ryUVBJo",
-  authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
-  projectId:"rakib-hardwire--senetary-13b1f",
-  storageBucket:"rakib-hardwire--senetary-13b1f.firebasestorage.app",
-  messagingSenderId:"80631125508",
-  appId:"1:80631125508:web:142b0c6d50dbf094680751"
+  apiKey:"AIzaSyCYOlNIYnPhFKin-Z0kD8r4Gan9ryUVBJo",
+  authDomain:"rakib-hardwire--senetary-13b1f.firebaseapp.com",
+  projectId:"rakib-hardwire--senetary-13b1f",
+  storageBucket:"rakib-hardwire--senetary-13b1f.firebasestorage.app",
+  messagingSenderId:"80631125508",
+  appId:"1:80631125508:web:142b0c6d50dbf094680751"
 };
 // দুই দোকান: ভাইয়ের ইমেইলে ঢুকলে সব ডেটা m_ দিয়ে শুরু আলাদা জায়গায় যায়
-const OWNER='teammrhlive@gmail.com',BRO='mudidokan@gmail.com';
+const OWNER='teammrhlive@gmail.com',BRO='mudidokan@gmail.com',EMP='rifat@gmail.com';
 let PFX='';const cn=k=>PFX+k;
 const app=initializeApp(firebaseConfig),auth=initializeAuth(app,{persistence:browserLocalPersistence}),db=getFirestore(app);
 const COL=['p','cu','su','ex','tx','bl'],CNT={p:'stock',cu:'bal',su:'bal'};
+let SYNC_COL=COL,SYNC_META=true;
 const base={},first={};let mb=null,unsubs=[],timer=null,live=false,ready=0,ui=0;
 const cp=o=>JSON.parse(JSON.stringify(o));
 const cs=o=>JSON.stringify(o,(k,v)=>v&&typeof v=='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(x=>[x,v[x]])):v);
@@ -323,94 +324,96 @@ const split=(k,o)=>{o=cp(o);const f=CNT[k],c=f?+o[f]||0:0;if(f)delete o[f];retur
 function refresh(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){};th();hd();if(!$('#dlg').open)go(cur)}
 
 function merge(k,id,sv){
-  const f=CNT[k],i=D[k].findIndex(x=>x.id==id),b=base[k][id],ss=split(k,sv);
-  let o=ss.o,c=ss.c;
-  if(i>=0&&b){const l=split(k,D[k][i]);if(l.s!=b.s)o={...ss.o,...l.o};c=ss.c+(l.c-b.c)}
-  const n=f?{...o,[f]:c}:{...o};
-  base[k][id]={s:ss.s,c:ss.c};
-  const ch=i<0||cs(D[k][i])!=cs(n);
-  if(i<0)D[k].push(n);else D[k][i]=n;
-  return ch;
+  const f=CNT[k],i=D[k].findIndex(x=>x.id==id),b=base[k][id],ss=split(k,sv);
+  let o=ss.o,c=ss.c;
+  if(i>=0&&b){const l=split(k,D[k][i]);if(l.s!=b.s)o={...ss.o,...l.o};c=ss.c+(l.c-b.c)}
+  const n=f?{...o,[f]:c}:{...o};
+  base[k][id]={s:ss.s,c:ss.c};
+  const ch=i<0||cs(D[k][i])!=cs(n);
+  if(i<0)D[k].push(n);else D[k][i]=n;
+  return ch;
 }
 
 async function push(){
-  if(!live||!auth.currentUser)return;
-  for(const k of COL){
-    const f=CNT[k],have=new Set();
-    for(const it of D[k]){
-      have.add(it.id);
-      const b=base[k][it.id],l=split(k,it);
-      if(b&&b.s===l.s&&(!f||b.c===l.c))continue;
-      const prev=b;base[k][it.id]={s:l.s,c:l.c};
-      try{await setDoc(doc(db,cn(k),it.id),f?{...l.o,[f]:increment(l.c-(prev?prev.c:0))}:l.o,{merge:!!f})}
-      catch(e){base[k][it.id]=prev;toast('ক্লাউডে সেভ হয়নি, ইন্টারনেট দেখুন')}
-    }
-    for(const id of Object.keys(base[k])){
-      if(have.has(id))continue;
-      const prev=base[k][id];delete base[k][id];
-      try{await deleteDoc(doc(db,cn(k),id))}catch(e){base[k][id]=prev}
-    }
-  }
-  const ms=cs(D.shop),n=D.n;
-  if(!mb||mb.s!=ms||mb.n!=n){
-    const p=mb;mb={s:ms,n};
-    try{await setDoc(doc(db,'store',PFX+'meta2'),{j:JSON.stringify(D.shop),n:increment(n-(p?p.n:0))},{merge:true})}
-    catch(e){mb=p}
-  }
+  if(!live||!auth.currentUser)return;
+  for(const k of SYNC_COL){
+    const f=CNT[k],have=new Set();
+    for(const it of D[k]){
+      have.add(it.id);
+      const b=base[k][it.id],l=split(k,it);
+      if(b&&b.s===l.s&&(!f||b.c===l.c))continue;
+      const prev=b;base[k][it.id]={s:l.s,c:l.c};
+      try{await setDoc(doc(db,cn(k),it.id),f?{...l.o,[f]:increment(l.c-(prev?prev.c:0))}:l.o,{merge:!!f})}
+      catch(e){base[k][it.id]=prev;toast('ক্লাউডে সেভ হয়নি, ইন্টারনেট দেখুন')}
+    }
+    for(const id of Object.keys(base[k])){
+      if(have.has(id))continue;
+      const prev=base[k][id];delete base[k][id];
+      try{await deleteDoc(doc(db,cn(k),id))}catch(e){base[k][id]=prev}
+    }
+  }
+  if(SYNC_META){
+    const ms=cs(D.shop),n=D.n;
+    if(!mb||mb.s!=ms||mb.n!=n){
+      const p=mb;mb={s:ms,n};
+      try{await setDoc(doc(db,'store',PFX+'meta2'),{j:JSON.stringify(D.shop),n:increment(n-(p?p.n:0))},{merge:true})}
+      catch(e){mb=p}
+    }
+  }
 }
 window.cloudSave=()=>{clearTimeout(timer);timer=setTimeout(push,700)};
 
 function fin(){
-  if(!live&&ready>=COL.length+1){live=true;ui=1;push()}
-  if(ui){ui=0;refresh()}
+  if(!live&&ready>=SYNC_COL.length+(SYNC_META?1:0)){live=true;ui=1;push()}
+  if(ui){ui=0;refresh()}
 }
 function listen(){
-  unsubs=COL.map(k=>onSnapshot(collection(db,cn(k)),snap=>{
-    if(!first[k]){
-      if(snap.empty&&snap.metadata.fromCache)return;
-      first[k]=1;
-      if(!snap.empty){D[k]=[];base[k]={};snap.docs.forEach(d=>merge(k,d.id,d.data()));srt(D[k]);ui=1}
-      ready++;
-    }else{
-      let c=0;
-      snap.docChanges().forEach(x=>{
-        const id=x.doc.id;
-        if(x.type=='removed'){if(base[k][id]){D[k]=D[k].filter(y=>y.id!=id);delete base[k][id];c=1}}
-        else if(merge(k,id,x.doc.data()))c=1;
-      });
-      if(c){srt(D[k]);ui=1}
-    }
-    fin();
-  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
-  unsubs.push(onSnapshot(doc(db,'store',PFX+'meta2'),s=>{
-    if(!first.m){if(!s.exists()&&s.metadata.fromCache)return;first.m=1;ready++}
-    if(s.exists()){
-      const d=s.data(),sh=JSON.parse(d.j),keep=mb&&cs(D.shop)!=mb.s;let n=d.n||0;
-      if(mb)n+=D.n-mb.n;
-      const ch=(!keep&&cs(D.shop)!=cs(sh))||D.n!=n;
-      if(!keep)D.shop=sh;D.n=n;mb={s:cs(sh),n:d.n||0};
-      if(ch)ui=1;
-    }
-    fin();
-  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
+  unsubs=SYNC_COL.map(k=>onSnapshot(collection(db,cn(k)),snap=>{
+    if(!first[k]){
+      if(snap.empty&&snap.metadata.fromCache)return;
+      first[k]=1;
+      if(!snap.empty){D[k]=[];base[k]={};snap.docs.forEach(d=>merge(k,d.id,d.data()));srt(D[k]);ui=1}
+      ready++;
+    }else{
+      let c=0;
+      snap.docChanges().forEach(x=>{
+        const id=x.doc.id;
+        if(x.type=='removed'){if(base[k][id]){D[k]=D[k].filter(y=>y.id!=id);delete base[k][id];c=1}}
+        else if(merge(k,id,x.doc.data()))c=1;
+      });
+      if(c){srt(D[k]);ui=1}
+    }
+    fin();
+  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
+  if(SYNC_META)unsubs.push(onSnapshot(doc(db,'store',PFX+'meta2'),s=>{
+    if(!first.m){if(!s.exists()&&s.metadata.fromCache)return;first.m=1;ready++}
+    if(s.exists()){
+      const d=s.data(),sh=JSON.parse(d.j),keep=mb&&cs(D.shop)!=mb.s;let n=d.n||0;
+      if(mb)n+=D.n-mb.n;
+      const ch=(!keep&&cs(D.shop)!=cs(sh))||D.n!=n;
+      if(!keep)D.shop=sh;D.n=n;mb={s:cs(sh),n:d.n||0};
+      if(ch)ui=1;
+    }
+    fin();
+  },e=>toast('ক্লাউড সংযোগে সমস্যা')));
 }
 
 // পুরোনো এক-ডকুমেন্টের ডেটা থাকলে নতুন কাঠামোয় আনা (শুধু হার্ডওয়্যারের জন্য)
 async function migrate(){
-  try{
-    for(const k of COL){
-      if((await getDocs(collection(db,k))).empty){const o=await getDoc(doc(db,'store',k));if(o.exists())D[k]=JSON.parse(o.data().j)}
-    }
-    if(!(await getDoc(doc(db,'store','meta2'))).exists()){const o=await getDoc(doc(db,'store','meta'));if(o.exists()){const v=JSON.parse(o.data().j);D.shop=v.shop;D.n=v.n}}
-  }catch(e){}
+  try{
+    for(const k of COL){
+      if((await getDocs(collection(db,k))).empty){const o=await getDoc(doc(db,'store',k));if(o.exists())D[k]=JSON.parse(o.data().j)}
+    }
+    if(!(await getDoc(doc(db,'store','meta2'))).exists()){const o=await getDoc(doc(db,'store','meta'));if(o.exists()){const v=JSON.parse(o.data().j);D.shop=v.shop;D.n=v.n}}
+  }catch(e){}
 }
 
 window.login=async e=>{
-  e.preventDefault();
-  $('#lm').textContent='';
-  try{await signInWithEmailAndPassword(auth,$('#le').value.trim(),$('#lp').value)}
-  catch(x){$('#lm').textContent='লগইন হয়নি: ইমেইল বা পাসওয়ার্ড ভুল'}
-  return false;
+  e.preventDefault();
+  $('#lm').textContent='';
+  try{await signInWithEmailAndPassword(auth,$('#le').value.trim(),$('#lp').value)}
+  catch(x){$('#lm').textContent='লগইন হয়নি: ইমেইল বা পাসওয়ার্ড ভুল'}
+  return false;
 };
 window.logout=()=>{cl();signOut(auth)};
 
@@ -421,26 +424,29 @@ const resetIdle=()=>{clearTimeout(idle);if(auth.currentUser)idle=setTimeout(()=>
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)resetIdle()});
 
 onAuthStateChanged(auth,async u=>{
-  unsubs.forEach(f=>f());unsubs=[];live=false;ready=0;ui=0;mb=null;first.m=0;
-  const em=u?(u.email||'').toLowerCase():'';
+  unsubs.forEach(f=>f());unsubs=[];live=false;ready=0;ui=0;mb=null;first.m=0;
+  const em=u?(u.email||'').toLowerCase():'';
   const isOwner=em==OWNER.toLowerCase();
   const isBro=em==BRO.toLowerCase();
-  if(u&&!isOwner&&!isBro){
+  const isEmp=em==EMP.toLowerCase();
+  if(u&&!isOwner&&!isBro&&!isEmp){
     await signOut(auth);
     $('#lm').textContent='এই অ্যাকাউন্টের অনুমতি নেই';
     $('#lo').style.display='grid';
     return;
   }
   PFX=isBro?'m_':'';
+  SYNC_COL=isEmp?['p','cu','tx','bl']:COL;
+  SYNC_META=!isEmp;
   if(u)useShop(isBro);
-  COL.forEach(k=>{base[k]={};first[k]=0});
-  $('#lo').style.display=u?'none':'grid';
-  resetIdle();
-  window.OWN=!!u&&isOwner;
-  document.querySelector('nav button[data-v=buy]').style.display=window.OWN?'':'none';
-  if(u){th();hd()}
-  go(cur);
-  if(u){if(!PFX)await migrate();listen()}
+  COL.forEach(k=>{base[k]={};first[k]=0});
+  $('#lo').style.display=u?'none':'grid';
+  resetIdle();
+  window.OWN=!!u&&isOwner;
+  document.querySelector('nav button[data-v=buy]').style.display=window.OWN?'':'none';
+  if(u){th();hd()}
+  go(cur);
+  if(u){if(isOwner)await migrate();listen()}
 });
 </script>
 <script>
@@ -448,16 +454,16 @@ onAuthStateChanged(auth,async u=>{
 const H=['লাভ','আজকের লাভ','নিট লাভ','স্টকে আটকা টাকা','মহাজনের পাওনা','মাল কেনা','খরচ'];
 const ob=new MutationObserver(fix);
 function fix(){
- if(window.OWN)return;
- ob.disconnect();
- document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
- document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
- const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
- document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
- document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
- document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
- document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
- ob.observe(document.body,{childList:true,subtree:true});
+ if(window.OWN)return;
+ ob.disconnect();
+ document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
+ document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
+ const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
+ document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
+ document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
+ document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
+ document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
+ ob.observe(document.body,{childList:true,subtree:true});
 }
 ob.observe(document.body,{childList:true,subtree:true});
 })();
