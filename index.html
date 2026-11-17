@@ -156,7 +156,7 @@ let cur='home',cart=[],kt='cu',per=7,q='',so='n',sd='';
 const V={};
 function go(v){cur=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#main').innerHTML=V[v]();({stock:drawStock,sell:()=>{selP('s');drawCart()},buy:()=>selP('b')}[v]||(()=>{}))();scrollTo(0,0)}
 V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k=='s'||x.k=='r')),low=D.p.filter(p=>p.stock<=p.low);const c=(l,v)=>`<div class="st"><small>${l}</small><b>${v}</b></div>`;
-return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div><section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">পণ্যের বিক্রয়মূল্য জানতে লিখুন বা 🎙️ চাপ দিয়ে বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?”</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s" onclick="mrhListen()" title="ভয়েস">🎙️</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section><h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
+return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${PFX?'':`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">পণ্যের বিক্রয়মূল্য জানতে লিখুন বা 🎙️ চাপ দিয়ে বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?”</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s" onclick="mrhListen()" title="ভয়েস">🎙️</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
 // ---- MRH AI: লোকাল পণ্য খোঁজা, বিক্রয়মূল্য বলা ও নিশ্চিত বিক্রির খসড়া
 let mrhState=null;
 const mrhNorm=s=>String(s||'').toLowerCase().replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[৳,!?।ঃ]/g,' ').replace(/\s+/g,' ').trim();
@@ -443,30 +443,11 @@ onAuthStateChanged(auth,async u=>{
   $('#lo').style.display=u?'none':'grid';
   resetIdle();
   window.OWN=!!u&&isOwner;
-  document.querySelector('nav button[data-v=buy]').style.display=window.OWN?'':'none';
+  document.querySelector('nav button[data-v=buy]').style.display=(isOwner||isBro)?'':'none';
   if(u){th();hd()}
   go(cur);
   if(u){if(isOwner)await migrate();listen()}
 });
-</script>
-<script>
-(function(){
-const H=['লাভ','আজকের লাভ','নিট লাভ','স্টকে আটকা টাকা','মহাজনের পাওনা','মাল কেনা','খরচ'];
-const ob=new MutationObserver(fix);
-function fix(){
- if(window.OWN)return;
- ob.disconnect();
- document.querySelectorAll('.st').forEach(e=>{const t=e.querySelector('small');if(t&&H.includes(t.textContent.trim()))e.remove()});
- document.querySelectorAll('.card small.m').forEach(e=>{if(e.textContent.includes('• ক্রয়'))e.textContent=e.textContent.replace(/ • ক্রয়.*$/,'')});
- const pb=document.getElementById('pb');if(pb){pb.required=false;pb.style.display='none';if(pb.previousElementSibling)pb.previousElementSibling.style.display='none'}
- document.querySelectorAll('.tr').forEach(r=>{const s=r.querySelector('small');if(s&&/^(কেনা|মহাজনকে)/.test(s.textContent.trim()))r.remove()});
- document.querySelectorAll('h3').forEach(h=>{if(h.textContent.includes('দোকানের খরচ')){if(h.nextElementSibling)h.nextElementSibling.remove();h.remove()}});
- document.querySelectorAll('.tabs button').forEach(b=>{if(b.textContent.includes('মহাজন'))b.style.display='none'});
- document.querySelectorAll('#dlg button').forEach(b=>{if(b.textContent.includes('ব্যাকআপ'))b.remove()});
- ob.observe(document.body,{childList:true,subtree:true});
-}
-ob.observe(document.body,{childList:true,subtree:true});
-})();
 </script>
 <script src="addon.js"></script>
 </body></html>
