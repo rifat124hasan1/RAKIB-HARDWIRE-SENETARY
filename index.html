@@ -61,6 +61,29 @@ nav button.on span{background:var(--a);color:#fff;border-radius:14px;padding:2px
 /* নতুন: প্রোডাক্ট গ্রিড */
 .pg{display:grid;gap:8px}
 .pg .card{margin:0}
+/* নতুন স্টাইলিশ ডিজাইন */
+body{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 85%,#000) 0,var(--a) 150px,var(--bg) 150px);padding-bottom:110px}
+body.dk{background:linear-gradient(180deg,#0b1016 0,#0b1016 150px,var(--bg) 150px)}
+header{background:transparent;border:0;padding-bottom:18px}
+header h1{font-size:19px;font-weight:700}
+header button{background:rgba(255,255,255,.18);border-radius:12px;width:40px;height:40px;font-size:18px}
+header img,.lgo{box-shadow:0 0 0 3px rgba(255,255,255,.4)}
+.g{gap:10px}
+.st{border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(0,0,0,.09);position:relative;overflow:hidden;border-top:0}
+.st::after{content:"";position:absolute;right:-16px;top:-16px;width:64px;height:64px;border-radius:50%;background:var(--y);opacity:.2}
+.card{border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.07)}
+button.b{background:linear-gradient(135deg,var(--a),color-mix(in srgb,var(--a) 70%,#000));border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+button.s{border-radius:14px}
+input,select{border-radius:12px;border:1px solid transparent;background:var(--bg)}
+input:focus,select:focus{border-color:var(--a);outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent)}
+dialog{border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+nav{left:12px;right:12px;bottom:12px;border:0;border-radius:26px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{border-top:0;border-radius:20px;transition:.25s}
+nav button.on{background:color-mix(in srgb,var(--a) 14%,transparent);color:var(--a)}
+nav button.on span{background:none;padding:0;transform:translateY(-2px) scale(1.18)}
+#toast{bottom:110px}
+main>*{animation:mrhup .35s ease both}
+@keyframes mrhup{from{opacity:0;transform:translateY(10px)}}
 @media print{header,nav,main,.nop,#toast,#lo{display:none!important}dialog{box-shadow:none;border:0}}
 </style></head><body>
 <header></header><main id="main"></main>
@@ -345,17 +368,20 @@ function mrhApply(j,text){
  if(/(৳|টাকা|taka|\btk\b)/i.test(reply)&&/[0-9০-৯]/.test(reply)){mrhSay('কোন পণ্যের দাম জানতে চান? নামটা বলুন।',text);return}
  mrhSay(reply||'বুঝতে পারিনি, আরেকবার বলবেন?',text)}
 async function mrhRoute(text){
- if(mrhState){mrhLocal(text);return} // লোকাল ধাপ চলতে থাকলে সেখানেই শেষ করি
+ if(mrhState&&!navigator.onLine){mrhLocal(text);return}
+ mrhState=null; // আগের সরল-মোডের ধাপ আটকে থাকলে ছেড়ে দিই
  if((mrhPending&&Date.now()-mrhPendingAt<180000)||(mrhPurchasePending&&Date.now()-mrhPurchasePendingAt<180000)){
   const yn=mrhYesNo(text);
   if(yn==='y'){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:'{"action":"confirm","reply":""}'}]});if(mrhPending)mrhCommit();else mrhCommitPurchase();return}
   if(yn==='n'){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:'{"action":"cancel","reply":""}'}]});mrhPending=null;mrhPurchasePending=null;mrhSay('ঠিক আছে, কিছুই যোগ করা হয়নি।',text);return}}
- if(!navigator.onLine||!window.mrhGemini){mrhLocal(text);return}
+ if(!navigator.onLine){mrhLocal(text);return}
  const w=$('#mrhmsg');if(w)w.textContent='⏳ ভাবছি…';
- let j=null;
- try{j=await mrhAsk(text);const n=$('#mrhnet');if(n)n.textContent='অনলাইন'}
- catch(e){console.warn('MRH fallback',e);const n=$('#mrhnet');if(n)n.textContent='সরল মোড'}
- if(!j){mrhLocal(text);return}
+ let j=null,err='';
+ for(let t=0;t<2&&!j;t++){
+  try{if(!window.mrhGemini)throw new Error('AI লোড হয়নি');j=await mrhAsk(text)}
+  catch(e){err=(e&&e.message)||String(e);console.warn('MRH AI',e)}}
+ if(!j){mrhSay('এআই এখন সংযোগ পাচ্ছে না। কারণ: '+err.slice(0,160),text);return}
+ const n=$('#mrhnet');if(n)n.textContent='অনলাইন';
  mrhApply(j,text)}
 async function mrhHandle(text){
  text=String(text||'').trim();if(!text)return;
@@ -493,14 +519,7 @@ function copyO(){const t=$('#oto');if(!t.value)return toast('কপি করা
 // ---- সেটিংস
 function st(){const c1=/^#/.test(D.shop.color)?D.shop.color:'#2f5d8a',c2=D.shop.c2||'#f2b705',c2v=/^#/.test(c2)?c2:'#f2b705';
 dlg(`<h3>সেটিংস</h3>
-<div class="card">
-<b>🤖 MRH AI — সকল অনুমোদিত ব্যবহারকারীর জন্য</b>
-<p class="m">মালিক, ভাই/দোকান মালিক, ম্যানেজার ও কর্মচারী—লগইন করা প্রত্যেক অনুমোদিত ব্যবহারকারী হোম পেজে MRH AI পাবেন। AI ব্যবহার করলেই স্টক, ক্রয়, হিসাব, ক্রয়মূল্য, লাভ বা মালিক-নির্দিষ্ট অনুমতি পাওয়া যাবে না। AI-কে উত্তর দেওয়ার আগে ব্যবহারকারীর বিদ্যমান ভূমিকা ও অনুমতি মানতে হবে।</p>
-</div>
-<div class="card">
-<b>🔐 Version 1.1 — সার্ভার-সাইড সেটআপ প্রয়োজন</b>
-<p class="m">নতুন দোকানের স্ব-নিবন্ধন, রেজিস্ট্রেশন চালু/বন্ধ, Shop ID, প্রতিটি দোকানের আলাদা ডেটা, প্ল্যাটফর্ম অ্যাডমিন, দোকান স্থগিত/চালু, কর্মচারীর সূক্ষ্ম অনুমতি, নিরাপদ ক্লাউড অফলাইন-সিঙ্ক, CCTV ক্লাউড AI এবং সাবস্ক্রিপশন চালু করতে Firebase Security Rules ও Cloud Functions সেটআপ করতে হবে। শুধু HTML দিয়ে এগুলো নিরাপদভাবে কার্যকর করা যায় না।</p>
-</div><button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()">
+<button class="b" onclick="$('#lf').click()">দোকানের লোগো বদলান</button><label>দোকানের নাম</label><input value="${esc(D.shop.name)}" onchange="D.shop.name=this.value;save();hd()">
 <label>থিম বাছুন (${TH.length}টি)</label><select onchange="if(this.value==='')return;const t=TH[+this.value];D.shop.color=t[1];D.shop.c2=t[2];save();th();st()"><option value="">— একটা থিম বাছুন —</option>${TH.map((t,i)=>`<option value="${i}">${t[0]}`).join('')}</select>
 <label>মূল রং (যেকোনো সময় বদলান)</label><input type="color" value="${c1}" oninput="D.shop.color=this.value;save();th()">
 <label>দ্বিতীয় রং (বর্ডার ও অ্যাকসেন্ট)</label><input type="color" value="${c2v}" oninput="D.shop.c2=this.value;save();th()"><button class="s" onclick="D.shop.color='#2f5d8a';D.shop.c2='#f2b705';save();th();st()">থিম রিসেট</button>
