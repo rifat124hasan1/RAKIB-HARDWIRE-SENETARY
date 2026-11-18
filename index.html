@@ -39,7 +39,7 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none}
 #lo{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:20px}
 #lo .box{background:var(--c);border:1px solid var(--l);border-radius:10px;padding:20px;width:min(94vw,380px);text-align:center}
-.mrhbox{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin:12px 0}.mrhhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.mrhmsg{min-height:44px;background:var(--bg);border-radius:10px;padding:10px;margin:9px 0;line-height:1.5}.mrhrow{display:flex;gap:6px}.mrhrow input{flex:1;min-width:0}.mrhrow button{width:auto;min-width:48px}.mrhmuted{font-size:12px;color:var(--m)}
+.mrhbox{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin:12px 0}.mrhhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.mrhmsg{min-height:44px;background:var(--bg);border-radius:10px;padding:10px;margin:9px 0;line-height:1.5}.mrhrow{display:flex;gap:6px}.mrhrow input{flex:1;min-width:0}.mrhrow button{width:auto;min-width:48px}.mrhmuted{font-size:12px;color:var(--m)}.mrhmsg{white-space:pre-line}.mrhon{background:var(--r)!important;color:#fff!important}
 .fr{font-size:.6em;font-style:normal}
 .card,.st{border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.07);border:0}
 .st{border-left:0;border-top:4px solid var(--y)}
@@ -84,6 +84,7 @@ nav button.on span{background:var(--a);color:#fff;border-radius:14px;padding:2px
 <p id="lm" class="neg"></p>
 </form></div>
 <script>
+window.PFX='';
 let K='rakib_hs_v1';
 const newD=b=>({shop:{name:b?'মুদি দোকান':'রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি',logo:'',color:'#2f5d8a',dark:0},p:[],tx:[],cu:[],su:[],ex:[],bl:[],n:1});
 let D;try{D=JSON.parse(localStorage.getItem(K))}catch(e){}
@@ -156,16 +157,213 @@ let cur='home',cart=[],kt='cu',per=7,q='',so='n',sd='';
 const V={};
 function go(v){cur=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#main').innerHTML=V[v]();({stock:drawStock,sell:()=>{selP('s');drawCart()},buy:()=>selP('b')}[v]||(()=>{}))();scrollTo(0,0)}
 V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k=='s'||x.k=='r')),low=D.p.filter(p=>p.stock<=p.low);const c=(l,v)=>`<div class="st"><small>${l}</small><b>${v}</b></div>`;
-return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${window.PFX?'':`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">পণ্যের বিক্রয়মূল্য জানতে লিখুন বা 🎙️ চাপ দিয়ে বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?”</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s" onclick="mrhListen()" title="ভয়েস">🎙️</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
-// ---- MRH AI: লোকাল পণ্য খোঁজা, বিক্রয়মূল্য বলা ও নিশ্চিত বিক্রির খসড়া
-let mrhState=null;
+return `<div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')))}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${PFX?'':`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">${mrhLast?esc(mrhLast):'যেকোনো ভাষায় লিখুন বা বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?” 🎙️ একবার চাপলে আমি শুনতে থাকব, অথবা “এমআরএইচ” বলে ডাকুন।'}</div><div id="mrhst" class="mrhmuted">${mrhStatusText()}</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s${mrhMode!=='off'?' mrhon':''}" id="mrhmic" onclick="mrhToggle()" title="ভয়েস">${mrhMode==='off'?'🎙️':'⏹️'}</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
+// ---- MRH AI: Gemini (Firebase AI Logic) দিয়ে সব ভাষা বোঝা + ভয়েস মোড + অফলাইনে লোকাল ফলব্যাক
+// দাম/স্টকের সংখ্যা সবসময় অ্যাপ নিজে হিসাব করে বলে; AI-কে ক্রয়মূল্য, লাভ বা ন্যূনতম দাম পাঠানো হয় না।
+const MRH_MODELS=['gemini-3.7-flash','gemini-3.5-flash-lite']; // মডেলের নাম বদলাতে এখানে
+const MRH_NAME_RE=/(এম\s*আর\s*এইচ|এমআরএইচ|m\s*[.\-]?\s*r\s*[.\-]?\s*h)/i;
+let mrhState=null,mrhLast='',mrhPending=null,mrhPendingAt=0,mrhHist=[],mrhBusy=false,mrhQ=[];
+let mrhMode='off',mrhRec=null,mrhSpeaking=false,mrhActiveUntil=0,mrhErr=0,mrhFast=0,mrhLastStart=0,mrhTick=null,mrhTok=0,mrhLock=null;
+
+// ---------- কথা বলা (TTS) ----------
+const mrhSpk=t=>String(t).replace(/৳\s*([\d,.]+)/g,'$1 টাকা');
+function mrhSay(t,heard){
+ t=String(t||'');
+ mrhLast=(heard?'🗣️ '+heard+'\n':'')+t;
+ const e=$('#mrhmsg');if(e)e.textContent=mrhLast;else if(typeof cur!=='undefined'&&cur!=='home')toast(t.slice(0,140));
+ mrhTalk(t)}
+function mrhTalk(t){
+ try{
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const txt=mrhSpk(t),u=new SpeechSynthesisUtterance(txt),tok=++mrhTok;
+  u.lang=/[\u0980-\u09FF]/.test(txt)?'bn-BD':'en-US';
+  mrhSpeaking=true;mrhRecStop(); // নিজের কথা যেন নিজে না শোনে
+  let done=false;
+  const fin=()=>{if(done||tok!==mrhTok)return;done=true;mrhSpeaking=false;if(mrhMode==='active')mrhTouch();mrhRecResume()};
+  u.onend=fin;u.onerror=fin;
+  setTimeout(fin,Math.max(3000,txt.length*120+2000)); // কিছু ফোনে onend আসে না
+  speechSynthesis.speak(u);
+ }catch(x){mrhSpeaking=false;mrhRecResume()}}
+
+// ---------- ভয়েস মোড: একবার চাপলেই শুনতে থাকে, নাম ধরে ডাকলেও জাগে ----------
+const mrhStatusText=()=>mrhMode==='active'?'🔴 শুনছি… বলুন':mrhMode==='wake'?'👂 অপেক্ষায় আছি — “এমআরএইচ” বলে ডাকুন':'';
+function mrhUI(){const b=$('#mrhmic');if(b){b.textContent=mrhMode==='off'?'🎙️':'⏹️';b.classList.toggle('mrhon',mrhMode!=='off')}const s=$('#mrhst');if(s)s.textContent=mrhStatusText()}
+const mrhTouch=()=>{mrhActiveUntil=Date.now()+30000};
+async function mrhWake(on){try{if(on){if('wakeLock'in navigator&&!mrhLock)mrhLock=await navigator.wakeLock.request('screen')}else if(mrhLock){await mrhLock.release();mrhLock=null}}catch(e){mrhLock=null}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mrhMode!=='off'){mrhWake(true);mrhRecResume()}});
+function mrhToggle(){if(mrhMode==='off')mrhVoiceOn();else{mrhVoiceOff();mrhSay('ভয়েস বন্ধ করলাম।')}}
+function mrhVoiceOn(){
+ const SRc=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SRc){mrhSay('এই ব্রাউজারে ভয়েস সমর্থিত নয়। নিচের ঘরে লিখে পাঠান।');return}
+ mrhMode='active';mrhTouch();mrhErr=0;mrhFast=0;mrhUI();mrhWake(true);
+ clearInterval(mrhTick);
+ mrhTick=setInterval(()=>{if(mrhMode==='active'&&!mrhSpeaking&&!mrhBusy&&Date.now()>mrhActiveUntil){mrhMode='wake';mrhUI()}},3000);
+ mrhRecStart()}
+function mrhVoiceOff(){
+ mrhMode='off';clearInterval(mrhTick);mrhRecStop();mrhWake(false);
+ try{speechSynthesis.cancel()}catch(e){}mrhSpeaking=false;mrhUI()}
+function mrhRecStop(){if(mrhRec){const r=mrhRec;mrhRec=null;r.onend=r.onerror=r.onresult=null;try{r.abort()}catch(e){}}}
+function mrhRecResume(){if(mrhMode!=='off'&&!mrhSpeaking)setTimeout(mrhRecStart,350)}
+function mrhRecStart(){
+ if(mrhMode==='off'||mrhSpeaking||mrhRec)return;
+ const SRc=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SRc)return;
+ const now=Date.now();mrhFast=now-mrhLastStart<1200?mrhFast+1:0;mrhLastStart=now;
+ if(mrhFast>8){mrhVoiceOff();mrhSay('ভয়েস বারবার বন্ধ হয়ে যাচ্ছে। মাইক ঠিক আছে কিনা দেখে আবার চাপুন।');return}
+ const r=new SRc();r.lang='bn-BD';r.continuous=true;r.interimResults=true;r.maxAlternatives=1;
+ r.onresult=e=>{
+  let fin='',itm='';
+  for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=t;else itm+=t}
+  const el=$('#mrhin');
+  if(itm&&mrhMode==='active'&&el)el.value=itm;
+  if(fin.trim()){mrhErr=0;if(el)el.value='';mrhVoiceText(fin.trim())}};
+ r.onerror=e=>{
+  const c=e.error;
+  if(c==='not-allowed'||c==='service-not-allowed'){mrhVoiceOff();mrhSay('মাইক্রোফোনের অনুমতি দেওয়া নেই। ফোনের সেটিংস থেকে অনুমতি দিন।');return}
+  if(c==='audio-capture'){mrhVoiceOff();mrhSay('মাইক্রোফোন পাওয়া যায়নি।');return}
+  if(c==='network'){mrhErr++;if(mrhErr>=3){mrhVoiceOff();mrhSay('ভয়েস চালাতে ইন্টারনেট লাগে। সংযোগ দেখুন বা লিখে পাঠান।')}}};
+ r.onend=()=>{if(mrhRec===r){mrhRec=null;mrhRecResume()}};
+ mrhRec=r;try{r.start()}catch(e){mrhRec=null}}
+function mrhVoiceText(text){
+ const m=MRH_NAME_RE.test(text);
+ const rest=text.replace(MRH_NAME_RE,' ').replace(/^\s*(ভাই|হ্যালো|হে|ওই|শোনো|শুনো|hey|hello|ok|okay)\s+/i,'').replace(/\s+/g,' ').trim();
+ if(mrhMode==='wake'){
+  if(!m)return; // নাম না বললে কিছুই করবে না
+  mrhMode='active';mrhTouch();mrhUI();document.dispatchEvent(new Event('input'));
+  if(rest.length>1)mrhHandle(rest);else mrhSay('জি, বলুন।');
+  return}
+ if(/(ভয়েস|মাইক)\s*(বন্ধ|অফ)|^\s*(থামো|চুপ|স্টপ|stop|bye|বাই)\s*$/i.test(rest||text)){mrhVoiceOff();mrhSay('ঠিক আছে, ভয়েস বন্ধ করলাম।');return}
+ mrhTouch();document.dispatchEvent(new Event('input'));
+ mrhHandle(rest||text)}
+
+// ---------- AI-এর সাথে কথা ----------
+const mrhPlain=s=>String(s==null?'':s).replace(/<[^>]*>/g,'').replace(/[|\n\r]+/g,' ').replace(/\s+/g,' ').trim();
+function mrhCatalog(text){
+ let L=D.p.slice();
+ if(L.length>500){ // অনেক পণ্য হলে প্রশ্নের সাথে মিল থাকাগুলো আগে
+  const q=mrhNorm(text+' '+mrhHist.filter(x=>x.role==='user').slice(-3).map(x=>x.parts[0].text).join(' '));
+  const g=new Set();for(let k=0;k<q.length-1;k++)g.add(q.substr(k,2));
+  L=L.map(p=>{const n=mrhNorm(mrhPlain(p.name)+' '+mrhPlain(p.nh));let s=0;for(let k=0;k<n.length-1;k++)if(g.has(n.substr(k,2)))s++;return {p,s}}).sort((a,b)=>b.s-a.s).slice(0,300).map(x=>x.p)}
+ return L.map(p=>{const nm=mrhPlain(p.name),alt=mrhPlain(p.nh);return [p.id,nm,alt&&alt!==nm?alt:'',Object.keys(units(p)).join('/'),p.stock>0?'আছে':'শেষ'].join('|')}).join('\n')}
+function mrhSystem(text){
+ let s=`You are "MRH", the voice/text assistant inside the stock app of a Bangladeshi hardware & sanitary shop. The owner and staff talk to you in Bengali (Bangla script), English, Banglish (Bengali typed in English letters) or any mix, casually, with typos, half sentences and speech-recognition mistakes. Always work out the real intent. Resolve follow-ups ("ওটা", "আর ২টা", "same", "দাম?") using the conversation so far.
+Reply in the language the user used (default: natural spoken Bengali). Keep replies to 1-2 short sentences because they are read aloud.
+You can ONLY: (1) tell the selling price of products, (2) say whether a product is available, (3) prepare a draft sale that the user must confirm, (4) chat briefly. NEVER reveal or guess buying/cost price, profit, minimum price, suppliers, customer dues or sales totals; if asked, politely say these are not shown here.
+NEVER write a price, amount or stock number yourself. For any price question return action "price" and the app fills in the exact numbers.
+PRODUCT LIST, one per line: id|name|other name|units|availability. Choose products only by id from this list. The user may say a name in Bengali, English or Banglish; match by meaning and sound. If several products fit, use action "clarify" and name up to 5 of them in the reply. If nothing fits, say you could not find it and suggest the closest names.
+Return ONLY one JSON object, no other text:
+{"action":"answer|price|draft_sale|confirm|cancel|clarify","reply":"...","items":[{"id":"<id>","qty":2,"unit":"পিস","price":null}]}
+- price: items = products asked about. Add qty and unit only if the user gave an amount (e.g. 2 ft, 5 kg). reply = a short lead-in WITHOUT any number (may be empty).
+- draft_sale: the user sold or wants to sell something. Every item needs qty. Set price only if the user explicitly stated a selling price per unit, otherwise null. If qty is missing use action "clarify" and ask.
+- confirm / cancel: only when a pending draft exists and the user clearly agrees / refuses.
+- clarify: ask ONE short question.
+- answer: greetings, thanks, small talk, or things you cannot do.
+unit must be one of the units listed for that product. Map pcs/piece/টা/টি -> পিস, kg -> কেজি, gm/gram -> গ্রাম, ft/foot -> ফুট, meter -> মিটার, liter/ltr -> লিটার, packet/pack -> প্যাকেট. If the user gives no unit, leave unit null.
+Convert Bengali digits and spoken numbers to decimals: আড়াই=2.5, দেড়=1.5, সোয়া ১=1.25, সাড়ে তিন=3.5, পাঁচ=5.
+PRODUCTS:
+${mrhCatalog(text)}`;
+ if(mrhPending&&Date.now()-mrhPendingAt<180000)s+=`\nPENDING DRAFT (waiting for the user's yes/no): ${mrhPending.map(l=>`${l.p.id} ${nf(l.qty)} ${l.u}`).join('; ')}. If the user changes the quantity or product, return a new draft_sale.`;
+ return s}
+function mrhParse(raw){
+ try{let t=String(raw||'').trim().replace(/^```(?:json)?/i,'').replace(/```$/,'').trim();const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<a)return null;
+  const j=JSON.parse(t.slice(a,b+1));return j&&typeof j.action==='string'?j:null}catch(e){return null}}
+async function mrhAsk(text){
+ const sys=mrhSystem(text),contents=mrhHist.slice(-10).concat([{role:'user',parts:[{text}]}]);
+ let last=null;
+ for(const m of MRH_MODELS){
+  try{
+   const raw=await Promise.race([window.mrhGemini(m,sys,contents),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),12000))]);
+   const j=mrhParse(raw);
+   if(j){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:JSON.stringify(j)}]});mrhHist=mrhHist.slice(-12);return j}
+   last=new Error('bad json')}
+  catch(e){last=e;console.warn('MRH AI',m,e)}}
+ throw last||new Error('no ai')}
+
+// ---------- AI-এর উত্তর কাজে লাগানো (সব সংখ্যা এখানেই হিসাব হয়) ----------
+const MRH_UNITS={pcs:'পিস',pc:'পিস',piece:'পিস',pieces:'পিস','টা':'পিস','টি':'পিস',kg:'কেজি',kilo:'কেজি',gm:'গ্রাম',g:'গ্রাম',gram:'গ্রাম',ft:'ফুট',foot:'ফুট',feet:'ফুট',meter:'মিটার',metre:'মিটার',m:'মিটার',liter:'লিটার',litre:'লিটার',ltr:'লিটার',l:'লিটার',ml:'মিলিলিটার',packet:'প্যাকেট',pack:'প্যাকেট',inch:'ইঞ্চি',pound:'পাউন্ড',lb:'পাউন্ড',yard:'গজ'};
+function mrhUnit(p,u){const us=Object.keys(units(p));let s=String(u||'').trim();if(us.includes(s))return s;s=MRH_UNITS[s.toLowerCase()]||s;return us.includes(s)?s:dn(p)}
+function mrhResolve(items){
+ const out=[];
+ (Array.isArray(items)?items:[]).forEach(it=>{
+  const p=D.p.find(x=>String(x.id)===String(it&&it.id));if(!p)return;
+  const q=+it.qty,pr=+it.price;
+  out.push({p,qty:q>0?q:0,u:mrhUnit(p,it.unit),price:pr>0?pr:0})});
+ return out}
+function mrhPriceText(r,lead){
+ const parts=r.map(({p,qty,u})=>{
+  const nm=mrhPlain(p.name);
+  if(qty){const one=priceU(p,u);return `${nm}: ${nf(qty)} ${u} = ${tk(one*qty)} (প্রতি ${dn(p)} ${tk(priceU(p,dn(p)))})`}
+  const d=dn(p),pk=p.packPrice&&d!=='প্যাকেট'&&units(p)['প্যাকেট']?` (প্রতি প্যাকেট ${tk(priceU(p,'প্যাকেট'))})`:'';
+  return `${nm}: প্রতি ${d} ${tk(priceU(p,d))}${pk}`});
+ const l=lead&&!/[0-9০-৯]/.test(lead)?String(lead).trim():'';
+ return (l?l+'\n':'')+parts.join('\n')}
+const mrhYesNo=text=>{const t=mrhNorm(text);
+ if(/^(হ্যাঁ|হ্যা|হা|হাঁ|জি|ঠিক|ওকে|ok|okay|yes|yeah|ya|haa|han|hmm|করো|কর|দাও|যোগ করো|যোগ কর|add|confirm)(\s|$)/.test(t))return 'y';
+ if(/^(না|নাহ|নাই|বাদ|থাক|বাতিল|cancel|no|nah|na|ক্যান্সেল)(\s|$)/.test(t)&&t.split(' ').length<=2&&!/\d/.test(t))return 'n';
+ return ''};
+function mrhCommit(){
+ const L=mrhPending;mrhPending=null;if(!L||!L.length)return;
+ const used={};cart.forEach(l=>{used[l.id]=(used[l.id]||0)+(l.m||0)});
+ for(const l of L){
+  const p=D.p.find(x=>x.id===l.p.id);if(!p)continue;
+  if((used[p.id]||0)+l.m>p.stock+1e-9){mrhSay(`${mrhPlain(p.name)} এর স্টক কম। খসড়া যোগ করা হয়নি।`);return}
+  used[p.id]=(used[p.id]||0)+l.m}
+ L.forEach(l=>cart.push({id:l.p.id,n:l.p.name,q:l.qty,u:l.u,pr:l.pr,m:l.m,amt:l.amt}));
+ go('sell');drawCart();
+ mrhSay('বিক্রির খসড়া বিলে যোগ করেছি। বিক্রি নিশ্চিত করতে বিলে গিয়ে “বিক্রি নিশ্চিত করুন” চাপুন।')}
+function mrhApply(j,text){
+ const a=j.action,reply=String(j.reply||'').trim();
+ if(a==='price'){
+  const r=mrhResolve(j.items);
+  if(!r.length){mrhSay(reply&&!/[0-9০-৯]/.test(reply)?reply:'এই নামে পণ্য খুঁজে পেলাম না। পণ্যের নামটা আরেকবার বলুন।',text);return}
+  mrhPending=null;mrhSay(mrhPriceText(r,reply),text);return}
+ if(a==='draft_sale'){
+  const r=mrhResolve(j.items).filter(x=>x.qty>0);
+  if(!r.length){mrhSay(reply||'কোন পণ্য কতটা বিক্রি করেছেন বলুন।',text);return}
+  const used={};cart.forEach(l=>{used[l.id]=(used[l.id]||0)+(l.m||0)});
+  const lines=[],bad=[];let tot=0;
+  for(const x of r){
+   const pr=x.price>0?x.price:priceU(x.p,x.u),nm=mrhPlain(x.p.name);
+   if(x.price>0&&pr<minU(x.p,x.u)-1e-9){bad.push(`${nm} এই দামে বিক্রি করা যাবে না`);continue}
+   const m=x.qty*units(x.p)[x.u];
+   if((used[x.p.id]||0)+m>x.p.stock+1e-9){bad.push(`${nm} এর স্টকে এত নেই`);continue}
+   used[x.p.id]=(used[x.p.id]||0)+m;
+   lines.push({p:x.p,qty:x.qty,u:x.u,pr,m,amt:x.qty*pr});tot+=x.qty*pr}
+  if(!lines.length){mrhPending=null;mrhSay(bad.join('। ')+'।',text);return}
+  mrhPending=lines;mrhPendingAt=Date.now();
+  mrhSay((bad.length?bad.join('। ')+'।\n':'')+lines.map(l=>`${mrhPlain(l.p.name)}: ${nf(l.qty)} ${l.u} × ${tk(l.pr)} = ${tk(l.amt)}`).join('\n')+(lines.length>1?`\nমোট ${tk(tot)}`:'')+'\nএটি বিক্রির বিলে যোগ করব? হ্যাঁ বা না বলুন।',text);return}
+ if(a==='confirm'){
+  if(mrhPending&&Date.now()-mrhPendingAt<180000)mrhCommit();else mrhSay('বিলে যোগ করার মতো কোনো খসড়া নেই।',text);return}
+ if(a==='cancel'){mrhPending=null;mrhSay('ঠিক আছে, কিছুই যোগ করা হয়নি।',text);return}
+ // clarify / answer: AI নিজে দামের সংখ্যা বললে সেটা বলতে দিই না
+ if(/(৳|টাকা|taka|\btk\b)/i.test(reply)&&/[0-9০-৯]/.test(reply)){mrhSay('কোন পণ্যের দাম জানতে চান? নামটা বলুন।',text);return}
+ mrhSay(reply||'বুঝতে পারিনি, আরেকবার বলবেন?',text)}
+async function mrhRoute(text){
+ if(mrhState){mrhLocal(text);return} // লোকাল ধাপ চলতে থাকলে সেখানেই শেষ করি
+ if(mrhPending&&Date.now()-mrhPendingAt<180000){
+  const yn=mrhYesNo(text);
+  if(yn==='y'){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:'{"action":"confirm","reply":""}'}]});mrhCommit();return}
+  if(yn==='n'){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:'{"action":"cancel","reply":""}'}]});mrhPending=null;mrhSay('ঠিক আছে, কিছুই যোগ করা হয়নি।',text);return}}
+ if(!navigator.onLine||!window.mrhGemini){mrhLocal(text);return}
+ const w=$('#mrhmsg');if(w)w.textContent='⏳ ভাবছি…';
+ let j=null;
+ try{j=await mrhAsk(text);const n=$('#mrhnet');if(n)n.textContent='অনলাইন'}
+ catch(e){console.warn('MRH fallback',e);const n=$('#mrhnet');if(n)n.textContent='সরল মোড'}
+ if(!j){mrhLocal(text);return}
+ mrhApply(j,text)}
+async function mrhHandle(text){
+ text=String(text||'').trim();if(!text)return;
+ if(mrhBusy){mrhQ.push(text);return}
+ mrhBusy=true;
+ try{await mrhRoute(text)}catch(e){console.warn('MRH',e);mrhSay('একটু সমস্যা হয়েছে, আবার বলুন।',text)}
+ finally{mrhBusy=false;const n=mrhQ.shift();if(n)mrhHandle(n)}}
+// ---------- পুরোনো লোকাল মোড (ইন্টারনেট/AI না থাকলে ফলব্যাক) ----------
 const mrhNorm=s=>String(s||'').toLowerCase().replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[৳,!?।ঃ]/g,' ').replace(/\s+/g,' ').trim();
-const mrhSay=t=>{const e=$('#mrhmsg');if(e)e.textContent=t;try{if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='bn-BD';speechSynthesis.speak(u)}}catch(x){}};
 const mrhNum=s=>{const m=mrhNorm(s).match(/\d+(?:\.\d+)?/);return m?+m[0]:0};
 function mrhFind(q){let z=mrhNorm(q).replace(/(এর দাম কত|দাম কত|কত টাকা|দাম বলো|দামটা বলো|বিক্রি করলাম|বিক্রি করেছি|বিক্রি করব|বিক্রি হলো|বিক্রি|দাম|টা|টি|এই|ওই|আমাকে|বলবে|বলুন|জানাও|জানাবে|প্রোডাক্ট|product)/g,' ').trim();let a=D.p.filter(p=>mrhNorm(p.name).includes(z)||z.includes(mrhNorm(p.name))).filter(p=>z.length>0);if(!a.length){const words=z.split(' ').filter(w=>w.length>1);a=D.p.map(p=>({p,n:words.filter(w=>mrhNorm(p.name).includes(w)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n).map(x=>x.p)}return a.slice(0,6)}
 function mrhReplyForProduct(p){mrhState=null;mrhSay(`${p.name} এর নির্ধারিত বিক্রয়মূল্য ${tk(priceU(p,dn(p)))} প্রতি ${dn(p)}।`)}
 function mrhSend(){const el=$('#mrhin');if(!el)return;const text=el.value.trim();if(!text)return;el.value='';mrhHandle(text)}
-function mrhHandle(text){
+function mrhLocal(text){
  const t=mrhNorm(text);
  if(mrhState&&mrhState.step==='choose'){const opts=mrhState.opts;const n=mrhNum(text);let p=n>0?opts[n-1]:null;if(!p){const a=mrhFind(text);p=a.length===1?a[0]:opts.find(x=>mrhNorm(x.name).includes(t))}if(!p){mrhSay('কোন পণ্যটি বুঝিয়েছেন, নামটি আরেকবার বলুন।');return}const mode=mrhState.mode;mrhState=null;if(mode==='sale')mrhStartSale(p);else mrhReplyForProduct(p);return}
  if(mrhState&&mrhState.step==='product'){const a=mrhFind(text);if(a.length===1){if(mrhState.mode==='sale')mrhStartSale(a[0]);else mrhReplyForProduct(a[0]);return}if(a.length>1){mrhState={step:'choose',mode:mrhState.mode,opts:a};mrhSay('একাধিক পণ্য মিলেছে। '+a.map((p,i)=>`${i+1}. ${p.name}`).join('। ')+'। কোনটি? নম্বর বা নাম বলুন।');return}mrhSay('এই নামে পণ্য খুঁজে পেলাম না। পণ্যের নামটি আবার বলুন।');return}
@@ -178,8 +376,7 @@ function mrhHandle(text){
  mrhState={step:'product',mode:sale?'sale':'price'};mrhSay(sale?'কোন পণ্যটি বিক্রি করেছেন? পণ্যের নাম বলুন।':'কোন পণ্যটির দাম জানতে চান? পণ্যের নাম বলুন।');
 }
 function mrhStartSale(p){mrhState={step:'qty',p};mrhSay(`কত ${dn(p)} ${p.name} বিক্রি করেছেন?`)}
-function mrhListen(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){mrhSay('এই ব্রাউজারে ভয়েস ইনপুট সমর্থিত নয়। নিচের ঘরে লিখে পাঠান।');return}try{const r=new SR();r.lang='bn-BD';r.interimResults=false;r.maxAlternatives=1;r.onresult=e=>mrhHandle(e.results[0][0].transcript);r.onerror=()=>mrhSay('কথা বোঝা যায়নি। আবার চেষ্টা করুন অথবা লিখে পাঠান।');r.start()}catch(e){mrhSay('মাইক্রোফোন চালু করা যায়নি। অনুমতি দিন অথবা লিখে পাঠান।')}}
-window.mrhSend=mrhSend;window.mrhListen=mrhListen;window.mrhHandle=mrhHandle;
+window.mrhSend=mrhSend;window.mrhListen=mrhToggle;window.mrhToggle=mrhToggle;window.mrhHandle=mrhHandle;
 window.addEventListener('online',()=>{const e=$('#mrhnet');if(e)e.textContent='অনলাইন';window.cloudSave&&window.cloudSave()});window.addEventListener('offline',()=>{const e=$('#mrhnet');if(e)e.textContent='অফলাইন'});
 // ---- স্টক
 V.stock=()=>`<div class="row"><h2>স্টক</h2><button class="s" onclick="pf()">＋ নতুন পণ্য</button></div><input placeholder="পণ্য খুঁজুন" value="${esc(q)}" oninput="q=this.value;drawStock()"><select onchange="so=this.value;drawStock()">${[['n','নাম অনুসারে'],['low','কম স্টক আগে'],['sh','স্টক বেশি আগে'],['pl','দাম কম → বেশি'],['ph','দাম বেশি → কম']].map(o=>`<option value="${o[0]}"${so==o[0]?' selected':''}>${o[1]}`).join('')}</select><div id="sl"></div>`;
@@ -312,8 +509,23 @@ const firebaseConfig={
 };
 // দুই দোকান: ভাইয়ের ইমেইলে ঢুকলে সব ডেটা m_ দিয়ে শুরু আলাদা জায়গায় যায়
 const OWNER='teammrhlive@gmail.com',BRO='mudidokan@gmail.com',EMP='rifat@gmail.com';
-let PFX='';window.PFX='';const cn=k=>PFX+k;
+let PFX='';const cn=k=>PFX+k;
 const app=initializeApp(firebaseConfig),auth=initializeAuth(app,{persistence:browserLocalPersistence}),db=getFirestore(app);
+// ---- MRH AI: Firebase AI Logic (Gemini Developer API). এপিআই কী কোডে নেই, Firebase কনসোল থেকে চালু করা থাকে
+let aiLoad=null;
+window.mrhGemini=async(modelName,system,contents)=>{
+  if(!auth.currentUser)throw new Error('login');
+  if(!aiLoad)aiLoad=(async()=>{
+    const B='https://www.gstatic.com/firebasejs/12.17.0/';
+    const [A,I]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-ai.js')]);
+    const a2=A.initializeApp(firebaseConfig,'mrh-ai');
+    return {I,ai:I.getAI(a2,{backend:new I.GoogleAIBackend()})};
+  })().catch(e=>{aiLoad=null;throw e});
+  const {I,ai}=await aiLoad;
+  const model=I.getGenerativeModel(ai,{model:modelName,systemInstruction:system,generationConfig:{responseMimeType:'application/json',temperature:0.2}});
+  const res=await model.generateContent({contents});
+  return res.response.text();
+};
 const COL=['p','cu','su','ex','tx','bl'],CNT={p:'stock',cu:'bal',su:'bal'};
 let SYNC_COL=COL,SYNC_META=true;
 const base={},first={};let mb=null,unsubs=[],timer=null,live=false,ready=0,ui=0;
