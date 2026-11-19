@@ -2,7 +2,7 @@
 <html lang="bn"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MRH Version 1.1 — রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি</title>
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#2f5d8a">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0a6b4f">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Hind+Siliguri:wght@400;600;700&family=Anek+Bangla:wght@400;600;700&family=Baloo+Da+2:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Atma:wght@400;600;700&family=Tiro+Bangla&display=swap" rel="stylesheet">
 <style>
 :root{--a:#2f5d8a;--y:#f2b705;--bg:#f1f3f5;--c:#fff;--t:#1c2530;--m:#6b7785;--l:#dde1e6;--g:#1e8e5a;--r:#c8372d}
@@ -84,6 +84,36 @@ nav button.on span{background:none;padding:0;transform:translateY(-2px) scale(1.
 #toast{bottom:110px}
 main>*{animation:mrhup .35s ease both}
 @keyframes mrhup{from{opacity:0;transform:translateY(10px)}}
+
+/* ===== MRH নতুন ফিনটেক ডিজাইন (bKash/Nagad ধাঁচ) ===== */
+:root{--a:#0a6b4f;--y:#b6f24a;--bg:#eef3f1;--c:#fff;--t:#10201a;--m:#62756c;--l:#dfe8e4;--g:#0f9d6a;--r:#d6453b}
+body.dk{--bg:#0c1512;--c:#15221d;--t:#e6f0ec;--m:#8fa69c;--l:#24352e}
+body{background:linear-gradient(180deg,#06382a 0,var(--a) 190px,var(--bg) 190px);font-feature-settings:"tnum"}
+body.dk{background:linear-gradient(180deg,#04140f 0,#04140f 190px,var(--bg) 190px)}
+header{padding-bottom:22px}
+header h1{font-size:18px;letter-spacing:.1px}
+header button{background:rgba(255,255,255,.16);backdrop-filter:blur(6px);border-radius:14px}
+header img,.lgo{box-shadow:0 0 0 3px rgba(182,242,74,.55)}
+.g{grid-template-columns:1fr 1fr}
+.g .st:first-child{grid-column:1/-1;background:linear-gradient(135deg,#0a6b4f,#06382a);color:#fff;border-radius:24px;padding:18px 18px 20px;box-shadow:0 14px 30px rgba(6,56,42,.35)}
+.g .st:first-child small{color:rgba(255,255,255,.75);font-size:14px}
+.g .st:first-child b{font-size:34px;letter-spacing:-.8px;color:#fff}
+.g .st:first-child::after{width:120px;height:120px;right:-30px;top:-34px;background:var(--y);opacity:.22}
+.st{border-radius:18px;padding:13px;box-shadow:0 4px 14px rgba(10,60,45,.08)}
+.st::after{background:var(--y);opacity:.35}
+.st b{font-size:20px}
+.card{border-radius:18px;box-shadow:0 3px 12px rgba(10,60,45,.07)}
+button.b{background:linear-gradient(135deg,#0f9d6a,#0a6b4f);border-radius:16px;padding:14px;box-shadow:0 8px 18px rgba(10,107,79,.32)}
+button.b:active{transform:scale(.98)}
+button.s{border-radius:14px;background:color-mix(in srgb,var(--a) 10%,var(--c));color:var(--a);font-weight:600}
+body.dk button.s{color:var(--t);background:var(--l)}
+nav{border-radius:28px;box-shadow:0 12px 32px rgba(6,56,42,.25)}
+nav button.on{background:color-mix(in srgb,var(--y) 55%,transparent);color:#06382a}
+.tr{padding:11px 0}
+.mrhbox{border-radius:22px;box-shadow:0 8px 22px rgba(10,60,45,.1);border:1px solid color-mix(in srgb,var(--y) 60%,transparent)}
+.mrhmsg{border-radius:16px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){main>*{animation:none}}
 @media print{header,nav,main,.nop,#toast,#lo{display:none!important}dialog{box-shadow:none;border:0}}
 </style></head><body>
 <header></header><main id="main"></main>
@@ -109,7 +139,7 @@ main>*{animation:mrhup .35s ease both}
 <script>
 window.PFX='';
 let K='rakib_hs_v1_1';
-const newD=b=>({shop:{name:b?'মুদি দোকান':'রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি',logo:'',color:'#2f5d8a',dark:0},p:[],tx:[],cu:[],su:[],ex:[],bl:[],n:1});
+const newD=b=>({shop:{name:b?'মুদি দোকান':'রাকিব হার্ডওয়্যার অ্যান্ড স্যানিটারি',logo:'',color:'#0a6b4f',c2:'#b6f24a',dark:0},p:[],tx:[],cu:[],su:[],ex:[],bl:[],n:1});
 let D;try{D=JSON.parse(localStorage.getItem(K))}catch(e){}
 D=D||newD(0);
 function useShop(b){K=b?'rakib_hs_bro_v1_1':'rakib_hs_v1_1';let d=null;try{d=JSON.parse(localStorage.getItem(K));if(!d){const legacy=JSON.parse(localStorage.getItem(b?'rakib_hs_bro':'rakib_hs_v1'));if(legacy){d=legacy;localStorage.setItem(K,JSON.stringify(d))}}}catch(e){}D=d||newD(b)}
@@ -124,7 +154,7 @@ const td=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+
 const toast=m=>{const t=$('#toast');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1800)};
 const dlg=h=>{$('#dlg').innerHTML=h;$('#dlg').showModal()},cl=()=>$('#dlg').close();
 // ---- থিম: [নাম, মূল রং, দ্বিতীয় রং]
-const TH=[['নীল-হলুদ','#2f5d8a','#f2b705'],['সবুজ-সোনালি','#1e8e5a','#f2b705'],['লাল-কালো','#c8372d','#222222'],['কমলা-নীল','#e8590c','#1c7ed6'],['বেগুনি-গোলাপি','#6f42c1','#e83e8c'],['গাঢ় নীল-কমলা','#1b3a5c','#ff922b'],['টিয়া-সাদা','#0b7285','#99e9f2'],['বাদামি-সোনালি','#6d4c41','#ffca28'],['ধূসর-লাল','#495057','#fa5252'],['গাঢ় সবুজ-লেবু','#2b8a3e','#c0eb75'],['মেরুন-হলুদ','#800f2f','#ffd43b'],['আকাশি-কমলা','#1098ad','#ff8787'],['কালো-সোনালি','#212529','#fcc419'],['নেভি-সবুজ','#14213d','#51cf66'],['চকোলেট-গোলাপি','#5c3d2e','#f783ac'],['ইন্ডিগো-হলুদ','#3b5bdb','#ffe066'],['পাইন-কমলা','#0b5345','#f59f00'],['গোলাপি-ধূসর','#d6336c','#868e96'],['সমুদ্র-সাদা','#1864ab','#e7f5ff'],['জলপাই-লাল','#5c7c1f','#e03131']];
+const TH=[['পান্না-পেস্তা (নতুন)','#0a6b4f','#b6f24a'],['নীল-হলুদ','#2f5d8a','#f2b705'],['সবুজ-সোনালি','#1e8e5a','#f2b705'],['লাল-কালো','#c8372d','#222222'],['কমলা-নীল','#e8590c','#1c7ed6'],['বেগুনি-গোলাপি','#6f42c1','#e83e8c'],['গাঢ় নীল-কমলা','#1b3a5c','#ff922b'],['টিয়া-সাদা','#0b7285','#99e9f2'],['বাদামি-সোনালি','#6d4c41','#ffca28'],['ধূসর-লাল','#495057','#fa5252'],['গাঢ় সবুজ-লেবু','#2b8a3e','#c0eb75'],['মেরুন-হলুদ','#800f2f','#ffd43b'],['আকাশি-কমলা','#1098ad','#ff8787'],['কালো-সোনালি','#212529','#fcc419'],['নেভি-সবুজ','#14213d','#51cf66'],['চকোলেট-গোলাপি','#5c3d2e','#f783ac'],['ইন্ডিগো-হলুদ','#3b5bdb','#ffe066'],['পাইন-কমলা','#0b5345','#f59f00'],['গোলাপি-ধূসর','#d6336c','#868e96'],['সমুদ্র-সাদা','#1864ab','#e7f5ff'],['জলপাই-লাল','#5c7c1f','#e03131']];
 [0,15,30,45,60,90,120,150,180,200,220,240,260,280,300,320,340].forEach(x=>TH.push(['রং '+(TH.length+1),`hsl(${x},55%,32%)`,`hsl(${(x+180)%360},85%,55%)`]));
 for(let i=0;i<30;i++){const x=(i*47)%360;TH.push(['রং '+(TH.length+1),`hsl(${x},60%,38%)`,`hsl(${(x+40)%360},90%,58%)`])}
 // ---- নামের ফরম্যাট (নোট অ্যাপের মতো)
@@ -168,8 +198,9 @@ const row=x=>`<div class="tr"><div><b>${esc(x.n)}</b><small>${lab[x.k]||'লে�
 // ছবি: সর্বোচ্চ পিক্সেল; পণ্যের ছবিতে ১২০০px ও উচ্চ JPEG quality রাখা হয়
 function rd(f,sz,cb){if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,sz/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',sz>=1000?.9:.86))};i.src=r.result};r.readAsDataURL(f)}
 function th(){
-  document.documentElement.style.setProperty('--a',D.shop.color);
-  document.documentElement.style.setProperty('--y',D.shop.c2||'#f2b705');
+  const oldDef=!D.shop.color||D.shop.color==='#2f5d8a';
+  document.documentElement.style.setProperty('--a',oldDef?'#0a6b4f':D.shop.color);
+  document.documentElement.style.setProperty('--y',oldDef?'#b6f24a':(D.shop.c2||'#b6f24a'));
   document.body.classList.toggle('dk',!!D.shop.dark);
   if(D.shop.tc)document.body.style.setProperty('--t',D.shop.tc);
   else document.body.style.removeProperty('--t');
@@ -186,7 +217,8 @@ V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k
 return `<button class="s" onclick="undoLast()" ${undoSnapshot?'':'disabled'}>↶ শেষ কাজ Undo</button><div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')),'todaySales()')}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${window.AI_ENABLED?`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">${mrhLast?esc(mrhLast):'যেকোনো ভাষায় লিখুন বা বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?” 🎙️ একবার চাপলে আমি শুনতে থাকব, অথবা “এমআরএইচ” বলে ডাকুন।'}</div><div id="mrhst" class="mrhmuted">${mrhStatusText()}</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s${mrhMode!=='off'?' mrhon':''}" id="mrhmic" onclick="mrhToggle()" title="ভয়েস">${mrhMode==='off'?'🎙️':'⏹️'}</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`:''}<h3>📅 বাকি পরিশোধের তারিখ</h3>${D.cu.filter(x=>x.bal>0&&x.dueDate).sort((a,b)=>String(a.dueDate).localeCompare(String(b.dueDate))).slice(0,5).map(x=>`<div class="tr"><div><b>${esc(x.name)}</b><small>${esc(x.dueDate)}</small></div><span class="neg">${tk(x.bal)}</span></div>`).join('')||'<p class="m">তারিখসহ কোনো বাকি নেই</p>'}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
 // ---- MRH AI: Gemini (Firebase AI Logic) দিয়ে সব ভাষা বোঝা + ভয়েস মোড + অফলাইনে লোকাল ফলব্যাক
 // দাম/স্টকের সংখ্যা সবসময় অ্যাপ নিজে হিসাব করে বলে; AI-কে ক্রয়মূল্য, লাভ বা ন্যূনতম দাম পাঠানো হয় না।
-const MRH_MODELS=['gemini-3.7-flash','gemini-3.5-flash-lite']; // মডেলের নাম বদলাতে এখানে
+const MRH_MODELS=['gemini-2.5-flash','gemini-2.5-flash-lite']; // দ্রুত মডেল; প্রথমটা ফেইল করলে দ্বিতীয়টা
+const MRH_TIMEOUT=9000; // মডেলের নাম বদলাতে এখানে
 const MRH_NAME_RE=/(এম\s*আর\s*এইচ|এমআরএইচ|m\s*[.\-]?\s*r\s*[.\-]?\s*h)/i;
 let mrhState=null,mrhLast='',mrhPending=null,mrhPendingAt=0,mrhPurchasePending=null,mrhPurchasePendingAt=0,mrhHist=[],mrhBusy=false,mrhQ=[];
 let mrhMode='off',mrhRec=null,mrhSpeaking=false,mrhActiveUntil=0,mrhErr=0,mrhFast=0,mrhLastStart=0,mrhTick=null,mrhTok=0,mrhLock=null;
@@ -198,12 +230,25 @@ function mrhSay(t,heard){
  mrhLast=(heard?'🗣️ '+heard+'\n':'')+t;
  const e=$('#mrhmsg');if(e)e.textContent=mrhLast;else if(typeof cur!=='undefined'&&cur!=='home')toast(t.slice(0,140));
  mrhTalk(t)}
+// কণ্ঠস্বর: সেটিংসে বাছাই করা যায়; না বাছলে সবচেয়ে ভালো বাংলা কণ্ঠ নিজে খুঁজে নেয়
+function mrhVoices(){try{return speechSynthesis.getVoices()||[]}catch(e){return[]}}
+function mrhPickVoice(bn){
+ const vs=mrhVoices(),want=D.shop.voice;
+ if(want){const v=vs.find(x=>x.voiceURI===want||x.name===want);if(v)return v}
+ const pre=bn?/^bn|^bangla|bengali/i:/^en/i;
+ const L=vs.filter(x=>pre.test(x.lang)||pre.test(x.name));
+ const score=x=>(/neural|natural|online|google|enhanced|premium/i.test(x.name)?2:0)+(x.localService?0:1);
+ return L.sort((a,b)=>score(b)-score(a))[0]||null}
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{};
 function mrhTalk(t){
  try{
   if(!('speechSynthesis'in window))return;
   speechSynthesis.cancel();
   const txt=mrhSpk(t),u=new SpeechSynthesisUtterance(txt),tok=++mrhTok;
-  u.lang=/[\u0980-\u09FF]/.test(txt)?'bn-BD':'en-US';
+  const isBn=/[\u0980-\u09FF]/.test(txt);
+  u.lang=isBn?'bn-BD':'en-US';
+  const vo=mrhPickVoice(isBn);if(vo){u.voice=vo;u.lang=vo.lang||u.lang}
+  u.rate=D.shop.vrate||1;u.pitch=D.shop.vpitch||1;
   mrhSpeaking=true;mrhRecStop(); // নিজের কথা যেন নিজে না শোনে
   let done=false;
   const fin=()=>{if(done||tok!==mrhTok)return;done=true;mrhSpeaking=false;if(mrhMode==='active')mrhTouch();mrhRecResume()};
@@ -225,14 +270,88 @@ function mrhVoiceOn(){
  mrhMode='active';mrhTouch();mrhErr=0;mrhFast=0;mrhUI();mrhWake(true);
  clearInterval(mrhTick);
  mrhTick=setInterval(()=>{if(mrhMode==='active'&&!mrhSpeaking&&!mrhBusy&&Date.now()>mrhActiveUntil){mrhMode='wake';mrhUI()}},3000);
- mrhRecStart()}
+ mrhGemOK()?mrhGemStart().then(ok=>{if(!ok)mrhRecStart()}):mrhRecStart()}
 function mrhVoiceOff(){
- mrhMode='off';clearInterval(mrhTick);mrhRecStop();mrhWake(false);
+ mrhMode='off';clearInterval(mrhTick);mrhRecStop();mrhGemStop();mrhWake(false);
  try{speechSynthesis.cancel()}catch(e){}mrhSpeaking=false;mrhUI()}
+
+// ---------- জেমিনি দিয়ে শোনা: মাইক রেকর্ড → চুপ হলে অডিও জেমিনিকে ----------
+let mrhGL={on:false,stream:null,ctx:null,an:null,rec:null,chunks:[],talking:false,lastVoice:0,startAt:0,raf:0,fails:0};
+const mrhGemOK=()=>!!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.mrhGeminiAudio&&navigator.onLine&&!D.shop.noGemListen);
+async function mrhGemStart(){
+ if(mrhGL.on)return true;
+ try{
+  const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+  const AC=window.AudioContext||window.webkitAudioContext,ctx=new AC(),src=ctx.createMediaStreamSource(st),an=ctx.createAnalyser();
+  an.fftSize=1024;src.connect(an);
+  Object.assign(mrhGL,{on:true,stream:st,ctx,an,chunks:[],talking:false,rec:null,fails:0});
+  mrhGemLoop();return true
+ }catch(e){console.warn('MRH mic',e);mrhGemStop();return false}}
+function mrhGemStop(){
+ cancelAnimationFrame(mrhGL.raf);
+ try{if(mrhGL.rec&&mrhGL.rec.state!=='inactive'){mrhGL.rec.onstop=null;mrhGL.rec.stop()}}catch(e){}
+ try{mrhGL.stream&&mrhGL.stream.getTracks().forEach(t=>t.stop())}catch(e){}
+ try{mrhGL.ctx&&mrhGL.ctx.close()}catch(e){}
+ mrhGL={on:false,stream:null,ctx:null,an:null,rec:null,chunks:[],talking:false,lastVoice:0,startAt:0,raf:0,fails:0}}
+function mrhGemLoop(){
+ const g=mrhGL;if(!g.on)return;
+ const buf=new Uint8Array(g.an.fftSize);g.an.getByteTimeDomainData(buf);
+ let m=0;for(let i=0;i<buf.length;i++){const v=Math.abs(buf[i]-128);if(v>m)m=v}
+ const loud=m>14,now=Date.now();
+ // নিজের কথা বলার সময় বা এআই ভাবার সময় শোনে না
+ if(mrhSpeaking||mrhBusy){if(g.talking)mrhGemCut(true)}
+ else{
+  if(loud){g.lastVoice=now;if(!g.talking)mrhGemBegin()}
+  if(g.talking&&(now-g.lastVoice>1100||now-g.startAt>25000))mrhGemCut(false)}
+ g.raf=requestAnimationFrame(mrhGemLoop)}
+function mrhGemBegin(){
+ const g=mrhGL;
+ try{
+  const mt=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(x=>MediaRecorder.isTypeSupported(x))||'';
+  const r=new MediaRecorder(g.stream,mt?{mimeType:mt}:{});
+  g.chunks=[];r.ondataavailable=e=>{if(e.data&&e.data.size)g.chunks.push(e.data)};
+  r.start(250);g.rec=r;g.talking=true;g.startAt=Date.now();
+  const el=$('#mrhmsg');if(el&&mrhMode==='active')el.textContent='🎧 শুনছি…'
+ }catch(e){console.warn(e)}}
+function mrhGemCut(discard){
+ const g=mrhGL,r=g.rec;g.talking=false;if(!r)return;
+ const dur=Date.now()-g.startAt;
+ r.onstop=async()=>{
+  if(discard||dur<500||!g.chunks.length){return}
+  const blob=new Blob(g.chunks,{type:r.mimeType||'audio/webm'});g.chunks=[];
+  if(blob.size<2500)return;
+  const b64=await new Promise(ok=>{const fr=new FileReader();fr.onload=()=>ok(String(fr.result).split(',')[1]);fr.readAsDataURL(blob)});
+  mrhHandleAudio(b64,(blob.type||'audio/webm').split(';')[0])};
+ try{r.stop()}catch(e){}g.rec=null}
+async function mrhHandleAudio(b64,mime){
+ if(mrhBusy)return;
+ mrhBusy=true;mrhTouch();
+ try{
+  const w=$('#mrhmsg');if(w)w.textContent='⏳ ভাবছি…';
+  const sys=mrhSystem('')+'\nThe user message is AUDIO. Also add field "heard" = exact words you heard (Bengali script).';
+  const contents=mrhHist.slice(-8);
+  let j=null,err=null;
+  for(const m of MRH_MODELS){
+   try{const raw=await Promise.race([window.mrhGeminiAudio(m,sys,contents,b64,mime),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),MRH_TIMEOUT+3000))]);j=mrhParse(raw);if(j)break}catch(e){err=e;console.warn('MRH audio',m,e)}}
+  if(!j){mrhGL.fails++;if(mrhGL.fails>=2){mrhGemStop();mrhSay('জেমিনি শুনতে পারছে না, পুরোনো উপায়ে শুনছি।');mrhRecStart()}return}
+  mrhGL.fails=0;
+  const heard=String(j.heard||'').trim();
+  if(!heard&&(!j.reply||j.action==='answer')){if(w)w.textContent=mrhLast||'';return}
+  // নাম ধরে ডাকার মোড (ঘুমন্ত অবস্থা)
+  if(mrhMode==='wake'){if(!MRH_NAME_RE.test(heard)){if(w)w.textContent=mrhLast||'';return}mrhMode='active';mrhUI()}
+  if(/(ভয়েস|মাইক)\s*(বন্ধ|অফ)|^\s*(থামো|চুপ|স্টপ|stop|bye|বাই)\s*$/i.test(heard)){mrhVoiceOff();mrhSay('ঠিক আছে, ভয়েস বন্ধ করলাম।');return}
+  // হ্যাঁ/না হলে সরাসরি
+  if((mrhPending||mrhPurchasePending)){const yn=mrhYesNo(heard);
+   if(yn==='y'){if(mrhPending)mrhCommit();else mrhCommitPurchase();return}
+   if(yn==='n'){mrhPending=null;mrhPurchasePending=null;mrhSay('ঠিক আছে, কিছুই যোগ করা হয়নি।',heard);return}}
+  mrhHist.push({role:'user',parts:[{text:heard||'(audio)'}]},{role:'model',parts:[{text:JSON.stringify({action:j.action,reply:j.reply,items:j.items})}]});mrhHist=mrhHist.slice(-12);
+  mrhApply(j,heard)
+ }catch(e){console.warn('MRH audio',e)}
+ finally{mrhBusy=false}}
 function mrhRecStop(){if(mrhRec){const r=mrhRec;mrhRec=null;r.onend=r.onerror=r.onresult=null;try{r.abort()}catch(e){}}}
-function mrhRecResume(){if(mrhMode!=='off'&&!mrhSpeaking)setTimeout(mrhRecStart,350)}
+function mrhRecResume(){if(mrhGL.on)return;if(mrhMode!=='off'&&!mrhSpeaking)setTimeout(mrhRecStart,350)}
 function mrhRecStart(){
- if(mrhMode==='off'||mrhSpeaking||mrhRec)return;
+ if(mrhMode==='off'||mrhSpeaking||mrhRec||mrhGL.on)return;
  const SRc=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SRc)return;
  const now=Date.now();mrhFast=now-mrhLastStart<1200?mrhFast+1:0;mrhLastStart=now;
  if(mrhFast>8){mrhVoiceOff();mrhSay('ভয়েস বারবার বন্ধ হয়ে যাচ্ছে। মাইক ঠিক আছে কিনা দেখে আবার চাপুন।');return}
@@ -250,7 +369,11 @@ function mrhRecStart(){
   if(c==='network'){mrhErr++;if(mrhErr>=3){mrhVoiceOff();mrhSay('ভয়েস চালাতে ইন্টারনেট লাগে। সংযোগ দেখুন বা লিখে পাঠান।')}}};
  r.onend=()=>{if(mrhRec===r){mrhRec=null;mrhRecResume()}};
  mrhRec=r;try{r.start()}catch(e){mrhRec=null}}
+let mrhLastHeard='',mrhLastHeardAt=0;
 function mrhVoiceText(text){
+ const nk=mrhNorm(text),nowT=Date.now();
+ if(nk&&nk===mrhLastHeard&&nowT-mrhLastHeardAt<4000)return; // একই বাক্য দুইবার ধরলে বাদ
+ mrhLastHeard=nk;mrhLastHeardAt=nowT;
  const m=MRH_NAME_RE.test(text);
  const rest=text.replace(MRH_NAME_RE,' ').replace(/^\s*(ভাই|হ্যালো|হে|ওই|শোনো|শুনো|hey|hello|ok|okay)\s+/i,'').replace(/\s+/g,' ').trim();
  if(mrhMode==='wake'){
@@ -262,18 +385,70 @@ function mrhVoiceText(text){
  mrhTouch();document.dispatchEvent(new Event('input'));
  mrhHandle(rest||text)}
 
+
+// ---------- পণ্যের নাম অভিধান + ভুল শোনা শব্দ ধরার মেলানো ----------
+const MRH_DICT=[["সুতলি", "সুতলী", "সুতা", "সুতো", "শুতলি", "সূতলি", "sutli", "sutoli", "twine", "jute twine", "পাটের সুতলি", "নাইলন সুতলি"], ["দড়ি", "দড়ী", "ডুরি", "রশি", "rope", "dori", "nylon rope", "নাইলন দড়ি", "পাটের দড়ি"], ["তার", "ওয়্যার", "wire", "তামার তার", "কপার তার", "এমএস তার", "জিআই তার", "বাইন্ডিং তার", "binding wire"], ["ক্যাবল", "কেবল", "cable", "ক্যাবল তার", "সার্ভিস ক্যাবল"], ["পেরেক", "পেরেগ", "পেরক", "nail", "কাঠের পেরেক", "তারকাটা", "তার কাঁটা", "ওয়্যার নেইল"], ["স্ক্রু", "স্ক্রুপ", "screw", "ছ্রু", "টেপ স্ক্রু", "কাঠের স্ক্রু", "মেশিন স্ক্রু", "সেলফ ড্রিল স্ক্রু"], ["নাট", "নাট বল্টু", "nut", "হেক্স নাট", "লক নাট"], ["বল্টু", "বোল্ট", "bolt", "হেক্স বোল্ট", "ইউ বোল্ট", "ফাউন্ডেশন বোল্ট"], ["ওয়াশার", "washer", "ফ্ল্যাট ওয়াশার", "স্প্রিং ওয়াশার"], ["র‍্যাওল প্লাগ", "রল প্লাগ", "রাউল প্লাগ", "wall plug", "rawl plug", "ফিশার প্লাগ", "প্লাস্টিক প্লাগ"], ["তালা", "তালা চাবি", "lock", "padlock", "প্যাডলক", "ডোর লক", "গোদরেজ তালা", "লিভার লক", "কডি তালা"], ["চাবি", "key", "ডুপ্লিকেট চাবি"], ["কব্জা", "কবজা", "কাবজা", "hinge", "দরজার কব্জা", "বাটারফ্লাই কব্জা", "সুইং কব্জা", "পিয়ানো কব্জা"], ["ছিটকিনি", "ছিটকিনী", "latch", "bolt latch", "টাওয়ার বোল্ট", "সিটকিনি", "চিটকিনি"], ["হ্যান্ডেল", "হাতল", "handle", "ডোর হ্যান্ডেল", "টানা হাতল", "পুল হ্যান্ডেল"], ["হাতুড়ি", "হাতুরি", "hammer", "হ্যামার", "রাবার হাতুড়ি", "লোহার হাতুড়ি"], ["প্লায়ার্স", "প্লাস", "প্লাইয়ার্স", "pliers", "কাটিং প্লায়ার্স", "নোজ প্লায়ার্স", "কম্বিনেশন প্লায়ার্স"], ["স্ক্রু ড্রাইভার", "স্ক্রুড্রাইভার", "screwdriver", "ড্রাইভার", "টেস্টার", "ফিলিপস ড্রাইভার", "ফ্ল্যাট ড্রাইভার"], ["রেঞ্জ", "স্প্যানার", "spanner", "wrench", "রিং স্প্যানার", "রেঞ্চ", "পাইপ রেঞ্জ", "এডজাস্টেবল রেঞ্জ"], ["করাত", "কড়াত", "saw", "হ্যান্ড স^", "হ্যাক স", "হ্যাকসॉ", "hacksaw", "কাঠের করাত", "লোহা কাটা করাত"], ["র‍্যান্দা", "রান্দা", "রেন্দা", "plane", "কাঠের র‍্যান্দা", "জয়েন্টার"], ["ছেনি", "চিজেল", "chisel", "বাটালি", "কাঠের ছেনি"], ["ফিতা", "মিটার ফিতা", "টেপ", "measuring tape", "ইঞ্চি ফিতা", "স্টিল ফিতা", "মাপার ফিতা"], ["লেভেল", "spirit level", "লেভেল টিউব", "পানির লেভেল", "water level"], ["ড্রিল", "ড্রিল মেশিন", "drill", "ড্রিল বিট", "drill bit", "হ্যামার ড্রিল", "কংক্রিট বিট"], ["গ্রাইন্ডার", "গ্রাইন্ডিং মেশিন", "grinder", "এঙ্গেল গ্রাইন্ডার", "কাটিং হুইল", "কাটার ডিস্ক", "গ্রাইন্ডিং হুইল"], ["রং", "রঙ", "পেইন্ট", "paint", "ডিস্টেম্পার", "distemper", "এনামেল রং", "enamel", "প্লাস্টিক পেইন্ট", "ওয়াল পেইন্ট"], ["প্রাইমার", "primer", "ওয়াল প্রাইমার", "রং প্রাইমার", "রেড অক্সাইড"], ["ব্রাশ", "brush", "রং ব্রাশ", "paint brush", "পেইন্ট ব্রাশ", "রোলার", "roller", "রং রোলার"], ["থিনার", "thinner", "টারপিন", "turpentine", "কেরোসিন রং"], ["পুটি", "putty", "ওয়াল পুটি", "হোয়াইট সিমেন্ট", "white cement", "জিপসাম"], ["সিমেন্ট", "cement", "পোর্টল্যান্ড সিমেন্ট", "সিমেন্ট ব্যাগ"], ["বালু", "sand", "সিলেট বালু", "ফিলিং বালু"], ["রড", "rod", "এমএস রড", "ms rod", "স্টিল রড", "বিএসআরএম রড", "কেএসআরএম রড", "রড ৬০ গ্রেড"], ["গাঁথুনির জাল", "জাল", "net", "চিকেন মেশ", "মেশ", "জালি", "ওয়্যার মেশ", "বেড়ার জাল"], ["টিন", "সিআই শিট", "টিনের চাল", "ঢেউটিন", "ci sheet", "corrugated sheet", "রঙিন টিন"], ["গ্লু", "আঠা", "glue", "ফেভিকল", "fevicol", "সুপার গ্লু", "এম সিল", "m seal", "এরালডাইট", "araldite", "গাম"], ["টেপ", "প্লাস্টিক টেপ", "ইনসুলেশন টেপ", "tape", "ইলেকট্রিক টেপ", "দুই পাশ টেপ", "ডাবল টেপ", "মাস্কিং টেপ", "স্কচ টেপ", "সিলিং টেপ"], ["সুইচ", "switch", "সুইচ বোর্ড", "এক গ্যাং সুইচ", "দুই গ্যাং সুইচ", "বোর্ড", "ফ্যান রেগুলেটর", "রেগুলেটর"], ["সকেট", "socket", "প্লাগ", "plug", "থ্রি পিন প্লাগ", "টু পিন প্লাগ", "মাল্টিপ্লাগ", "multi plug", "এক্সটেনশন বোর্ড"], ["বাল্ব", "bulb", "বাতি", "লাইট", "এলইডি", "led", "এলইডি বাল্ব", "led bulb", "এলইডি লাইট", "led light", "ওয়াট বাল্ব", "বাতি বাল্ব", "এনার্জি সেভার"], ["টিউব লাইট", "টিউবলাইট", "tube light", "টিউব", "এলইডি টিউব", "led tube", "ফ্লুরোসেন্ট"], ["হোল্ডার", "holder", "বাল্ব হোল্ডার", "ল্যাম্প হোল্ডার", "পেন্ডেন্ট হোল্ডার"], ["এমসিবি", "mcb", "সার্কিট ব্রেকার", "circuit breaker", "ফিউজ", "fuse", "মেইন সুইচ", "চেঞ্জ ওভার"], ["কন্ডুইট", "conduit", "পিভিসি কন্ডুইট", "বিজলী পাইপ", "ইলেকট্রিক পাইপ", "কেসিং", "casing", "কেসিং ক্যাপিং", "ক্যাপিং"], ["পিভিসি পাইপ", "পিভিসি", "pvc pipe", "pvc", "পানির পাইপ", "প্লাস্টিক পাইপ", "পাইপ", "pipe", "ড্রেন পাইপ", "সুয়ারেজ পাইপ"], ["জিআই পাইপ", "gi pipe", "লোহার পাইপ", "গ্যালভানাইজড পাইপ", "ইস্পাতের পাইপ"], ["সিপিভিসি পাইপ", "cpvc", "গরম পানির পাইপ", "পিপিআর পাইপ", "ppr", "পিপি আর"], ["ফিটিংস", "fittings", "পাইপ ফিটিংস", "কনেক্টর", "connector"], ["এলবো", "elbow", "কনুই", "বেন্ড", "bend", "৯০ ডিগ্রি এলবো", "৪৫ ডিগ্রি এলবো"], ["টি", "tee", "টি জয়েন্ট", "টি কানেক্টর", "ওয়াই টি", "y tee"], ["সকেট ফিটিং", "কাপলিং", "coupling", "মুফ", "মাফ", "ইউনিয়ন", "union", "নিপল", "nipple", "রিডিউসার", "reducer"], ["ক্যাপ", "cap", "এন্ড ক্যাপ", "প্লাগ ক্যাপ", "পাইপ ক্যাপ"], ["ট্যাপ", "tap", "কল", "কলের মুখ", "faucet", "পানির কল", "পিলার ট্যাপ", "বেসিন ট্যাপ", "বিব কক", "bib cock", "পিলার কক", "আংগেল কক", "angle cock", "স্টপ কক", "stop cock"], ["শাওয়ার", "shower", "হ্যান্ড শাওয়ার", "হ্যান্ড স্প্রে", "বিডে স্প্রে", "bidet", "বাথ শাওয়ার", "রেইন শাওয়ার", "শাওয়ার সেট"], ["বেসিন", "basin", "ওয়াশ বেসিন", "হাত ধোয়া বেসিন", "পেডেস্টাল বেসিন", "কাউন্টার বেসিন"], ["কমোড", "commode", "টয়লেট", "toilet", "ওয়াটার ক্লোজেট", "water closet", "wc", "প্যান", "pan", "ইন্ডিয়ান প্যান", "প্যান কমোড", "ফ্লাশ ট্যাংক", "flush tank", "সিস্টার্ন", "cistern", "কমোড সিট", "সিট কভার"], ["গেট ভাল্ভ", "gate valve", "ভাল্ভ", "valve", "বল ভাল্ভ", "ball valve", "নন রিটার্ন ভাল্ভ", "চেক ভাল্ভ", "check valve", "ফুট ভাল্ভ", "foot valve", "গেইট ভাল্ব"], ["পানির ট্যাংক", "ট্যাংক", "tank", "প্লাস্টিক ট্যাংক", "পানির ট্যাঙ্ক", "ওভারহেড ট্যাংক", "রিজার্ভ ট্যাংক"], ["পানির পাম্প", "পাম্প", "pump", "মোটর", "motor", "ওয়াটার পাম্প", "সাবমারসিবল পাম্প", "সেন্ট্রিফিউগাল পাম্প"], ["টেপ থ্রেড", "টেফলন টেপ", "teflon tape", "পিটিএফই", "ptfe", "ওয়াটার টেপ", "সিলিং টেপ থ্রেড", "প্লাম্বিং টেপ"], ["ফ্লোর ড্রেন", "floor drain", "ড্রেন", "drain", "ঝাঁঝরি", "ঝাঁঝরী", "জালি ড্রেন", "গ্রেটিং", "grating", "ফ্লোর ট্র্যাপ", "সাইফন", "siphon", "ট্র্যাপ", "trap"], ["পিভিসি সলভেন্ট", "সলভেন্ট", "solvent cement", "পাইপের আঠা", "পিভিসি গ্লু", "pvc glue"], ["ওয়্যার ব্রাশ", "wire brush", "সিরিজ কাগজ", "বালি কাগজ", "sandpaper", "স্যান্ড পেপার", "শিরিষ কাগজ", "সিরিষ কাগজ", "সিরিস কাগজ"], ["কোদাল", "কুদাল", "spade", "shovel", "বেলচা", "belcha", "খোন্তা", "কুড়াল", "axe", "কুড়ালি", "দা", "দাও", "কাস্তে", "sickle"], ["কাঁচি", "কাচি", "scissors", "কাটার", "cutter", "ব্লেড", "blade", "কাটার ব্লেড", "ছুরি", "knife"], ["টর্চ", "torch", "flashlight", "টর্চ লাইট", "রিচার্জেবল টর্চ", "হেডলাইট", "ব্যাটারি", "battery", "সেল", "cell", "এএ ব্যাটারি", "এএএ ব্যাটারি"], ["মই", "ladder", "সিঁড়ি", "এলুমিনিয়াম মই", "ভাঁজ মই", "স্টিল মই"], ["ঝাড়ু", "broom", "ঝাড়ু", "মপ", "mop", "বালতি", "bucket", "মগ", "mug", "পানির বালতি", "ডাস্টবিন", "dustbin", "ময়লার ঝুড়ি"], ["প্লাস্টিক শিট", "polythene", "পলিথিন", "পলিথিন শিট", "ত্রিপল", "tarpaulin", "তেরপল", "টারপলিন"], ["রেজর", "ফিতা তালা", "চেইন", "chain", "শিকল", "শিকলের তালা", "চেইন লক", "কুপ", "কুপের তালা"], ["অ্যাঙ্গেল", "angle", "এঙ্গেল", "এল অ্যাঙ্গেল", "ব্র্যাকেট", "bracket", "এল ব্র্যাকেট", "শেলফ ব্র্যাকেট"], ["পাইপ ক্লিপ", "clip", "ক্লিপ", "ক্ল্যাম্প", "clamp", "ক্ল্যাম্প ক্লিপ", "হোস ক্লিপ", "hose clip", "জি ক্ল্যাম্প"], ["হোস পাইপ", "hose", "হোজ", "গার্ডেন পাইপ", "রাবার পাইপ", "ফ্লেক্সিবল পাইপ", "ফ্লেক্স", "flexible hose", "সংযোগ পাইপ", "কানেকশন পাইপ"], ["ফ্যান", "fan", "সিলিং ফ্যান", "ceiling fan", "টেবিল ফ্যান", "এক্সহস্ট ফ্যান", "exhaust fan", "ফ্যান ক্যাপাসিটর", "ক্যাপাসিটর", "capacitor"], ["জানালার গ্রিল", "গ্রিল", "grill", "দরজার গ্রিল", "রেলিং", "railing", "লোহার গ্রিল", "গেট", "gate", "স্লাইডিং গেট"], ["গ্লাস", "glass", "কাঁচ", "আয়না", "mirror", "আয়না গ্লাস", "সিসা", "ফ্রস্টেড গ্লাস", "কাঁচের শিট"], ["টাইলস", "tiles", "টাইলস আঠা", "টাইলস গ্রাউট", "grout", "টাইলস স্পেসার", "ফ্লোর টাইলস", "ওয়াল টাইলস", "সিরামিক টাইলস"], ["ডোর স্টপার", "door stopper", "ডোর ক্লোজার", "door closer", "ডোর আই", "ম্যাজিক আই", "ডোর বেল", "door bell", "কলিং বেল", "calling bell"], ["ঘণ্টা", "বেল", "bell", "কলিং বেল সুইচ"], ["ড্রয়ার", "drawer", "ড্রয়ার চ্যানেল", "drawer channel", "ড্রয়ার লক", "ড্রয়ার হ্যান্ডেল"], ["ভেলক্রো", "velcro", "জিপ টাই", "zip tie", "কেবল টাই", "cable tie", "টাই বেল্ট", "প্লাস্টিক টাই"], ["লুব্রিকেন্ট", "lubricant", "ডব্লিউডি", "wd 40", "wd40", "তেল", "oil", "মেশিন তেল", "গ্রিজ", "grease", "কেরোসিন", "kerosene"], ["সোল্ডার", "solder", "সোল্ডারিং আয়রন", "soldering iron", "সোল্ডার তার", "ফ্লাক্স", "flux", "ওয়েল্ডিং রড", "welding rod", "ইলেকট্রোড", "electrode"], ["মাল্টিমিটার", "multimeter", "টেস্টার", "tester", "লাইন টেস্টার", "ভোল্ট টেস্টার", "ক্ল্যাম্প মিটার"], ["সেফটি গ্লাভস", "গ্লাভস", "gloves", "হাত মোজা", "হেলমেট", "helmet", "সেফটি হেলমেট", "সেফটি গগলস", "গগলস", "goggles", "মাস্ক", "mask", "সেফটি শু", "গাম বুট", "gum boot"], ["চাল", "ভাত চাল", "rice", "chal", "মিনিকেট", "minikit", "নাজিরশাইল", "নাজির শাইল", "নাজির", "বাসমতি", "basmati", "পোলাও চাল", "চিনিগুঁড়া", "চিনিগুড়া", "কাটারিভোগ", "কাটারী ভোগ", "স্বর্ণা", "সর্ণা", "ব্রি ২৮", "ব্রি ধান", "আতপ চাল", "সেদ্ধ চাল", "মোটা চাল", "সরু চাল"], ["ডাল", "dal", "daal", "মসুর ডাল", "মশুর ডাল", "masoor dal", "মুগ ডাল", "মুগডাল", "moong dal", "মটর ডাল", "matar dal", "ছোলার ডাল", "ছোলা ডাল", "চানা ডাল", "খেসারি ডাল", "খেসারী ডাল", "অড়হর ডাল", "মাষকলাই ডাল", "বিউলির ডাল"], ["ছোলা", "বুট", "chola", "chickpea", "কালো ছোলা", "সাদা ছোলা", "কাবুলি ছোলা", "মটর", "matar", "peas", "রাজমা", "rajma", "বরবটি বীজ", "সয়াবিন বীজ"], ["আটা", "ata", "atta", "flour", "গমের আটা", "আটা প্যাকেট", "ময়দা", "moyda", "maida", "all purpose flour", "সুজি", "suji", "semolina", "বেসন", "besan", "gram flour", "চালের গুঁড়া", "চালের গুড়া", "rice flour"], ["tel", "সয়াবিন তেল", "সয়াবিন", "soybean oil", "soyabin", "সরিষার তেল", "সরিষা তেল", "mustard oil", "পামওলিন", "palm olein", "পাম তেল", "সানফ্লাওয়ার তেল", "ঘি", "ghee", "ডালডা", "dalda", "বনস্পতি", "রূপচাঁদা", "তীর তেল", "ফ্রেশ তেল", "বসুন্ধরা তেল", "রাইস ব্রান তেল", "নারিকেল তেল", "coconut oil", "অলিভ অয়েল", "olive oil"], ["চিনি", "সুগার", "sugar", "chini", "সাদা চিনি", "লাল চিনি", "brown sugar", "মিছরি", "কিউব চিনি", "গুড়", "গুর", "jaggery", "খেজুর গুড়", "আখের গুড়"], ["লবণ", "নুন", "নূন", "salt", "lobon", "noon", "আয়োডিনযুক্ত লবণ", "আয়োডিন লবণ", "খাবার লবণ", "কালো লবণ", "বিট লবণ", "সৈন্ধব লবণ", "টেবিল সল্ট"], ["হলুদ", "হলুদ গুঁড়া","হলদি","হলদি গুঁড়া","হলদী", "holud", "turmeric", "হলুদের গুঁড়া", "হলুদ গুড়া", "মরিচ", "মরিচ গুঁড়া", "মরিচের গুঁড়া", "লাল মরিচ", "শুকনো মরিচ", "chili powder", "chilli", "কাঁচা মরিচ", "কাচা মরিচ", "green chili", "গোলমরিচ", "golmorich", "black pepper", "সাদা মরিচ"], ["ধনিয়া", "ধনে", "ধনে গুঁড়া", "ধনিয়া গুঁড়া", "dhonia", "coriander", "ধনেপাতা", "ধনে পাতা", "জিরা", "জিরা গুঁড়া", "jira", "cumin", "কালো জিরা", "কালোজিরা", "kalojira", "black seed", "পাঁচফোড়ন", "পাচফোড়ন", "panch phoron", "পাঁচ ফোড়ন"], ["এলাচ", "এলাচি", "elach", "cardamom", "দারুচিনি", "দারচিনি", "darchini", "cinnamon", "লবঙ্গ", "লবং", "clove", "তেজপাতা", "তেজ পাতা", "bay leaf", "জয়ফল", "জায়ফল", "জয়িত্রি", "জৈত্রী", "মেথি", "methi", "fenugreek", "সরিষা", "sorisha", "mustard seed", "তেঁতুল", "tetul", "tamarind", "হিং", "asafoetida"], ["মসলা", "গরম মসলা", "গরমমসলা", "garam masala", "মসলা গুঁড়া", "রান্নার মসলা", "চিকেন মসলা", "chicken masala", "বিফ মসলা", "beef masala", "মাছের মসলা", "কাচ্চি মসলা", "কাচ্চি", "বিরিয়ানি মসলা", "biryani masala", "রেডি মসলা", "চাট মসলা", "পান্তা মসলা", "হালিম মিক্স", "সাজান মসলা"], ["পেঁয়াজ", "পিঁয়াজ", "পেয়াজ", "piyaj", "onion", "দেশি পেঁয়াজ", "ভারতীয় পেঁয়াজ", "রসুন", "roshun", "garlic", "আদা", "ada", "ginger", "আদা বাটা", "রসুন বাটা", "আদা রসুন", "আদা-রসুন বাটা"], ["আলু", "alu", "potato", "আলুর", "লাল আলু", "ডায়মন্ড আলু", "টমেটো", "tomato", "বেগুন", "brinjal", "eggplant", "ফুলকপি", "cauliflower", "বাঁধাকপি", "bandhakopi", "cabbage", "গাজর", "gajor", "carrot", "মুলা", "মূলা", "radish", "শসা", "cucumber", "লাউ", "lau", "bottle gourd", "কুমড়া", "কুমড়ো", "pumpkin", "পটল", "patol", "করলা", "korola", "bitter gourd", "বরবটি", "borboti", "ঢেঁড়স", "dherosh", "okra", "লেবু", "lebu", "lemon", "লিমন"], ["ডিম", "dim", "egg", "মুরগির ডিম", "হাঁসের ডিম", "ফার্মের ডিম", "দেশি ডিম", "ডজন ডিম", "হালি", "ডিমের ট্রে"], ["মুরগি", "মুরগী", "murgi", "chicken", "ব্রয়লার", "broiler", "সোনালি মুরগি", "লেয়ার মুরগি", "দেশি মুরগি", "গরুর মাংস", "beef", "খাসির মাংস", "mutton", "মাংস", "mangsho", "meat", "মাছ", "mach", "fish", "রুই", "কাতলা", "ইলিশ", "ilish", "তেলাপিয়া", "পাঙ্গাস", "চিংড়ি", "prawn", "shrimp", "শুটকি", "shutki", "dried fish"], ["দুধ", "dudh", "milk", "তরল দুধ", "পাস্তুরিত দুধ", "গুঁড়া দুধ", "গুড়া দুধ", "powder milk", "milk powder", "ডানো", "dano", "ডিপ্লোমা", "diploma", "মার্কস", "marks", "ফ্রেশ মিল্ক", "আড়ং দুধ", "মিল্ক ভিটা", "milk vita", "কনডেন্সড মিল্ক", "condensed milk", "ক্রিম", "cream", "দই", "doi", "yogurt", "ঘোল", "মাখন", "butter", "পনির", "cheese", "চিজ"], ["চা", "cha", "tea", "চা পাতা", "চায়ের পাতা", "tea leaf", "তাজা চা", "ইস্পাহানি চা", "ঈস্পাহানি", "ispahani", "ফিনলে চা", "finlay", "ডিপ টি", "tea bag", "টি ব্যাগ", "লিপটন", "lipton", "রেড টি", "গ্রিন টি", "green tea", "কফি", "coffee", "নেসক্যাফে", "nescafe", "কফি মেট", "coffee mate", "ব্রু", "bru", "হরলিক্স", "horlicks", "বোর্নভিটা", "bournvita", "ওভালটিন", "ovaltine", "মিলো", "milo"], ["বিস্কুট", "biscuit", "biscut", "বিস্কুট প্যাকেট", "ক্র্যাকার", "cracker", "কুকিজ", "cookies", "সুপার বিস্কুট", "ডাইজেস্টিভ", "digestive", "টোস্ট বিস্কুট", "toast biscuit", "ওয়েফার", "wafer", "চকলেট", "chocolate", "chocolet", "ক্যান্ডি", "candy", "লজেন্স", "lozenge", "টফি", "toffee", "ললিপপ", "চুইংগাম", "chewing gum"], ["চিপস", "chips", "পটেটো চিপস", "potato chips", "কুরকুরে", "kurkure", "চানাচুর", "chanachur", "ঝালমুড়ি", "মুড়ি", "muri", "puffed rice", "চিড়া", "চিঁড়া", "chira", "flattened rice", "খই", "khoi", "নুডুলস", "noodles", "noodle", "ইন্সট্যান্ট নুডুলস", "ম্যাগি", "maggi", "ডুডুল", "doodles", "মামা নুডুলস", "পাস্তা", "pasta", "ম্যাকারনি", "macaroni", "সেমাই", "shemai", "vermicelli", "লাচ্ছা", "লাচ্ছা সেমাই"], ["জুস", "juice", "ফলের জুস", "ফ্রুটি", "frooti", "স্লাইস", "slice", "মাজা", "maaza", "পানীয়", "soft drink", "কোক", "coke", "কোকাকোলা", "coca cola", "পেপসি", "pepsi", "সেভেন আপ", "7up", "স্প্রাইট", "sprite", "ফান্টা", "fanta", "মিরিন্ডা", "mirinda", "মাউন্টেন ডিউ", "রেড বুল", "red bull", "এনার্জি ড্রিংক", "energy drink", "ললিপপ জুস", "ট্যাং", "tang", "রুহ আফজা", "rooh afza", "শরবত", "sharbat", "সিরাপ", "syrup"], ["পানি", "পানির বোতল", "water", "mineral water", "মিনারেল ওয়াটার", "বোতল পানি", "পানির জার", "water jar", "জার", "মুজ", "মুজ পানি", "ড্রিঙ্কিং ওয়াটার", "পানি ১ লিটার", "পানি ২ লিটার", "পানি ৫ লিটার", "আকিজ পানি", "মাউন্ট এভারেস্ট", "ক্ষীর", "ক্লিয়ার", "আরওয়াই"], ["সাবান", "sabon", "soap", "গায়ের সাবান", "body soap", "লাক্স", "lux", "লাইফবয়", "lifebuoy", "ডাভ", "dove", "পিয়ার্স", "pears", "সিঙ্গার", "সিনথল", "cinthol", "ডেটল", "dettol", "সানসিল্ক", "হ্যান্ড ওয়াশ", "handwash", "hand wash", "লিকুইড সোপ", "liquid soap", "ওয়াশিং সোপ", "কাপড় কাচার সাবান", "লন্ড্রি সাবান", "সানলাইট সাবান", "কেয়া সাবান", "keya", "কেয়া"], ["সার্ফ", "surf", "ডিটারজেন্ট", "detergent", "গুঁড়া সাবান", "washing powder", "কাপড় কাচার পাউডার", "রিন", "rin", "হুইল", "wheel", "ভিম", "vim", "বাসন মাজার", "বাসন ধোয়া", "dish wash", "dishwash", "ডিশওয়াশ", "ভিম বার", "ভিম লিকুইড", "ডাইশ সোপ", "ফিনিস", "টাইড", "tide", "এরিয়েল", "ariel", "ফেবরিক সফটনার", "fabric softener", "কম্ফোর্ট", "comfort", "ব্লিচ", "bleach", "হারপিক", "harpic", "টয়লেট ক্লিনার", "toilet cleaner", "লাইজল", "lizol", "ফ্লোর ক্লিনার", "floor cleaner", "ডম্ব", "ডোমেক্স", "domex", "ক্লিনার", "cleaner", "জীবাণুনাশক", "ডিসইনফেক্ট্যান্ট", "disinfectant", "স্যাভলন", "savlon", "ডেটল লিকুইড", "ডেটল হ্যান্ডওয়াশ"], ["শ্যাম্পু", "shampoo", "shampu", "শ্যাম্পু সাশে", "sachet", "সানসিল্ক শ্যাম্পু", "ক্লিয়ার শ্যাম্পু", "হেড অ্যান্ড শোল্ডার", "head and shoulders", "ডাভ শ্যাম্পু", "কন্ডিশনার", "conditioner", "হেয়ার অয়েল", "hair oil", "চুলের তেল", "নারিকেল তেল প্যারাসুট", "parachute", "প্যারাশুট", "জবাকুসুম", "jabakusum", "কেশ তেল", "আমলা", "amla", "আমলকি", "ভাটিকা", "vatika", "হেয়ার জেল", "hair gel", "হেয়ার ক্রিম", "হেয়ার কালার", "কালার", "মেহেদি", "mehedi", "henna", "হেনা"], ["টুথপেস্ট", "toothpaste", "টুথ পেস্ট", "পেস্ট", "কোলগেট", "colgate", "পেপসোডেন্ট", "pepsodent", "মিসওয়াক", "miswak", "সেনসোডাইন", "sensodyne", "ক্লোজআপ", "close up", "closeup", "সিগনাল", "signal", "মেসওয়াক", "টুথব্রাশ", "toothbrush", "টুথ ব্রাশ", "ব্রাশ দাঁত", "মাউথওয়াশ", "mouthwash", "ডেন্টাল", "dental", "দাঁতের মাজন", "মাজন", "দাঁতের পাউডার", "দন্ত মাজন", "টুথ পাউডার"], ["ক্রিম", "face cream", "ফেস ক্রিম", "ফেয়ারনেস ক্রিম", "fair and lovely", "ফেয়ার এন্ড লাভলি", "গ্লো এন্ড লাভলি", "ভ্যাসলিন", "vaseline", "লোশন", "lotion", "বডি লোশন", "বডি ওয়াশ", "body wash", "ফেস ওয়াশ", "face wash", "ফেসওয়াশ", "সানস্ক্রিন", "sunscreen", "পন্ডস", "ponds", "নিভিয়া", "nivea", "হিমালয়া", "himalaya", "লিপবাম", "lip balm", "লিপস্টিক", "lipstick", "কাজল", "kajal", "কাজল পেন্সিল", "পাউডার", "powder", "বেবি পাউডার", "টাল্ক", "talc", "ট্যালকম পাউডার", "পারফিউম", "perfume", "বডি স্প্রে", "body spray", "ডিওডোরেন্ট", "deodorant", "ডিও", "deo", "সেন্ট", "scent", "আতর", "attar", "ইত্র"], ["razor", "শেভিং", "shaving", "শেভিং ক্রিম", "shaving cream", "শেভিং ফোম", "জিলেট", "gillette", "শেভ", "সেফটি রেজর", "ট্রিমার", "trimmer", "আফটার শেভ", "aftershave", "দাড়ি", "সেলুন"], ["ন্যাপকিন", "napkin", "সেনেটারি ন্যাপকিন", "sanitary napkin", "স্যানিটারি প্যাড", "pad", "প্যাড", "সেনিটারি", "সেফ", "সেফ প্যাড", "ফ্রিডম", "freedom", "হুইস্পার", "whisper", "ডায়াপার", "diaper", "ন্যাপি", "nappy", "প্যাম্পার্স", "pampers", "মামি পোকো", "mamypoko", "বেবি ডায়াপার", "টিস্যু", "tissue", "টিস্যু পেপার", "tissue paper", "ফেস টিস্যু", "টয়লেট টিস্যু", "toilet tissue", "টয়লেট পেপার", "toilet paper", "রুমাল", "handkerchief", "পেপার ন্যাপকিন", "কিচেন টিস্যু", "কিচেন রোল", "ওয়েট টিস্যু", "wet tissue", "ওয়েট ওয়াইপস", "wet wipes", "ওয়াইপস"], ["মশার কয়েল", "mosquito coil", "কয়েল", "coil", "মশা মারার", "মশা", "ম্যাট", "mat", "মশার ম্যাট", "মশার স্প্রে", "মর্টিন", "mortein", "এসিআই", "ace", "ফিল্ড", "হিট", "hit", "রেইড", "raid", "ইনসেক্ট", "পোকা মারা", "পোকামাকড়", "ইঁদুর মারা", "ইঁদুরের বিষ", "রেট কিল", "রেটোল", "ন্যাপথলিন", "naphthalene", "ন্যাপথলিন বল", "কপূর", "কর্পূর", "camphor", "ফিনাইল", "phenyl", "ফিনাইল বোতল", "এয়ার ফ্রেশনার", "air freshener", "রুম ফ্রেশনার", "ধূপ", "dhup", "আগরবাতি", "agarbati", "incense", "ধূপকাঠি", "মোমবাতি", "candle", "মোম", "দিয়াশলাই", "ম্যাচ", "match", "matchbox", "ম্যাচ বাক্স", "লাইটার", "lighter", "গ্যাস লাইটার"], ["সিগারেট", "cigarette", "বিড়ি", "bidi", "বিড়ি প্যাকেট", "জর্দা", "zarda", "সাদা পাতা", "সাদাপাতা", "খৈনি", "তামাক", "tobacco", "পান", "paan", "betel", "পানের পাতা", "সুপারি", "supari", "areca", "চুন", "chun", "লাল চুন", "খয়ের", "khoyer", "পানমসলা", "pan masala", "গুটখা", "gutka", "মুখশুদ্ধি", "mukhshuddhi", "মৌরি", "mouri", "fennel", "ভাজা মৌরি", "সাদা মৌরি", "সুগন্ধি সুপারি"], ["খাতা", "khata", "notebook", "কলম", "kolom", "pen", "বলপেন", "ballpen", "বল পেন", "জেল পেন", "gel pen", "পেন্সিল", "pencil", "রাবার", "eraser", "rubber", "শার্পনার", "sharpener", "স্কেল", "ruler", "scale", "রঙ পেন্সিল", "colour pencil", "কালার পেন্সিল", "মার্কার", "marker", "হাইলাইটার", "highlighter", "কাগজ", "kagoj", "paper", "এ ফোর কাগজ", "a4 paper", "এ৪", "কার্বন", "carbon", "আঠা কাগজ", "ফাইল", "file", "ফোল্ডার", "folder", "স্টাপলার", "stapler", "পিন", "pin", "স্টাপলার পিন", "কাগজ ক্লিপ", "গাম বোতল", "প্যাড", "ডাইরি", "diary", "রেজিস্টার", "register", "ক্যাশ মেমো", "cash memo", "মেমো", "ক্যালকুলেটর", "calculator"], ["স্কুল ব্যাগ", "school bag", "ব্যাগ", "bag", "পলিথিন ব্যাগ", "polythene bag", "প্লাস্টিক ব্যাগ", "শপিং ব্যাগ", "shopping bag", "বাজারের ব্যাগ", "থলে", "thole", "থলি", "চটের বস্তা", "বস্তা", "bosta", "sack", "বস্তা চাল", "প্যাকেট", "packet", "প্যাক", "pack", "ঠোঙা", "thonga", "কাগজের ঠোঙা", "কাগজের ব্যাগ", "জিপ লক", "ziplock", "ক্লিং ফিল্ম", "cling film", "ফয়েল", "foil", "অ্যালুমিনিয়াম ফয়েল", "এলুমিনিয়াম ফয়েল", "বাটার পেপার", "butter paper", "প্লাস্টিক র‍্যাপ", "র‍্যাপ", "wrap"], ["বাসন", "basan", "প্লেট", "plate", "থালা", "thala", "বাটি", "bati", "bowl", "কাপ", "cup", "চামচ", "chamoch", "spoon", "কাঁটাচামচ", "fork", "চাকু", "জগ", "jug", "কেটলি", "kettle", "ফ্লাস্ক", "flask", "থার্মোস", "thermos", "টিফিন", "tiffin", "টিফিন বক্স", "lunch box", "হট পট", "hotpot", "casserole", "বোতল", "bottle", "পানির বোতল", "water bottle", "বেলন", "belon", "চাকি", "chaki", "বেলুন", "রোলিং পিন", "rolling pin", "খুন্তি", "khunti", "হাতা", "hata", "ladle", "চালনি", "chalni", "sieve", "colander"], ["হাঁড়ি", "হাড়ি", "hari", "pot", "পাতিল", "patil", "কড়াই", "korai", "kadai", "wok", "ফ্রাইং প্যান", "frying pan", "তাওয়া", "tawa", "রাইস কুকার", "rice cooker", "প্রেসার কুকার", "pressure cooker", "কুকার", "cooker", "স্টোভ", "stove", "চুলা", "chula", "গ্যাস চুলা", "gas stove", "গ্যাস সিলিন্ডার", "gas cylinder", "সিলিন্ডার", "এলপি গ্যাস", "lpg", "লাল গ্যাস", "ওভেন", "oven", "মাইক্রোওয়েভ", "microwave", "ব্লেন্ডার", "blender", "মিক্সার", "mixer", "জুসার", "juicer", "টোস্টার", "toaster", "ইলেকট্রিক কেটলি", "electric kettle", "ইন্ডাকশন", "induction", "ইন্ডাকশন কুকার", "হিটার", "heater", "রুম হিটার", "ওয়াটার হিটার", "গিজার", "geyser"], ["লুঙ্গি", "lungi", "গামছা", "gamcha", "towel", "তোয়ালে", "টাওয়েল", "রুমাল", "ধুতি", "dhuti", "শাড়ি", "sari", "saree", "থ্রি পিস", "three piece", "শার্ট", "shirt", "প্যান্ট", "pant", "গেঞ্জি", "genji", "ফতুয়া", "fotua", "পাঞ্জাবি", "panjabi", "পায়জামা", "pajama", "মোজা", "moja", "socks", "জুতা", "juta", "shoe", "স্যান্ডেল", "sandal", "স্লিপার", "slipper", "চপ্পল", "chappal", "ছাতা", "chata", "umbrella", "রেইনকোট", "raincoat", "টুপি", "tupi", "হিজাব", "hijab", "বোরকা", "burqa", "ওড়না", "orna", "স্কার্ফ", "scarf", "জায়নামাজ", "জায়নামায", "prayer mat", "তসবি", "tasbih", "টুপি নামাজ"], ["বাচ্চার খাবার", "baby food", "সেরেলাক", "cerelac", "নেসলে", "nestle", "ল্যাকটোজেন", "lactogen", "এস ২৬", "s26", "ফ্যারেক্স", "farex", "বেবি ফুড", "বেবি মিল্ক", "ফর্মুলা", "formula", "বেবি অয়েল", "baby oil", "জনসন", "johnson", "জনসন বেবি", "বেবি সাবান", "বেবি শ্যাম্পু", "বেবি লোশন", "ফিডার", "feeder", "feeding bottle", "বেবি বোতল", "চুষনি", "pacifier", "খেলনা", "toy", "বল", "ball", "বেলুন", "balloon", "পুতুল", "doll", "গাড়ি", "toy car"], ["জেলি", "jelly", "জ্যাম", "jam", "জ্যাম জেলি", "সস", "sauce", "টমেটো সস", "tomato sauce", "ketchup", "কেচাপ", "চিলি সস", "chili sauce", "সয়া সস", "soy sauce", "ভিনেগার", "vinegar", "সিরকা", "শিরকা", "আচার", "achar", "pickle", "আমের আচার", "জলপাইয়ের আচার", "মায়োনিজ", "mayonnaise", "মেয়োনেজ", "পিনাট বাটার", "peanut butter", "চকলেট স্প্রেড", "nutella", "নিউটেলা", "মধু", "modhu", "honey", "মৌচাকের মধু", "খাঁটি মধু", "কর্নফ্লেক্স", "cornflakes", "corn flakes", "ওটস", "oats", "ওটমিল", "oatmeal", "কেলগস", "kelloggs", "মুসলি", "muesli", "গ্রানোলা", "granola", "কাস্টার্ড", "custard", "কাস্টার্ড পাউডার", "কর্নফ্লাওয়ার", "cornflour", "বেকিং পাউডার", "baking powder", "বেকিং সোডা", "baking soda", "সোডা", "soda", "খাবার সোডা", "ইস্ট", "yeast", "ভ্যানিলা", "vanilla", "এসেন্স", "essence", "ফুড কালার", "food color", "জেলাটিন", "gelatin", "আগার আগার", "agar"], ["আম", "am", "mango", "কলা", "kola", "banana", "আপেল", "apple", "কমলা", "komola", "orange", "মাল্টা", "malta", "আঙুর", "angur", "grape", "আনার", "anar", "pomegranate", "ডালিম", "ডাব", "dab", "কাঁঠাল", "jackfruit", "পেঁপে", "pepe", "papaya", "তরমুজ", "tormuj", "watermelon", "বাঙ্গি", "bangi", "melon", "পেয়ারা", "peyara", "guava", "লিচু", "lichu", "lychee", "আনারস", "ananas", "pineapple", "জাম", "jam fruit", "নারিকেল", "narikel", "coconut", "নারকেল", "খেজুর", "khejur", "dates", "কিশমিশ", "kishmish", "raisin", "কাজুবাদাম", "কাজু", "cashew", "কাঠবাদাম", "বাদাম", "badam", "almond", "চিনাবাদাম", "চিনা বাদাম", "peanut", "পেস্তা", "pista", "pistachio", "আখরোট", "walnut", "কাজু বাদাম", "মিক্স নাট", "mixed nuts", "শুকনো ফল", "dry fruit", "ড্রাই ফ্রুটস"]];
+// নিজের শেখানো ডাকনাম (সেটিংস/ভয়েস থেকে): D.shop.alias = {"শব্দ":"পণ্যের id"}
+const mrhSound=s=>{ // বাংলা/ইংরেজি শব্দকে কাছাকাছি উচ্চারণের একটা চাবিতে নামানো
+ let t=String(s||'').toLowerCase().replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[\u200c\u200d]/g,'');
+ const m={'ী':'ি','ূ':'ু','ৃ':'রি','ণ':'ন','শ':'স','ষ':'স','য':'জ','ড়':'র','ঢ়':'র','ঙ':'ং','ঁ':'','ঃ':'','্':'','়':'','ৎ':'ত','ঈ':'ই','ঊ':'উ','ৈ':'ই','ৌ':'উ','ব':'ভ','ভ':'ভ','খ':'ক','ঘ':'ক','গ':'ক','ঘ':'ক','ছ':'চ','ঝ':'জ','থ':'ত','ধ':'দ','ফ':'প','ঠ':'ট','ঢ':'ড','ঞ':'ন','ম':'ন'};
+ t=t.replace(/[^\u0980-\u09FFa-z0-9 ]/g,' ');
+ let o='';for(const c of t)o+=(m[c]!==undefined?m[c]:c);
+ return o.replace(/(.)\1+/g,'$1').replace(/\s+/g,' ').trim()};
+const mrhLev=(a,b)=>{if(a===b)return 0;if(!a.length)return b.length;if(!b.length)return a.length;let p=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let c=[i];for(let j=1;j<=b.length;j++)c[j]=Math.min(c[j-1]+1,p[j]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[b.length]};
+let MRH_IDX=null,MRH_IDX_N=-1;
+function mrhIndex(){ // অভিধানের প্রতিটা নামকে দোকানের পণ্যের সাথে জুড়ে রাখে
+ const key=D.p.length+':'+D.p.map(p=>p.id+(p.name||'')).join('').length;
+ if(MRH_IDX&&MRH_IDX_N===key)return MRH_IDX;
+ const idx=[];
+ const add=(term,p,w)=>{const k=mrhSound(term);if(k.length>1)idx.push({k,p,w})};
+ D.p.forEach(p=>{
+  add(mrhPlain(p.name),p,3);if(p.nh)add(mrhPlain(p.nh),p,3);
+  const pk=mrhSound(mrhPlain(p.name)+' '+mrhPlain(p.nh||''));
+  MRH_DICT.forEach(g=>{
+   // এই পণ্যের নামের সাথে অভিধানের কোনো শব্দ মিললে, ওই দলের সব নাম এই পণ্যের ডাকনাম
+   const pw=' '+pk+' ';
+   if(g.some(t=>{const tk=mrhSound(t);return tk.length>2&&(pw.includes(' '+tk+' ')||pk===tk||(tk.length>=4&&tk.includes(' ')&&pk.includes(tk)))})){g.forEach(t=>add(t,p,1.5))}})});
+ const al=D.shop.alias||{};Object.keys(al).forEach(w=>{const p=D.p.find(x=>String(x.id)===String(al[w]));if(p)add(w,p,5)});
+ MRH_IDX=idx;MRH_IDX_N=key;return idx}
+const MRH_STOP=new Set(['দাম','কত','টাকা','এর','টা','টি','খানা','পিস','কেজি','গ্রাম','লিটার','প্যাকেট','আছে','নাই','দেন','দাও','দিন','বলো','বলেন','বিক্রি','করলাম','নিলাম','একটা','দুটো','তিনটা','চারটা','পাঁচটা','ভাই','হ্যালো','প্লিজ','ওই','ঐ','এই','সেই','কি','কী','কোনো','আর','আরও','মাল','জিনিস','প্রোডাক্ট','দোকান'].map(w=>mrhSound(w)));
+// পণ্যের নামে খুব সাধারণ শব্দ (এগুলো একা মিললে পণ্য নির্বাচন হবে না)
+const MRH_GENERIC=new Set(['গুঁড়া','গুড়া','গুঁড়ো','পাউডার','powder','প্যাকেট','বোতল','ট্যাবলেট','সেট','নতুন','বড়','ছোট','মাঝারি','সাদা','কালো','লাল','নীল','হলুদ রং','ইঞ্চি','ফুট','মিটার','ওয়াট','লিটার','কেজি','গ্রাম','পিস','এক্সট্রা','স্পেশাল','প্রিমিয়াম','গোল্ড','সুপার','প্লাস','ফ্রেশ'].map(w=>mrhSound(w)));
+function mrhFuzzyRun(q,max,useStrong){ // বলা কথা থেকে সবচেয়ে কাছের পণ্যগুলো (সবচেয়ে ভালো আগে)
+ const qk=mrhSound(q);if(!qk)return[];
+ let words=qk.split(' ').filter(w=>w.length>1&&!MRH_STOP.has(w));
+ const strong=words.filter(w=>!MRH_GENERIC.has(w));if(useStrong&&strong.length)words=strong; // জোরালো শব্দ থাকলে সাধারণ শব্দ ধরব না
+ const idx=mrhIndex(),sc=new Map();
+ for(const e of idx){
+  let s=0;
+  if(qk.includes(e.k)&&e.k.length>2)s=6*e.w+e.k.length;
+  else{
+   for(const w of words){
+    if(w.length>=2&&(e.k===w||e.k.split(' ').includes(w)))s=Math.max(s,4*e.w+w.length);
+    else if(e.k.includes(w)&&w.length>2)s=Math.max(s,3*e.w+w.length);
+    else if(w.length>=4){const ew=e.k.split(' ');for(const x of ew){if(x.length<4)continue;const d=mrhLev(w,x),lim=Math.max(w.length,x.length)<=6?1:2;if(d>0&&(w[0]!==x[0]))continue;if(d<=lim)s=Math.max(s,(2.5-d*.6)*e.w+Math.min(w.length,x.length))}}}}
+  if(s>0)sc.set(e.p,Math.max(sc.get(e.p)||0,s))}
+ const arr=[...sc.entries()].sort((a,b)=>b[1]-a[1]);const top=arr.length?arr[0][1]:0;return arr.filter(x=>x[1]>=top*.75).slice(0,max||6).map(x=>x[0])}
+function mrhFuzzy(q,max){const a=mrhFuzzyRun(q,max,true);return a.length?a:mrhFuzzyRun(q,max,false)}
+// ডাকনাম শেখানো: "সুতলি মানে <পণ্য>"
+function mrhLearn(text){
+ const m=String(text).match(/^\s*(.{2,25}?)\s*(?:মানে|হলো|হল|means|=)\s*(.{2,40})\s*$/i);if(!m)return false;
+ const a=mrhFuzzy(m[2],1)[0]||D.p.find(p=>mrhNorm(p.name).includes(mrhNorm(m[2])));
+ if(!a)return false;
+ D.shop.alias=D.shop.alias||{};D.shop.alias[mrhNorm(m[1])]=a.id;save();MRH_IDX=null;
+ mrhSay(`ঠিক আছে, এখন থেকে "${m[1].trim()}" বললে ${mrhPlain(a.name)} বুঝব।`,text);return true}
 // ---------- AI-এর সাথে কথা ----------
 const mrhPlain=s=>String(s==null?'':s).replace(/<[^>]*>/g,'').replace(/[|\n\r]+/g,' ').replace(/\s+/g,' ').trim();
 function mrhCatalog(text){
  let L=D.p.slice();
- if(L.length>500){ // অনেক পণ্য হলে প্রশ্নের সাথে মিল থাকাগুলো আগে
+ if(L.length>60){const fz=mrhFuzzy(text+' '+mrhHist.filter(x=>x.role==='user').slice(-2).map(x=>x.parts[0].text).join(' '),25); // অনেক পণ্য হলে প্রশ্নের সাথে মিল থাকাগুলো আগে
   const q=mrhNorm(text+' '+mrhHist.filter(x=>x.role==='user').slice(-3).map(x=>x.parts[0].text).join(' '));
   const g=new Set();for(let k=0;k<q.length-1;k++)g.add(q.substr(k,2));
-  L=L.map(p=>{const n=mrhNorm(mrhPlain(p.name)+' '+mrhPlain(p.nh));let s=0;for(let k=0;k<n.length-1;k++)if(g.has(n.substr(k,2)))s++;return {p,s}}).sort((a,b)=>b.s-a.s).slice(0,300).map(x=>x.p)}
+  L=L.map(p=>{const n=mrhNorm(mrhPlain(p.name)+' '+mrhPlain(p.nh));let s=0;for(let k=0;k<n.length-1;k++)if(g.has(n.substr(k,2)))s++;return {p,s}}).sort((a,b)=>b.s-a.s).slice(0,60).map(x=>x.p);L=[...new Set(fz.concat(L))].slice(0,60)}
  return L.map(p=>{const nm=mrhPlain(p.name),alt=mrhPlain(p.nh);return [p.id,nm,alt&&alt!==nm?alt:'',Object.keys(units(p)).join('/'),p.stock>0?'আছে':'শেষ'].join('|')}).join('\n')}
 function mrhSystem(text){
  let s=`You are "MRH", the voice/text assistant inside the stock app of a Bangladeshi hardware & sanitary shop. The owner and staff talk to you in Bengali (Bangla script), English, Banglish (Bengali typed in English letters) or any mix, casually, with typos, half sentences and speech-recognition mistakes. Always work out the real intent. Resolve follow-ups ("ওটা", "আর ২টা", "same", "দাম?") using the conversation so far.
-Reply in the language the user used (default: natural spoken Bengali). Keep replies to 1-2 short sentences because they are read aloud.
+Reply in the language the user used (default: natural spoken Bengali). Keep replies to 1-2 short sentences because they are read aloud. Never repeat the same sentence or phrase twice in one reply, and do not repeat what you said in the previous turn; if the user asks again, answer differently or more briefly. You may also answer general questions (facts, calculations, advice, small talk) briefly with action "answer". If you notice a way the app or shop workflow could be improved, you may suggest it in one sentence, but never change anything yourself: always ask the user first.
 You can ONLY: (1) tell the selling price of products, (2) say whether a product is available, (3) prepare a draft sale that the user must confirm, (4) for the OWNER ONLY, prepare a draft purchase with quantity and TOTAL purchase amount per item, (5) chat briefly. Never reveal buying price or profit from stored records; a purchase amount is only what the owner explicitly tells you. NEVER reveal or guess buying/cost price, profit, minimum price, suppliers, customer dues or sales totals; if asked, politely say these are not shown here.
 NEVER write a price, amount or stock number yourself. For any price question return action "price" and the app fills in the exact numbers.
 PRODUCT LIST, one per line: id|name|other name|units|availability. Choose products only by id from this list. The user may say a name in Bengali, English or Banglish; match by meaning and sound. If several products fit, use action "clarify" and name up to 5 of them in the reply. If nothing fits, say you could not find it and suggest the closest names.
@@ -287,6 +462,7 @@ Return ONLY one JSON object, no other text:
 - answer: greetings, thanks, small talk, or things you cannot do.
 unit must be one of the units listed for that product. Map pcs/piece/টা/টি -> পিস, kg -> কেজি, gm/gram -> গ্রাম, ft/foot -> ফুট, meter -> মিটার, liter/ltr -> লিটার, packet/pack -> প্যাকেট. If the user gives no unit, leave unit null.
 Convert Bengali digits and spoken numbers to decimals: আড়াই=2.5, দেড়=1.5, সোয়া ১=1.25, সাড়ে তিন=3.5, পাঁচ=5.
+Speech recognition often mishears Bengali hardware words (e.g. সুতলি heard as সুতলী/শুতলি/সূতলি). Match by sound and meaning, not exact spelling; prefer the closest product from the list below.
 PRODUCTS:
 ${mrhCatalog(text)}`;
  if(mrhPending&&Date.now()-mrhPendingAt<180000)s+=`\nPENDING SALE DRAFT (waiting for yes/no): ${mrhPending.map(l=>`${l.p.id} ${nf(l.qty)} ${l.u}`).join('; ')}.`;if(mrhPurchasePending&&Date.now()-mrhPurchasePendingAt<180000)s+=`\nPENDING PURCHASE DRAFT (waiting for yes/no): ${mrhPurchasePending.map(l=>`${l.p.id} ${nf(l.qty)} ${l.u} total ${l.total}`).join('; ')}.`;
@@ -299,7 +475,7 @@ async function mrhAsk(text){
  let last=null;
  for(const m of MRH_MODELS){
   try{
-   const raw=await Promise.race([window.mrhGemini(m,sys,contents),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),12000))]);
+   const raw=await Promise.race([window.mrhGemini(m,sys,contents),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),MRH_TIMEOUT))]);
    const j=mrhParse(raw);
    if(j){mrhHist.push({role:'user',parts:[{text}]},{role:'model',parts:[{text:JSON.stringify(j)}]});mrhHist=mrhHist.slice(-12);return j}
    last=new Error('bad json')}
@@ -367,7 +543,20 @@ function mrhApply(j,text){
  // clarify / answer: AI নিজে দামের সংখ্যা বললে সেটা বলতে দিই না
  if(/(৳|টাকা|taka|\btk\b)/i.test(reply)&&/[0-9০-৯]/.test(reply)){mrhSay('কোন পণ্যের দাম জানতে চান? নামটা বলুন।',text);return}
  mrhSay(reply||'বুঝতে পারিনি, আরেকবার বলবেন?',text)}
+function mrhQuick(text){
+ // সহজ দাম/স্টক প্রশ্ন মোবাইলেই সাথে সাথে উত্তর; জটিল হলে AI-তে যায়
+ const t=mrhNorm(text);
+ if(!/(দাম|কত|price|rate|রেট|আছে|স্টক|stock)/.test(t))return false;
+ if(/(বিক্রি|বেচ|কিনলাম|কিনেছি|কেনা|সেল|sold|bought|বাকি|যোগ|add)/.test(t))return false;
+ if(/\d|[০-৯]/.test(text))return false;
+ const a=mrhFind(text);
+ if(a.length!==1)return false;
+ const p=a[0],nm=mrhPlain(p.name);
+ if(/(আছে|স্টক|stock)/.test(t)&&!/(দাম|কত|price|rate|রেট)/.test(t)){mrhSay(p.stock>0?`${nm} আছে।`:`${nm} এখন শেষ।`,text);return true}
+ mrhSay(mrhPriceText([{p,qty:0,u:dn(p)}],''),text);return true}
 async function mrhRoute(text){
+ if(mrhLearn(text))return;
+ if(mrhQuick(text))return;
  if(mrhState&&!navigator.onLine){mrhLocal(text);return}
  mrhState=null; // আগের সরল-মোডের ধাপ আটকে থাকলে ছেড়ে দিই
  if((mrhPending&&Date.now()-mrhPendingAt<180000)||(mrhPurchasePending&&Date.now()-mrhPurchasePendingAt<180000)){
@@ -377,7 +566,7 @@ async function mrhRoute(text){
  if(!navigator.onLine){mrhLocal(text);return}
  const w=$('#mrhmsg');if(w)w.textContent='⏳ ভাবছি…';
  let j=null,err='';
- for(let t=0;t<2&&!j;t++){
+ for(let t=0;t<1&&!j;t++){
   try{if(!window.mrhGemini)throw new Error('AI লোড হয়নি');j=await mrhAsk(text)}
   catch(e){err=(e&&e.message)||String(e);console.warn('MRH AI',e)}}
  if(!j){mrhSay('এআই এখন সংযোগ পাচ্ছে না। কারণ: '+err.slice(0,160),text);return}
@@ -385,14 +574,14 @@ async function mrhRoute(text){
  mrhApply(j,text)}
 async function mrhHandle(text){
  text=String(text||'').trim();if(!text)return;
- if(mrhBusy){mrhQ.push(text);return}
+ if(mrhBusy){if(!mrhQ.includes(text))mrhQ.push(text);return}
  mrhBusy=true;
  try{await mrhRoute(text)}catch(e){console.warn('MRH',e);mrhSay('একটু সমস্যা হয়েছে, আবার বলুন।',text)}
  finally{mrhBusy=false;const n=mrhQ.shift();if(n)mrhHandle(n)}}
 // ---------- পুরোনো লোকাল মোড (ইন্টারনেট/AI না থাকলে ফলব্যাক) ----------
 const mrhNorm=s=>String(s||'').toLowerCase().replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[৳,!?।ঃ]/g,' ').replace(/\s+/g,' ').trim();
 const mrhNum=s=>{const m=mrhNorm(s).match(/\d+(?:\.\d+)?/);return m?+m[0]:0};
-function mrhFind(q){let z=mrhNorm(q).replace(/(এর দাম কত|দাম কত|কত টাকা|দাম বলো|দামটা বলো|বিক্রি করলাম|বিক্রি করেছি|বিক্রি করব|বিক্রি হলো|বিক্রি|দাম|টা|টি|এই|ওই|আমাকে|বলবে|বলুন|জানাও|জানাবে|প্রোডাক্ট|product)/g,' ').trim();let a=D.p.filter(p=>mrhNorm(p.name).includes(z)||z.includes(mrhNorm(p.name))).filter(p=>z.length>0);if(!a.length){const words=z.split(' ').filter(w=>w.length>1);a=D.p.map(p=>({p,n:words.filter(w=>mrhNorm(p.name).includes(w)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n).map(x=>x.p)}return a.slice(0,6)}
+function mrhFind(q){let z=mrhNorm(q).replace(/(এর দাম কত|দাম কত|কত টাকা|দাম বলো|দামটা বলো|বিক্রি করলাম|বিক্রি করেছি|বিক্রি করব|বিক্রি হলো|বিক্রি|দাম|টা|টি|এই|ওই|আমাকে|বলবে|বলুন|জানাও|জানাবে|প্রোডাক্ট|product)/g,' ').trim();let a=D.p.filter(p=>mrhNorm(p.name).includes(z)||z.includes(mrhNorm(p.name))).filter(p=>z.length>0);if(!a.length){const words=z.split(' ').filter(w=>w.length>1);a=D.p.map(p=>({p,n:words.filter(w=>mrhNorm(p.name).includes(w)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n).map(x=>x.p)}if(!a.length)a=mrhFuzzy(q,6);return a.slice(0,6)}
 function mrhReplyForProduct(p){mrhState=null;mrhSay(`${p.name} এর নির্ধারিত বিক্রয়মূল্য ${tk(priceU(p,dn(p)))} প্রতি ${dn(p)}।`)}
 function mrhSend(){const el=$('#mrhin');if(!el)return;const text=el.value.trim();if(!text)return;el.value='';mrhHandle(text)}
 function mrhLocal(text){
@@ -531,6 +720,11 @@ dlg(`<h3>সেটিংস</h3>
 <label>দ্বিতীয় রং (বর্ডার ও অ্যাকসেন্ট)</label><input type="color" value="${c2v}" oninput="D.shop.c2=this.value;save();th()"><button class="s" onclick="D.shop.color='#2f5d8a';D.shop.c2='#f2b705';save();th();st()">থিম রিসেট</button>
 <label><input type="checkbox" style="width:auto" ${D.shop.dark?'checked':''} onchange="D.shop.dark=+this.checked;save();th()"> ডার্ক মোড</label>
 <label>লেখার রং</label><input type="color" value="${D.shop.tc||'#1c2530'}" oninput="D.shop.tc=this.value;save();th()"><button class="s" onclick="D.shop.tc='';save();th()">রং রিসেট</button>
+<div class="card"><b>🔊 MRH-এর কণ্ঠস্বর</b>
+<label>কণ্ঠ বাছুন</label><select onchange="D.shop.voice=this.value;save();mrhTalk('আমি এখন এই কণ্ঠে কথা বলব।')"><option value="">নিজে থেকে সেরাটা বাছুক</option>${mrhVoices().filter(v=>/^bn|^en/i.test(v.lang)).map(v=>`<option value="${esc(v.voiceURI||v.name)}"${(D.shop.voice||'')===(v.voiceURI||v.name)?' selected':''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>
+<label>কথা বলার গতি</label><input type="range" min="0.7" max="1.4" step="0.05" value="${D.shop.vrate||1}" onchange="D.shop.vrate=+this.value;save();mrhTalk('এই গতিতে কথা বলব।')">
+<label>কণ্ঠের ভারী-পাতলা ভাব</label><input type="range" min="0.7" max="1.4" step="0.05" value="${D.shop.vpitch||1}" onchange="D.shop.vpitch=+this.value;save();mrhTalk('এই সুরে কথা বলব।')">
+<button type="button" class="s" onclick="mrhTalk('আসসালামু আলাইকুম, আমি এমআরএইচ। বলুন কী করতে পারি?')">▶ কণ্ঠ শুনে দেখুন</button><p class="m">তালিকায় বাংলা কণ্ঠ না থাকলে ফোনের সেটিংস থেকে Google বা টেক্সট-টু-স্পিচে বাংলা ভয়েস ডাউনলোড করুন।</p></div>
 <label>লেখার সাইজ</label><input type="range" min="12" max="24" value="${D.shop.fs||16}" onchange="D.shop.fs=+this.value;save();th()">
 <label>English / সংখ্যার ফন্ট</label><select onchange="D.shop.fe=this.value;save();th()">${['Poppins','Inter','Roboto','Montserrat','Nunito','Noto Sans Bengali'].map(f=>`<option${(D.shop.fe||'Poppins')==f?' selected':''}>${f}`).join('')}</select>
 <label>বাংলা ফন্ট</label><select onchange="D.shop.fb=this.value;save();th()">${['Noto Sans Bengali','Hind Siliguri','Anek Bangla','Baloo Da 2','Noto Serif Bengali','Atma','Tiro Bangla'].map(f=>`<option${(D.shop.fb||'Noto Sans Bengali')==f?' selected':''}>${f}`).join('')}</select>
@@ -559,17 +753,28 @@ let PFX='';const cn=k=>PFX+k;
 const app=initializeApp(firebaseConfig),auth=initializeAuth(app,{persistence:browserLocalPersistence}),db=getFirestore(app);
 // ---- MRH AI: Firebase AI Logic (Gemini Developer API). এপিআই কী কোডে নেই, Firebase কনসোল থেকে চালু করা থাকে
 let aiLoad=null;
-window.mrhGemini=async(modelName,system,contents)=>{
-  if(!auth.currentUser)throw new Error('login');
+const aiGet=()=>{
   if(!aiLoad)aiLoad=(async()=>{
     const B='https://www.gstatic.com/firebasejs/12.17.0/';
     const [A,I]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-ai.js')]);
     const a2=A.initializeApp(firebaseConfig,'mrh-ai');
     return {I,ai:I.getAI(a2,{backend:new I.GoogleAIBackend()})};
   })().catch(e=>{aiLoad=null;throw e});
-  const {I,ai}=await aiLoad;
+  return aiLoad};
+window.mrhGemini=async(modelName,system,contents)=>{
+  if(!auth.currentUser)throw new Error('login');
+  const {I,ai}=await aiGet();
   const model=I.getGenerativeModel(ai,{model:modelName,systemInstruction:system,generationConfig:{responseMimeType:'application/json',temperature:0.2}});
   const res=await model.generateContent({contents});
+  return res.response.text();
+};
+// অডিও সরাসরি জেমিনিকে: বাংলা-ইংরেজি মেশানো কথাও বোঝে
+window.mrhGeminiAudio=async(modelName,system,contents,b64,mime)=>{
+  if(!auth.currentUser)throw new Error('login');
+  const {I,ai}=await aiGet();
+  const model=I.getGenerativeModel(ai,{model:modelName,systemInstruction:system,generationConfig:{responseMimeType:'application/json',temperature:0.2}});
+  const c=contents.concat([{role:'user',parts:[{inlineData:{mimeType:mime,data:b64}},{text:'(এটা ব্যবহারকারীর কণ্ঠস্বর। কী বলেছে বুঝে JSON-এ উত্তর দাও। কিছু না বললে বা শুধু শব্দ হলে action "answer" আর reply খালি রাখো। JSON-এ "heard" ফিল্ডে যা শুনেছ লেখো।)'}]}]);
+  const res=await model.generateContent({contents:c});
   return res.response.text();
 };
 const COL=['p','cu','su','ex','tx','bl'],CNT={p:'stock',cu:'bal',su:'bal'};
@@ -700,7 +905,7 @@ onAuthStateChanged(auth,async u=>{
   COL.forEach(k=>{base[k]={};first[k]=0});
   $('#lo').style.display=u?'none':'grid';
   resetIdle();
-  window.OWN=!!u&&isOwner;window.AI_ENABLED=!!u;
+  window.OWN=!!u&&isOwner;window.AI_ENABLED=!!u;if(u)setTimeout(()=>{try{aiGet()}catch(e){}},1500);
   document.querySelector('nav button[data-v=buy]').style.display=isOwner?'':'none';
   if(u){th();hd()}
   go(cur);
