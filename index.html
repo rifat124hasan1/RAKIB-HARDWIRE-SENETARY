@@ -217,7 +217,7 @@ V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k
 return `<button class="s" onclick="undoLast()" ${undoSnapshot?'':'disabled'}>↶ শেষ কাজ Undo</button><div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')),'todaySales()')}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${window.AI_ENABLED?`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">${mrhLast?esc(mrhLast):'যেকোনো ভাষায় লিখুন বা বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?” 🎙️ একবার চাপলে আমি শুনতে থাকব, অথবা “এমআরএইচ” বলে ডাকুন।'}</div><div id="mrhst" class="mrhmuted">${mrhStatusText()}</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s${mrhMode!=='off'?' mrhon':''}" id="mrhmic" onclick="mrhToggle()" title="ভয়েস">${mrhMode==='off'?'🎙️':'⏹️'}</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`:''}<h3>📅 বাকি পরিশোধের তারিখ</h3>${D.cu.filter(x=>x.bal>0&&x.dueDate).sort((a,b)=>String(a.dueDate).localeCompare(String(b.dueDate))).slice(0,5).map(x=>`<div class="tr"><div><b>${esc(x.name)}</b><small>${esc(x.dueDate)}</small></div><span class="neg">${tk(x.bal)}</span></div>`).join('')||'<p class="m">তারিখসহ কোনো বাকি নেই</p>'}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
 // ---- MRH AI: Gemini (Firebase AI Logic) দিয়ে সব ভাষা বোঝা + ভয়েস মোড + অফলাইনে লোকাল ফলব্যাক
 // দাম/স্টকের সংখ্যা সবসময় অ্যাপ নিজে হিসাব করে বলে; AI-কে ক্রয়মূল্য, লাভ বা ন্যূনতম দাম পাঠানো হয় না।
-const MRH_MODELS=['gemini-2.5-flash','gemini-2.5-flash-lite']; // দ্রুত মডেল; প্রথমটা ফেইল করলে দ্বিতীয়টা
+const MRH_MODELS=['gemini-3.5-flash-lite','gemini-3.7-flash','gemini-3.6-flash']; // দ্রুত মডেল; প্রথমটা ফেইল করলে দ্বিতীয়টা
 const MRH_TIMEOUT=9000; // মডেলের নাম বদলাতে এখানে
 const MRH_NAME_RE=/(এম\s*আর\s*এইচ|এমআরএইচ|m\s*[.\-]?\s*r\s*[.\-]?\s*h)/i;
 let mrhState=null,mrhLast='',mrhPending=null,mrhPendingAt=0,mrhPurchasePending=null,mrhPurchasePendingAt=0,mrhHist=[],mrhBusy=false,mrhQ=[];
@@ -569,7 +569,7 @@ async function mrhRoute(text){
  for(let t=0;t<1&&!j;t++){
   try{if(!window.mrhGemini)throw new Error('AI লোড হয়নি');j=await mrhAsk(text)}
   catch(e){err=(e&&e.message)||String(e);console.warn('MRH AI',e)}}
- if(!j){mrhSay('এআই এখন সংযোগ পাচ্ছে না। কারণ: '+err.slice(0,160),text);return}
+ if(!j){mrhSay('এআই এখন সংযোগ পাচ্ছে না। কারণ: '+(String(err).match(/\[\d{3}[^\]]*\]/)||[''])[0]+' '+err.replace(/https?:\/\/\S+/g,'').slice(0,200),text);return}
  const n=$('#mrhnet');if(n)n.textContent='অনলাইন';
  mrhApply(j,text)}
 async function mrhHandle(text){
