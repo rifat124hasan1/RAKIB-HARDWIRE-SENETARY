@@ -115,6 +115,29 @@ nav button.on{background:color-mix(in srgb,var(--y) 55%,transparent);color:#0638
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--y);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){main>*{animation:none}}
 @media print{header,nav,main,.nop,#toast,#lo{display:none!important}dialog{box-shadow:none;border:0}}
+
+/* ===== ধাপ ১: ফিনটেক ডিজাইন ===== */
+header{background:linear-gradient(135deg,color-mix(in srgb,var(--a) 70%,#000),var(--a));border-bottom:0;border-radius:0 0 22px 22px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+header h1{font-weight:600}
+header button{background:rgba(255,255,255,.16);border-radius:12px;width:40px;height:40px;font-size:18px;padding:0}
+.card,.st{border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.st{border-left:0;border:1px solid var(--l)}
+button.b{border-radius:14px}button.s{border-radius:12px}
+input,select{border-radius:12px}
+nav{border-radius:22px 22px 0 0;box-shadow:0 -6px 18px rgba(0,0,0,.08);border-top:0}
+nav button{border-top:0;position:relative}
+nav button.on{color:var(--a)}
+nav button.on span{background:color-mix(in srgb,var(--a) 14%,transparent);border-radius:14px;margin:0 auto;width:48px}
+.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--a) 65%,#000),var(--a));color:#fff;border-radius:24px;padding:18px;margin-bottom:12px;box-shadow:0 10px 24px color-mix(in srgb,var(--a) 35%,transparent)}
+.hero .hrow{display:flex;justify-content:space-between;align-items:center;font-size:14px;opacity:.95}
+.hero .hbk{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:12px;width:auto;margin:0}
+.hero .hbig{font-size:34px;font-weight:700;margin:6px 0 2px;cursor:pointer}
+.hero .hsub{font-size:15px;opacity:.95}
+.hero .hmini{margin-top:10px;font-size:12px;opacity:.8}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.qa div{background:var(--c);border:1px solid var(--l);border-radius:18px;padding:10px 2px;text-align:center;font-size:12.5px;font-weight:600;cursor:pointer}
+.qa i{display:grid;place-items:center;width:40px;height:40px;margin:0 auto 5px;border-radius:14px;background:var(--y);color:#111;font-style:normal;font-size:20px}
+.lowbar{background:var(--c);border:1px solid var(--l);border-left:4px solid var(--r);border-radius:14px;padding:10px 12px;margin-bottom:12px;font-size:14px}
 </style></head><body>
 <header></header><main id="main"></main>
 <nav>
@@ -214,7 +237,7 @@ let cur='home',cart=[],kt='cu',per=7,q='',so='n',sd='';
 const V={};
 function go(v){cur=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#main').innerHTML=V[v]();({stock:drawStock,sell:()=>{selP('s');drawCart()},buy:()=>selP('b')}[v]||(()=>{}))();scrollTo(0,0)}
 V.home=()=>{const d0=new Date().setHours(0,0,0,0),s=D.tx.filter(x=>x.t>=d0&&(x.k=='s'||x.k=='r')),low=D.p.filter(p=>p.stock<=p.low);const c=(l,v,oc)=>`<div class="st"${oc?` onclick="${oc}" style="cursor:pointer"`:''}><small>${l}</small><b>${v}</b></div>`;
-return `<button class="s" onclick="undoLast()" ${undoSnapshot?'':'disabled'}>↶ শেষ কাজ Undo</button><div class="g">${c('আজকের বিক্রি',tk(sum(s,'amt')),'todaySales()')}${c('আজকের লাভ',tk(sum(s,'pf')))}${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${window.AI_ENABLED?`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">${mrhLast?esc(mrhLast):'যেকোনো ভাষায় লিখুন বা বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?” 🎙️ একবার চাপলে আমি শুনতে থাকব, অথবা “এমআরএইচ” বলে ডাকুন।'}</div><div id="mrhst" class="mrhmuted">${mrhStatusText()}</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s${mrhMode!=='off'?' mrhon':''}" id="mrhmic" onclick="mrhToggle()" title="ভয়েস">${mrhMode==='off'?'🎙️':'⏹️'}</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`:''}<h3>📅 বাকি পরিশোধের তারিখ</h3>${D.cu.filter(x=>x.bal>0&&x.dueDate).sort((a,b)=>String(a.dueDate).localeCompare(String(b.dueDate))).slice(0,5).map(x=>`<div class="tr"><div><b>${esc(x.name)}</b><small>${esc(x.dueDate)}</small></div><span class="neg">${tk(x.bal)}</span></div>`).join('')||'<p class="m">তারিখসহ কোনো বাকি নেই</p>'}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
+return `<section class="hero"><div class="hrow"><span>আজকের বিক্রি</span><button class="hbk" onclick="bk()">💾 ব্যাকআপ</button></div><div class="hbig" onclick="todaySales()">${tk(sum(s,'amt'))}</div><div class="hsub">আজকের লাভ ${tk(sum(s,'pf'))}</div><div class="hmini">${D.shop.lastBk?'সর্বশেষ ব্যাকআপ: '+dt(D.shop.lastBk):'এখনো ব্যাকআপ নেওয়া হয়নি'}</div></section><div class="qa"><div onclick="go('sell')"><i>🛒</i>নতুন বিক্রি</div><div onclick="go('buy')"><i>🚚</i>মাল কেনা</div><div onclick="go('khata')"><i>💸</i>বাকি আদায়</div><div onclick="go('acc')"><i>🧾</i>খরচ ও হিসাব</div></div>${low.length?`<div class="lowbar" onclick="go('stock')" style="cursor:pointer"><b class="neg">${low.length}টি পণ্যের স্টক কম।</b> দেখতে চাপুন।</div>`:''}<button class="s" onclick="undoLast()" ${undoSnapshot?'':'disabled'}>↶ শেষ কাজ Undo</button><div class="g">${c('স্টকে আটকা টাকা',tk(D.p.reduce((a,p)=>a+p.stock*p.buy,0)))}${c('মোট পণ্য',D.p.length)}${c('ক্রেতার বাকি',tk(sum(D.cu,'bal')))}${c('মহাজনের পাওনা',tk(sum(D.su,'bal')))}</div>${window.AI_ENABLED?`<section class="mrhbox"><div class="mrhhead"><b>🤖 MRH AI সহকারী</b><span class="mrhmuted" id="mrhnet">${navigator.onLine?'অনলাইন':'অফলাইন'}</span></div><div id="mrhmsg" class="mrhmsg" aria-live="polite">${mrhLast?esc(mrhLast):'যেকোনো ভাষায় লিখুন বা বলুন। যেমন: “১৮ ওয়াট LED লাইটের দাম কত?” 🎙️ একবার চাপলে আমি শুনতে থাকব, অথবা “এমআরএইচ” বলে ডাকুন।'}</div><div id="mrhst" class="mrhmuted">${mrhStatusText()}</div><div class="mrhrow"><input id="mrhin" placeholder="MRH-কে কিছু জিজ্ঞেস করুন…" onkeydown="if(event.key==='Enter')mrhSend()"><button class="b" onclick="mrhSend()">➤</button><button class="s${mrhMode!=='off'?' mrhon':''}" id="mrhmic" onclick="mrhToggle()" title="ভয়েস">${mrhMode==='off'?'🎙️':'⏹️'}</button></div><div class="mrhmuted">শুধু বিক্রয়মূল্য বলবে। ক্রয়মূল্য ও লাভ AI-তে দেখাবে না। বিক্রির খসড়া নিশ্চিত না করলে বিলে যোগ হবে না।</div></section>`:''}<h3>📅 বাকি পরিশোধের তারিখ</h3>${D.cu.filter(x=>x.bal>0&&x.dueDate).sort((a,b)=>String(a.dueDate).localeCompare(String(b.dueDate))).slice(0,5).map(x=>`<div class="tr"><div><b>${esc(x.name)}</b><small>${esc(x.dueDate)}</small></div><span class="neg">${tk(x.bal)}</span></div>`).join('')||'<p class="m">তারিখসহ কোনো বাকি নেই</p>'}<h3>⚠️ কম স্টকের পণ্য</h3>${low.map(p=>`<div class="tr"><b>${pnm(p)}</b><span class="neg">${p.stock>0?fqh(p,p.stock):'স্টক শেষ'}</span></div>`).join('')||'<p class="m">কম স্টকের পণ্য নেই</p>'}<h3>সাম্প্রতিক লেনদেন</h3>${D.tx.slice().sort((a,b)=>a.t-b.t).slice(-8).reverse().map(row).join('')||'<p class="m">এখনো কোনো লেনদেন নেই</p>'}`};
 // ---- MRH AI: Gemini (Firebase AI Logic) দিয়ে সব ভাষা বোঝা + ভয়েস মোড + অফলাইনে লোকাল ফলব্যাক
 // দাম/স্টকের সংখ্যা সবসময় অ্যাপ নিজে হিসাব করে বলে; AI-কে ক্রয়মূল্য, লাভ বা ন্যূনতম দাম পাঠানো হয় না।
 const MRH_MODELS=['gemini-3.5-flash-lite','gemini-3.7-flash','gemini-3.6-flash']; // দ্রুত মডেল; প্রথমটা ফেইল করলে দ্বিতীয়টা
@@ -606,7 +629,7 @@ function todaySales(){
  dlg(`<h3>📅 আজকের বিক্রির তালিকা</h3><div class="row"><b>মোট বিক্রি (ফেরত বাদে)</b><b class="pos">${tk(tot)}</b></div>${L.map(x=>`<div class="tr"><div><b>${esc(x.n)}</b><small>${lab[x.k]} • ${dt(x.t)}</small></div><span class="${x.k=='s'?'pos':'neg'}">${tk(x.amt)}</span></div>`).join('')||'<p class="m">আজ এখনো কোনো বিক্রি নেই</p>'}<button class="s" onclick="cl()">বন্ধ</button>`);
 }
 // ---- স্টক
-V.stock=()=>`<div class="row"><h2>স্টক</h2><button class="s" onclick="pf()">＋ নতুন পণ্য</button></div><button class="s" onclick="stockAudit()">🧮 স্টক মিলিয়ে দেখুন</button><button class="s" onclick="stockLossForm()">📉 নষ্ট / হারানো মাল</button><input placeholder="পণ্য খুঁজুন" value="${esc(q)}" oninput="q=this.value;drawStock()"><select onchange="so=this.value;drawStock()">${[['n','নাম অনুসারে'],['low','কম স্টক আগে'],['sh','স্টক বেশি আগে'],['pl','দাম কম → বেশি'],['ph','দাম বেশি → কম']].map(o=>`<option value="${o[0]}"${so==o[0]?' selected':''}>${o[1]}`).join('')}</select><div id="sl"></div>`;
+V.stock=()=>`<div class="row"><h2>স্টক</h2><button class="s" onclick="pf()">＋ নতুন পণ্য</button></div><button class="b" onclick="photoAdd(1)">📷 ছবি তুলে একটা পণ্য যোগ</button><button class="s" onclick="photoAdd()">📷 ছবি থেকে একাধিক পণ্য (AI)</button> <button class="s" onclick="stockAudit()">🧮 স্টক মিলিয়ে দেখুন</button><button class="s" onclick="stockLossForm()">📉 নষ্ট / হারানো মাল</button><input placeholder="পণ্য খুঁজুন" value="${esc(q)}" oninput="q=this.value;drawStock()"><select onchange="so=this.value;drawStock()">${[['n','নাম অনুসারে'],['low','কম স্টক আগে'],['sh','স্টক বেশি আগে'],['pl','দাম কম → বেশি'],['ph','দাম বেশি → কম']].map(o=>`<option value="${o[0]}"${so==o[0]?' selected':''}>${o[1]}`).join('')}</select><div id="sl"></div>`;
 function stockAudit(){dlg(`<h3>🧮 বাস্তব স্টক মিলানো</h3><p class="m">দোকানে গুনে পাওয়া পরিমাণ লিখুন। পার্থক্য দেখিয়ে নিশ্চিত করলে স্টক সংশোধন হবে এবং হিসাবের জন্য অডিট লেনদেন সংরক্ষিত থাকবে।</p><form onsubmit="return saveStockAudit(event)">${D.p.map((p,i)=>`<div class="tr"><div style="flex:1"><b>${esc(p.name)}</b><small>সিস্টেমে: ${fq(p,p.stock)}</small></div><input style="width:110px" type="number" step="any" min="0" id="audit${i}" placeholder="গুনে পাওয়া" value="${nf(p.stock/df(p))}"></div>`).join('')}<button class="b">পার্থক্য যাচাই ও সংরক্ষণ</button><button type="button" class="s" onclick="cl()">বাতিল</button></form>`)}
 function saveStockAudit(e){e.preventDefault();const dif=[];D.p.forEach((p,i)=>{const el=$('#audit'+i);if(!el)return;const real=+el.value*df(p);if(!Number.isFinite(real)||real<0)return;const delta=real-p.stock;if(Math.abs(delta)>1e-8)dif.push({p,old:p.stock,real,delta})});if(!dif.length){toast('কোনো পার্থক্য পাওয়া যায়নি');cl();return false}if(!confirm(dif.map(x=>x.p.name+': '+fq(x.p,x.old)+' → '+fq(x.p,x.real)).join('\n')+'\nএই সংশোধনগুলো সংরক্ষণ করবেন?'))return false;markUndo('স্টক মিলানো');dif.forEach(x=>{x.p.stock=x.real;D.tx.push({id:uid(),k:'adj',t:Date.now(),n:x.p.name+' — স্টক মিলানো',amt:0,pf:0,pid:x.p.id,delta:x.delta,oldStock:x.old,newStock:x.real})});save();cl();go('stock');toast(dif.length+'টি পণ্যের স্টক সংশোধন হয়েছে');return false}
 function stockLossForm(){dlg(`<h3>📉 নষ্ট / হারানো পণ্য</h3><form onsubmit="return saveStockLoss(event)"><label>পণ্য</label><select id="lossP">${D.p.map(p=>`<option value="${p.id}">${esc(p.name)} — ${fqh(p,p.stock)}</option>`).join('')}</select><label>পরিমাণ</label><input id="lossQ" type="number" min="0.001" step="any" required><label>কারণ</label><select id="lossWhy"><option>নষ্ট</option><option>হারিয়ে গেছে</option><option>ভাঙা</option><option>অন্যান্য</option></select><button class="b">স্টক থেকে বাদ দিন</button><button type="button" class="s" onclick="cl()">বাতিল</button></form>`)}
@@ -641,6 +664,39 @@ const done=img=>{if(id){const p=old;
   if(!window.OWN)o.buy=p.buy;
   else if(chg&&confirm('ক্রয়মূল্য বদলেছে।\n\nOK = আগের ভুল সংশোধন (পুরনো বিক্রির লাভও ঠিক হবে)\nCancel = নতুন দাম (পুরনো লাভ যেমন আছে তেমনই থাকবে)')){reBuy(p,o.buy,p.name);toast('পুরনো বিক্রির লাভ ঠিক হয়েছে')}
   Object.assign(p,o,img?{img}:{})}else D.p.push({id:uid(),img:img||'',...o});save();cl();go('stock')};const f0=$('#pcam')?.files[0]||$('#pimg').files[0];if(old&&(!old.priceHistory||!Array.isArray(old.priceHistory)))old.priceHistory=[];if(old&&(Math.abs((old.buy||0)-o.buy)>1e-9||Math.abs((old.sell||0)-o.sell)>1e-9)){old.priceHistory=old.priceHistory||[];old.priceHistory.push({t:Date.now(),buy:o.buy,sell:o.sell,source:'পণ্য সম্পাদনা'});if(old.priceHistory.length>100)old.priceHistory=old.priceHistory.slice(-100)}f0?rd(f0,1200,done):done();return false}
+// ---- ধাপ ২: ছবি থেকে একাধিক পণ্য যোগ (Gemini)
+let aiPL=[],aiThumb='',aiOne=false;
+function photoAdd(one){
+ aiOne=!!one;
+ if(!window.OWN)return alert('ছবি থেকে পণ্য যোগের অনুমতি শুধু মালিকের');
+ if(!window.mrhGeminiImage||!navigator.onLine)return alert('এই সুবিধার জন্য ইন্টারনেট ও লগইন লাগবে');
+ aiPL=[];
+ dlg(`<h3>${aiOne?'📷 একটা পণ্যের ছবি তুলুন':'📷 ছবি থেকে পণ্য যোগ'}</h3><p class="m">${aiOne?'পণ্যের ছবি তুললে নাম উঠে আসবে। দাম নিজে লিখে দিন, ছবিটাও পণ্যের সাথে থাকবে।':'তাকের ছবি, দামের তালিকা বা মেমোর ছবি দিন।'} AI নাম ও দাম পড়ে নিচে দেখাবে। আপনি ঠিক করে নিশ্চিত করলে তবেই স্টকে যোগ হবে।</p><div class="row"><button type="button" class="s" onclick="$('#aicam').click()">📷 ক্যামেরা</button><button type="button" class="s" onclick="$('#aigal').click()">🖼️ গ্যালারি</button></div><input type="file" id="aicam" accept="image/*" capture="environment" hidden onchange="photoRun(this.files[0])"><input type="file" id="aigal" accept="image/*" hidden onchange="photoRun(this.files[0])"><p id="aist" class="m"></p><div id="ailist"></div><button type="button" class="s" onclick="cl()">বন্ধ</button>`)
+}
+function photoRun(f){
+ if(!f)return;const st=$('#aist');aiThumb='';rd(f,400,u=>{aiThumb=u});st.textContent='ছবি পড়া হচ্ছে... একটু অপেক্ষা করুন';$('#ailist').innerHTML='';
+ rd(f,1280,async url=>{
+  const b64=url.split(',')[1];let j=null;
+  for(const m of MRH_MODELS){
+   try{const raw=await Promise.race([window.mrhGeminiImage(m,b64,'image/jpeg'),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),25000))]);
+    j=JSON.parse(String(raw).replace(/```json|```/g,'').trim());if(j&&Array.isArray(j.items))break}catch(e){console.warn('ছবি থেকে পণ্য',m,e)}}
+  if(!j||!Array.isArray(j.items)){st.textContent='ছবি পড়া যায়নি। আলো ঠিক রেখে আবার চেষ্টা করুন।';return}
+  const nm=x=>String(x||'').toLowerCase().replace(/\s+/g,'');
+  aiPL=j.items.filter(x=>x&&String(x.name||'').trim()).slice(0,aiOne?1:40).map(x=>{const type=U[x.type]?x.type:'piece',dup=D.p.some(p=>nm(p.name)===nm(x.name));return{name:String(x.name).trim(),type,sell:aiOne?'':(+x.sell>0?+x.sell:''),buy:aiOne?'':(+x.buy>0?+x.buy:''),stock:aiOne?'':(+x.stock>0?+x.stock:''),dup,on:!dup}});
+  if(!aiPL.length&&aiOne)aiPL=[{name:'',type:'piece',sell:'',buy:'',stock:'',dup:false,on:true}];st.textContent=aiPL.length?(aiOne?'নাম পাওয়া গেছে। এবার আপনার বিক্রয়মূল্য, ক্রয়মূল্য ও স্টক লিখুন।':aiPL.length+'টি পণ্য পাওয়া গেছে। ভুল থাকলে ঠিক করুন, দাম ফাঁকা থাকলে দিন।'):'কোনো পণ্য পাওয়া যায়নি।';
+  drawPL()})
+}
+function drawPL(){
+ $('#ailist').innerHTML=aiPL.length?aiPL.map((x,i)=>`<div class="card">${aiOne&&aiThumb?`<img src="${aiThumb}" alt="" style="width:90px;height:90px;object-fit:contain;border-radius:8px">`:''}<div class="row"><label style="margin:0"><input type="checkbox" style="width:auto" ${x.on?'checked':''} onchange="aiPL[${i}].on=this.checked"> যোগ করব${x.dup?' <span class="neg">(এই নামে পণ্য আগে থেকেই আছে)</span>':''}</label></div><input value="${esc(x.name)}" oninput="aiPL[${i}].name=this.value" placeholder="পণ্যের নাম"><select onchange="aiPL[${i}].type=this.value;drawPL()">${Object.keys(TN).map(k=>`<option value="${k}"${x.type==k?' selected':''}>${TN[k]}`).join('')}</select><div class="row"><div><label>বিক্রয়মূল্য (প্রতি ${U[x.type].main})</label><input type="number" step="any" value="${x.sell}" oninput="aiPL[${i}].sell=this.value"></div><div><label>ক্রয়মূল্য</label><input type="number" step="any" value="${x.buy}" oninput="aiPL[${i}].buy=this.value"></div><div><label>স্টক</label><input type="number" step="any" value="${x.stock}" oninput="aiPL[${i}].stock=this.value"></div></div></div>`).join('')+'<button class="b" onclick="photoSave()">✅ নির্বাচিত পণ্য স্টকে যোগ করুন</button>':''
+}
+function photoSave(){
+ const L=aiPL.filter(x=>x.on);if(!L.length)return alert('অন্তত একটি পণ্য বেছে নিন');
+ for(const x of L){if(!String(x.name).trim())return alert('সব পণ্যের নাম দিন');if(!(+x.sell>0))return alert('"'+x.name+'" এর বিক্রয়মূল্য দিন')}
+ if(!confirm(L.length+'টি পণ্য স্টকে যোগ করবেন?'))return;
+ markUndo('ছবি থেকে পণ্য যোগ');
+ L.forEach(x=>D.p.push({id:uid(),img:aiOne?aiThumb:'',name:String(x.name).trim(),nh:'',type:x.type,du:U[x.type].main,buy:+x.buy||0,sell:+x.sell,min:0,pack:0,packPrice:0,packMin:0,low:x.type=='piece'?5:1,stock:+x.stock||0,priceHistory:[]}));
+ save();cl();go('stock');toast(L.length+'টি পণ্য যোগ হয়েছে')
+}
 function delP(id){if(confirm('এই পণ্য মুছে ফেলবেন?')){D.p=D.p.filter(x=>x.id!=id);save();cl();go('stock')}}
 // ---- বিক্রি ও কেনা
 const popt=(f='')=>D.p.filter(p=>p.name.toLowerCase().includes(f.trim().toLowerCase())).map(p=>`<option value="${p.id}">${esc(p.name)} — ${fq(p,p.stock)}`).join('');
@@ -729,7 +785,7 @@ dlg(`<h3>সেটিংস</h3>
 <label>English / সংখ্যার ফন্ট</label><select onchange="D.shop.fe=this.value;save();th()">${['Poppins','Inter','Roboto','Montserrat','Nunito','Noto Sans Bengali'].map(f=>`<option${(D.shop.fe||'Poppins')==f?' selected':''}>${f}`).join('')}</select>
 <label>বাংলা ফন্ট</label><select onchange="D.shop.fb=this.value;save();th()">${['Noto Sans Bengali','Hind Siliguri','Anek Bangla','Baloo Da 2','Noto Serif Bengali','Atma','Tiro Bangla'].map(f=>`<option${(D.shop.fb||'Noto Sans Bengali')==f?' selected':''}>${f}`).join('')}</select>
 <div class="card"><b>☁️ ক্লাউড সিঙ্ক</b><p class="m">লগইন থাকা অবস্থায় অ্যাপের পণ্য, বিক্রি, ক্রয়, খাতা ও হিসাব Firebase-এ স্বয়ংক্রিয়ভাবে সিঙ্ক হয়। নেট না থাকলে সংযোগ ফিরলে সিঙ্কের চেষ্টা হবে। নিরাপত্তার জন্য আলাদা ব্যাকআপ ফাইলও নিয়মিত নামিয়ে রাখুন।</p></div><button class="s" onclick="bk()">ব্যাকআপ নামান</button> <button class="s" onclick="$('#imf').click()">ব্যাকআপ ফেরত আনুন</button> <button class="s" onclick="logout()">লগআউট</button> <button class="s" onclick="cl()">বন্ধ</button>`)}
-function bk(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
+function bk(){D.shop.lastBk=Date.now();try{save()}catch(e){}if(cur==='home')go('home');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
 $('#imf').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{try{const d=JSON.parse(t);if(!d||!Array.isArray(d.p)||!Array.isArray(d.tx)||!d.shop||typeof d.shop!=='object')throw 0;if(!confirm('বর্তমান ডেটা বদলে ব্যাকআপ ফেরত আনবেন? আগে বর্তমান ডেটার একটি ব্যাকআপ ডাউনলোড হবে।'))return;bk();D=d;save();th();hd();cl();go(cur);toast('ব্যাকআপ ফেরত এসেছে')}catch(x){alert('ফাইলটা ঠিক নয়')}})};
 th();hd();go('home');
 </script>
@@ -775,6 +831,15 @@ window.mrhGeminiAudio=async(modelName,system,contents,b64,mime)=>{
   const model=I.getGenerativeModel(ai,{model:modelName,systemInstruction:system,generationConfig:{responseMimeType:'application/json',temperature:0.2}});
   const c=contents.concat([{role:'user',parts:[{inlineData:{mimeType:mime,data:b64}},{text:'(এটা ব্যবহারকারীর কণ্ঠস্বর। কী বলেছে বুঝে JSON-এ উত্তর দাও। কিছু না বললে বা শুধু শব্দ হলে action "answer" আর reply খালি রাখো। JSON-এ "heard" ফিল্ডে যা শুনেছ লেখো।)'}]}]);
   const res=await model.generateContent({contents:c});
+  return res.response.text();
+};
+// ধাপ ২: ছবি থেকে পণ্যের তালিকা বের করা
+window.mrhGeminiImage=async(modelName,b64,mime)=>{
+  if(!auth.currentUser)throw new Error('login');
+  const {I,ai}=await aiGet();
+  const system='তুমি একটি হার্ডওয়্যার ও স্যানিটারি দোকানের স্টক সহকারী। ছবিতে (তাক, প্যাকেট, দামের তালিকা, মেমো বা হাতের লেখা) যে পণ্যগুলো স্পষ্ট দেখা বা পড়া যায় শুধু সেগুলো বের করো। যা পড়া যায় না তা আন্দাজ করবে না; দাম বা পরিমাণ না থাকলে null দাও। শুধু JSON ফেরত দাও: {"items":[{"name":"পণ্যের নাম","type":"piece|weight|liquid|length","sell":সংখ্যা বা null,"buy":সংখ্যা বা null,"stock":সংখ্যা বা null}]}। type: গোনা যায় এমন পণ্য piece, কেজিতে বিক্রি weight, লিটারে liquid, মিটারে length। দাম ও stock সেই type-এর মূল এককে (পিস/কেজি/লিটার/মিটার) দাও। সর্বোচ্চ ৪০টি পণ্য। ছবিতে কোনো মানুষের তথ্য থাকলে তা নেবে না।';
+  const model=I.getGenerativeModel(ai,{model:modelName,systemInstruction:system,generationConfig:{responseMimeType:'application/json',temperature:0.1}});
+  const res=await model.generateContent({contents:[{role:'user',parts:[{inlineData:{mimeType:mime,data:b64}},{text:'এই ছবির পণ্যগুলোর তালিকা JSON-এ দাও।'}]}]});
   return res.response.text();
 };
 const COL=['p','cu','su','ex','tx','bl'],CNT={p:'stock',cu:'bal',su:'bal'};
